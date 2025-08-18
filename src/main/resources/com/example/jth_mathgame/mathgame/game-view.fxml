@@ -31,18 +31,13 @@
                fx:id="timeLabel"
                GridPane.columnIndex="2"
                GridPane.rowIndex="0"/>
-        <Label text="[Question Here]"
-               fx:id="questionLabel"
-               GridPane.columnIndex="1"
-               GridPane.rowIndex="1"/>
-        <TextField fx:id="inputField"
-                   GridPane.columnIndex="1"
-                   GridPane.rowIndex="2"
-        />
-        <Button text="Submit"
-                fx:id="submitButton"
-                GridPane.columnIndex="1"
-                GridPane.rowIndex="3"/>
+        <VBox GridPane.columnIndex="1"
+              GridPane.rowIndex="1">
+            <Label text="[Question Here]"
+                   fx:id="questionLabel"/>
+            <TextField fx:id="inputField"/>
+            <Button text="Submit"
+                    fx:id="submitButton"/>
+        </VBox>
     </GridPane>
-
 </VBox>

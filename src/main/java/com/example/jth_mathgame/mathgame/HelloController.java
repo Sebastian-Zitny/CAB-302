@@ -24,6 +24,7 @@ public class HelloController {
 
     @FXML
     protected void onStartGameClick() throws IOException {
+        // Change window when start button clicked
         Stage stage = (Stage) startButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("game-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), HelloApplication.WIDTH, HelloApplication.HEIGHT);
@@ -40,5 +41,12 @@ public class HelloController {
         statsButton.setFont(new Font("Arial", 40));
         settingsButton.setFont(new Font("Arial", 40));
         quitButton.setFont(new Font("Arial", 40));
+    }
+
+    @FXML
+    protected void onQuitButtonClick() {
+        // Close window when quit button clicked
+        Stage stage = (Stage) startButton.getScene().getWindow();
+        stage.close();
     }
 }

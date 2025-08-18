@@ -3,9 +3,12 @@ package com.example.jth_mathgame.mathgame;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
+import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -48,5 +51,12 @@ public class HelloController {
         // Close window when quit button clicked
         Stage stage = (Stage) startButton.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    protected void toBeAdded() {
+        // Use on features not yet implemented
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "To be added...", ButtonType.OK);
+        alert.showAndWait();
     }
 }

@@ -16,7 +16,7 @@
     </VBox>
 
     <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml">
-        <Button fx:id="startButton" text="Start" minWidth="200" minHeight="40"/>
+        <Button fx:id="startButton" text="Start" minWidth="200" minHeight="40" onAction="#onStartGameClick"/>
         <Button fx:id="statsButton" text="Stats" minWidth="200" minHeight="40"/>
         <Button fx:id="settingsButton" text="Settings" minWidth="200" minHeight="40"/>
         <Button fx:id="quitButton" text="Quit" minWidth="200" minHeight="40"/>

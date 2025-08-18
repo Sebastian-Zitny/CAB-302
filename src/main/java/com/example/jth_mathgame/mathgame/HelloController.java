@@ -1,9 +1,14 @@
 package com.example.jth_mathgame.mathgame;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class HelloController {
     @FXML
@@ -17,6 +22,13 @@ public class HelloController {
     @FXML
     private Button quitButton;
 
+    @FXML
+    protected void onStartGameClick() throws IOException {
+        Stage stage = (Stage) startButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("game-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), HelloApplication.WIDTH, HelloApplication.HEIGHT);
+        stage.setScene(scene);
+    }
     @FXML
     public void initialize() {
         // Title text

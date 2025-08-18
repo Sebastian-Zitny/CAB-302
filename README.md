@@ -1,4 +1,4 @@
-# [Project_Name]
+# [UNNAMED FLASH CARD MATH GAME] <!-- Name is a W.I.P -->
 ## Purpose
 The purpose of this project is to make learning mathematics more engaging  and fun through the use of gamification.
 

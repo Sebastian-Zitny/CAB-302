@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
 public class menuController {
@@ -25,7 +27,8 @@ public class menuController {
     private Button quitButton;
 
     @FXML
-    protected void onStartGameClick() throws IOException {
+    protected void onStartGameClick() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        musicPlayer.playSound("src/sounds/button_3.wav");
         // Change window when start button clicked
         Stage stage = (Stage) startButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("game-view.fxml"));
@@ -46,14 +49,24 @@ public class menuController {
     }
 
     @FXML
-    protected void onQuitButtonClick() {
+    protected void onQuitButtonClick() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        musicPlayer.playSound("src/sounds/button_3.wav");
         // Close window when quit button clicked
         Stage stage = (Stage) startButton.getScene().getWindow();
         stage.close();
     }
+    @FXML
+    protected void onSettingButtonClick() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        musicPlayer.playSound("src/sounds/button_3.wav");
+        Stage stage = (Stage) settingsButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("setting-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), main.WIDTH, main.HEIGHT);
+        stage.setScene(scene);
+    }
 
     @FXML
-    protected void toBeAdded() {
+    protected void toBeAdded() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        musicPlayer.playSound("src/sounds/button_3.wav");
         // Use on features not yet implemented
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "To be added...", ButtonType.OK);
         alert.showAndWait();

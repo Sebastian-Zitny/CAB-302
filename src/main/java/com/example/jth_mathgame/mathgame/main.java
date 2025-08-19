@@ -4,9 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-
+import javax.sound.sampled.*;
 public class main extends Application {
     public static final String TITLE = "Math Game";
     public static final int WIDTH = 960;

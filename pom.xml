@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.jth_mathgame.mathgame/com.example.jth_mathgame.mathgame.Main
+                                com.example.jth_mathgame.mathgame/com.example.jth_mathgame.mathgame.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

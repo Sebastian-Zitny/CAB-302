@@ -8,12 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
-import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloController {
+public class menuController {
     @FXML
     private Label titleText;
     @FXML
@@ -29,8 +28,8 @@ public class HelloController {
     protected void onStartGameClick() throws IOException {
         // Change window when start button clicked
         Stage stage = (Stage) startButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("game-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), HelloApplication.WIDTH, HelloApplication.HEIGHT);
+        FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("game-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), main.WIDTH, main.HEIGHT);
         stage.setScene(scene);
     }
     @FXML

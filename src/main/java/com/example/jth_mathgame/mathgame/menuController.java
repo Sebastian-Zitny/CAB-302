@@ -28,8 +28,8 @@ public class menuController {
     protected void onStartGameClick() throws IOException {
         // Change window when start button clicked
         Stage stage = (Stage) startButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("game-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), main.WIDTH, main.HEIGHT);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("game-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), Main.WIDTH, Main.HEIGHT);
         stage.setScene(scene);
     }
     @FXML

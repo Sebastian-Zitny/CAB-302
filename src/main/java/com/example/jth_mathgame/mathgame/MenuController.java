@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class menuController {
+public class MenuController {
     @FXML
     private Label titleText;
     @FXML
@@ -28,8 +28,8 @@ public class menuController {
     protected void onStartGameClick() throws IOException {
         // Change window when start button clicked
         Stage stage = (Stage) startButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("game-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), main.WIDTH, main.HEIGHT);
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("game-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
     }
     @FXML

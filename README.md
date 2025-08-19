@@ -7,7 +7,7 @@ The purpose of this project is to make learning mathematics more engaging  and f
 - Level System,
 - Addition, Subtraction, Multiplication, Division,
 - Leaderboard,
-- Fixed/Timed/Endless Mode
+- Endless Mode
 
 ## Contribution
 - Commits are tracked to document the development of individual features before merging. All development on new features is be created and tested in separate branches. When finished and properly tested, branches may be merged back into *main*. 

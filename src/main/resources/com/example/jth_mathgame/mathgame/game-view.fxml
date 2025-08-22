@@ -22,6 +22,7 @@
                 prefWidth="50.0"
                 GridPane.columnIndex="0"
                 GridPane.rowIndex="0"
+                onAction="#onQuitButtonClick"
         />
         <Label text="Level X"
                fx:id="levelLabel"

@@ -56,4 +56,6 @@ public class GameController {
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
     }
+
+    //TODO: Make the submit button do something
 }

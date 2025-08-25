@@ -19,10 +19,14 @@
 
 
     <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml">
-        <Label text="Username:"/>
-        <TextField fx:id="UsernameTextField"/>
-        <Label text="Password:"/>
-        <TextField fx:id="PasswordTextField"/>
+        <Label text="Input your Username:"/>
+        <TextField fx:id="usernameTextField"/>
+        <Label text="Input your Password:"/>
+        <TextField fx:id="passwordTextField"/>
+        <Label text="Input your Email:"/>
+        <TextField fx:id="emailTextField"/>
+        <Label text="Input your Phone number:"/>
+        <TextField fx:id="phoneTextField"/>
         <Button fx:id="submitButton" text="Register" minWidth="200" minHeight="40" onAction="#onSubmitClick"/>
     </VBox>
 </VBox>

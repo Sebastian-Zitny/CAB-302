@@ -20,9 +20,9 @@
 
     <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml">
         <Label text="Username:"/>
-        <TextField fx:id="UsernameTextField"/>
+        <TextField fx:id="usernameTextField"/>
         <Label text="Password:"/>
-        <TextField fx:id="PasswordTextField"/>
+        <TextField fx:id="passwordTextField"/>
         <Button fx:id="submitButton" text="Submit" minWidth="200" minHeight="40" onAction="#onSubmitClick"/>
     </VBox>
 </VBox>

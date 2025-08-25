@@ -11,23 +11,43 @@ import java.io.IOException;
 
 public class LoginMenuController {
     @FXML
-    public TextField UsernameTextField;
+    public TextField usernameTextField;
     @FXML
-    public TextField PasswordTextField;
+    public TextField passwordTextField;
     @FXML
     private Label titleText;
     @FXML
     private Button submitButton;
 
-
+    private static final IContactDAO dao = new MockContactDAO();
 
     @FXML
     protected void onSubmitClick() throws IOException {
-        // Change window when start button clicked
-        Stage stage = (Stage) submitButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("menu-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), Main.WIDTH, Main.HEIGHT);
-        stage.setScene(scene);
+        String username = usernameTextField.getText();
+        String password = passwordTextField.getText();
+
+        // Look up user
+        Contact foundUser = dao.getAllContacts().stream()
+                .filter(c -> c.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
+
+        if (foundUser != null && foundUser.getPassword().equals(password)) {
+            // Login success
+            System.out.println("Login successful: " + username);
+
+            Stage stage = (Stage) submitButton.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("menu-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), Main.WIDTH, Main.HEIGHT);
+            stage.setScene(scene);
+        } else {
+            // failed login
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Login Failed");
+            alert.setHeaderText("Invalid credentials");
+            alert.setContentText("Please check your username and password.");
+            alert.showAndWait();
+        }
     }
 
     @FXML

@@ -26,7 +26,16 @@ public class InitialMenuController {
     protected void onLoginClick() throws IOException {
         // Change window when start button clicked
         Stage stage = (Stage) LoginButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("menu-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginMenu-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), Main.WIDTH, Main.HEIGHT);
+        stage.setScene(scene);
+    }
+
+    @FXML
+    protected void onRegisterClick() throws IOException {
+        // Change window when start button clicked
+        Stage stage = (Stage) LoginButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("RegisterMenu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), Main.WIDTH, Main.HEIGHT);
         stage.setScene(scene);
     }

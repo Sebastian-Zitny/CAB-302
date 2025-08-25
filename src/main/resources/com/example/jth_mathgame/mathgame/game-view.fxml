@@ -65,7 +65,8 @@
                     prefHeight="25.0"
                     minHeight="40"
                     prefWidth="50.0"
-                    minWidth="100"/>
+                    minWidth="100"
+                    onAction="#onSubmitButtonClick"/>
         </VBox>
     </GridPane>
 </VBox>

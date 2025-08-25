@@ -58,4 +58,8 @@ public class GameController {
     }
 
     //TODO: Make the submit button do something
+    @FXML
+    protected void onSubmitButtonClick() {
+        return;
+    }
 }

@@ -18,6 +18,8 @@ public class LoginMenuController {
     private Label titleText;
     @FXML
     private Button submitButton;
+    @FXML
+    private Button backButton;
 
     private static final IContactDAO dao = new MockContactDAO();
 
@@ -26,7 +28,6 @@ public class LoginMenuController {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
-        // Look up user
         Contact foundUser = dao.getAllContacts().stream()
                 .filter(c -> c.getUsername().equals(username))
                 .findFirst()
@@ -48,6 +49,15 @@ public class LoginMenuController {
             alert.setContentText("Please check your username and password.");
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    protected void onBackClick() throws IOException {
+        // Change window when start button clicked
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("InitialMenu-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), Main.WIDTH, Main.HEIGHT);
+        stage.setScene(scene);
     }
 
     @FXML

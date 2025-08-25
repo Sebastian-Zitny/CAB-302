@@ -16,13 +16,12 @@
         <Label fx:id="titleText"/>
     </VBox>
 
-
-
     <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml">
         <Label text="Username:"/>
         <TextField fx:id="usernameTextField"/>
         <Label text="Password:"/>
         <TextField fx:id="passwordTextField"/>
         <Button fx:id="submitButton" text="Submit" minWidth="200" minHeight="40" onAction="#onSubmitClick"/>
+        <Button fx:id="backButton" text="Back" minWidth="200" minHeight="40" onAction="#onBackClick"/>
     </VBox>
 </VBox>

@@ -24,6 +24,8 @@ public class RegisterMenuController {
     private Label titleText;
     @FXML
     private Button submitButton;
+    @FXML
+    private Button backButton;
 
 
 
@@ -48,6 +50,15 @@ public class RegisterMenuController {
         Scene scene = new Scene(fxmlLoader.load(), Main.WIDTH, Main.HEIGHT);
         stage.setScene(scene);
 
+    }
+
+    @FXML
+    protected void onBackClick() throws IOException {
+        // Change window when start button clicked
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("InitialMenu-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), Main.WIDTH, Main.HEIGHT);
+        stage.setScene(scene);
     }
 
     @FXML

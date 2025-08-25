@@ -11,5 +11,4 @@
             fx:controller="com.example.jth_mathgame.mathgame.GameController"
             prefHeight="400.0" prefWidth="600.0">
     <Label text="Game Window" />
-    <Button fx:id="startButton" text="Start" minWidth="200" minHeight="40" onAction="#onGameClick"/>
 </VBox>

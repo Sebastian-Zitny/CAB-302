@@ -53,12 +53,19 @@
             <TextField fx:id="inputField"/>
         </VBox>
 
+        <Label fx:id="answerResponseLabel"
+               GridPane.columnIndex="1"
+               GridPane.rowIndex="3"
+               GridPane.halignment="CENTER"
+               GridPane.vgrow="ALWAYS">
+        </Label>
+
         <VBox fx:id="submitVBox"
               GridPane.columnIndex="1"
-              GridPane.rowIndex="3"
+              GridPane.rowIndex="4"
               GridPane.vgrow="ALWAYS">
             <padding>
-                <Insets top="100"/>
+                <Insets top="80"/>
             </padding>
             <Button text="Submit"
                     fx:id="submitButton"

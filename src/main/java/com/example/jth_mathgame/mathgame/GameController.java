@@ -16,6 +16,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class GameController {
     @FXML
@@ -57,6 +58,12 @@ public class GameController {
         quitButton.setFont(smallFont);
         submitButton.setFont(smallFont);
         submitVBox.setAlignment(Pos.CENTER);
+        mockQuestion();
+    }
+
+    // TODO: Delete when no longer needed
+    private void mockQuestion() {
+        questionLabel.setText("9 + 10");
     }
 
     // TODO: Implement method
@@ -83,6 +90,6 @@ public class GameController {
     //TODO: Make the submit button do something
     @FXML
     protected void onSubmitButtonClick() {
-
+        answerCorrect(Objects.equals(inputField.getText(), "19")); //TODO: Delete when no longer needed
     }
 }

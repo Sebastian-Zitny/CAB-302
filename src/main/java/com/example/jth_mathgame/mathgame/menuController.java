@@ -28,7 +28,7 @@ public class menuController {
 
     @FXML
     protected void onStartGameClick() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        musicPlayer.playSound("src/sounds/button_3.wav");
+        soundPlayer.playSound("src/sounds/button_3.wav");
         // Change window when start button clicked
         Stage stage = (Stage) startButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("game-view.fxml"));
@@ -50,14 +50,14 @@ public class menuController {
 
     @FXML
     protected void onQuitButtonClick() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        musicPlayer.playSound("src/sounds/button_3.wav");
+        soundPlayer.playSound("src/sounds/button_3.wav");
         // Close window when quit button clicked
         Stage stage = (Stage) startButton.getScene().getWindow();
         stage.close();
     }
     @FXML
     protected void onSettingButtonClick() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        musicPlayer.playSound("src/sounds/button_3.wav");
+        soundPlayer.playSound("src/sounds/button_3.wav");
         Stage stage = (Stage) settingsButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("setting-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), main.WIDTH, main.HEIGHT);
@@ -66,7 +66,7 @@ public class menuController {
 
     @FXML
     protected void toBeAdded() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        musicPlayer.playSound("src/sounds/button_3.wav");
+        soundPlayer.playSound("src/sounds/button_3.wav");
         // Use on features not yet implemented
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "To be added...", ButtonType.OK);
         alert.showAndWait();

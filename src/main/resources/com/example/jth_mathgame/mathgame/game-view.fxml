@@ -1,14 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.jth_mathgame.mathgame.GameController"
-            prefHeight="400.0" prefWidth="600.0">
-    <Label text="Game Window" />
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.jth_mathgame.mathgame.GameController"
+      prefHeight="400.0" prefWidth="600.0">
+
+    <GridPane alignment="TOP_CENTER" minHeight="100">
+        <columnConstraints>
+            <ColumnConstraints halignment="CENTER" />
+        </columnConstraints>
+        <padding>
+            <Insets top="100" bottom="100" left="40" right="40"/>
+        </padding>
+        <Button text="Quit"
+                fx:id="quitButton"
+                prefHeight="25.0"
+                minHeight="40"
+                prefWidth="50.0"
+                minWidth="100"
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="0"
+                onAction="#onQuitButtonClick"
+        />
+        <Label text="Level X"
+               fx:id="levelLabel"
+               GridPane.halignment="CENTER"
+               GridPane.columnIndex="1"
+               GridPane.rowIndex="0"/>
+        <Label text="[Time remaining]"
+               fx:id="timeLabel"
+               GridPane.columnIndex="2"
+               GridPane.rowIndex="0"/>
+
+        <VBox GridPane.columnIndex="1"
+              GridPane.rowIndex="1">
+            <padding>
+                <Insets top="100"/>
+            </padding>
+            <Label text="[Question Here]"
+                   fx:id="questionLabel"/>
+        </VBox>
+
+        <VBox GridPane.columnIndex="1"
+              GridPane.rowIndex="2">
+            <padding>
+                <Insets top="100"/>
+            </padding>
+            <TextField fx:id="inputField"/>
+        </VBox>
+
+        <Label fx:id="answerResponseLabel"
+               GridPane.columnIndex="1"
+               GridPane.rowIndex="3"
+               GridPane.halignment="CENTER"
+               GridPane.vgrow="ALWAYS">
+        </Label>
+
+        <VBox fx:id="submitVBox"
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="4"
+              GridPane.vgrow="ALWAYS">
+            <padding>
+                <Insets top="80"/>
+            </padding>
+            <Button text="Submit"
+                    fx:id="submitButton"
+                    prefHeight="25.0"
+                    minHeight="40"
+                    prefWidth="50.0"
+                    minWidth="100"
+                    onAction="#onSubmitButtonClick"/>
+        </VBox>
+    </GridPane>
 </VBox>

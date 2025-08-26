@@ -48,7 +48,7 @@ public class MenuController {
     @FXML
     protected void onQuitButtonClick() {
         // Close window when quit button clicked
-        Stage stage = (Stage) startButton.getScene().getWindow();
+        Stage stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
     }
 

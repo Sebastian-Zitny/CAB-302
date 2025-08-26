@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.jth_mathgame.mathgame.SettingsController">
+
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <Label text="Settings" style="-fx-font-size: 36; -fx-font-family: Impact;" />
+
+            <!-- Difficulty ChoiceBox -->
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Difficulty:" style="-fx-font-size: 20;" />
+                <ChoiceBox fx:id="difficultyChoice" />
+            </HBox>
+
+            <!-- Sound Toggle -->
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Sound:" style="-fx-font-size: 20;" />
+                <CheckBox fx:id="soundCheck" text="Enabled"/>
+            </HBox>
+
+            <!-- Back button -->
+            <Button text="Back" fx:id="backButton" style="-fx-font-size: 24;" />
+        </VBox>
+    </center>
+</BorderPane>

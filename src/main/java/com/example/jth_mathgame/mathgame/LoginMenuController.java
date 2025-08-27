@@ -21,14 +21,15 @@ public class LoginMenuController {
     @FXML
     private Button backButton;
 
-    private static final IContactDAO dao = new MockContactDAO();
+    private static final IUserDAO dao = new MockUserDAO();
 
     @FXML
     protected void onSubmitClick() throws IOException {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
-        Contact foundUser = dao.getAllContacts().stream()
+        // Retrieves all users and looks for matching username, else null
+        User foundUser = dao.getAllUsers().stream()
                 .filter(c -> c.getUsername().equals(username))
                 .findFirst()
                 .orElse(null);
@@ -36,13 +37,13 @@ public class LoginMenuController {
         if (foundUser != null && foundUser.getPassword().equals(password)) {
             // Login success
             System.out.println("Login successful: " + username);
-
+            // TODO: The user needs to be persistent throughout the entire program
             Stage stage = (Stage) submitButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
             stage.setScene(scene);
         } else {
-            // failed login
+            // Failed login
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login Failed");
             alert.setHeaderText("Invalid credentials");
@@ -53,7 +54,7 @@ public class LoginMenuController {
 
     @FXML
     protected void onBackClick() throws IOException {
-        // Change window when start button clicked
+        // Change window when back button clicked
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
@@ -66,7 +67,7 @@ public class LoginMenuController {
         titleText.setText("Math Game");
         titleText.setFont(new Font("Impact", 58));
 
-        // Adjust buttons
+        // Adjust button
         submitButton.setFont(new Font("Arial", 40));
     }
 

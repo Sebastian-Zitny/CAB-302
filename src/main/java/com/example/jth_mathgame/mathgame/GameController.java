@@ -39,6 +39,7 @@ public class GameController {
     @FXML
     public void initialize() {
         // TODO: Maybe convert FXML padding to code
+        // Defines some fonts
         Font smallFont = new Font("Arial", 20);
         Font smallFontBold = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20);
 
@@ -62,11 +63,13 @@ public class GameController {
     }
 
     // TODO: Delete when no longer needed
+    // Creates a hardcoded mock question
     private void mockQuestion() {
         questionLabel.setText("9 + 10");
     }
 
     // TODO: Implement method
+    // Displays text based on if the answer is correct or not
     private void answerCorrect(boolean answer){
         if (answer) {
             answerResponseLabel.setText("Correct!");
@@ -78,18 +81,19 @@ public class GameController {
         }
     }
 
+    // Go back to menu when quit button clicked
     @FXML
     protected void onQuitButtonClick() throws IOException {
-        // Go back to menu when quit button clicked
         Stage stage = (Stage) quitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
     }
 
-    //TODO: Make the submit button do something
+    //TODO: Compare user input against answer when clicked
     @FXML
     protected void onSubmitButtonClick() {
+        // Right now it will simply evaluate true if inputField is 19
         answerCorrect(Objects.equals(inputField.getText(), "19")); //TODO: Delete when no longer needed
     }
 }

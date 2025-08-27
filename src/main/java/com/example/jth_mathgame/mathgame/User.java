@@ -1,13 +1,20 @@
 package com.example.jth_mathgame.mathgame;
 
-public class Contact {
+public class User {
     private int id;
     private String username;
     private String password;
     private String email;
     private String phone;
 
-    public Contact(String username, String password, String email, String phone) {
+    /**
+     * Creates a new user
+     * @param username The user's username
+     * @param password The user's password
+     * @param email The user's email address
+     * @param phone The user's phone
+     */
+    public User(String username, String password, String email, String phone) {
         this.username = username;
         this.password = password;
         this.email = email;

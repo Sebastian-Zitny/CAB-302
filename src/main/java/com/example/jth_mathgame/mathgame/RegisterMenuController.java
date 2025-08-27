@@ -23,29 +23,29 @@ public class RegisterMenuController {
     @FXML
     private Label titleText;
     @FXML
-    private Button submitButton;
+    private Button registerButton;
     @FXML
     private Button backButton;
 
 
 
     @FXML
-    protected void onSubmitClick() throws IOException {
+    protected void onRegisterClick() throws IOException {
+        // Create a new user when register button clicked
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
         String email = emailTextField.getText();
         String phone = phoneTextField.getText();
 
+        User newUser = new User(username, password, email, phone);
 
-        Contact newUser = new Contact(username, password, email, phone);
-
-        IContactDAO dao = new MockContactDAO();
-        dao.addContact(newUser);
+        IUserDAO dao = new MockUserDAO();
+        dao.addUser(newUser);
 
         System.out.println("Registered: " + newUser.getUsername());
 
-        // Change window when start button clicked
-        Stage stage = (Stage) submitButton.getScene().getWindow();
+        // Change window when register button clicked
+        Stage stage = (Stage) registerButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
@@ -68,7 +68,7 @@ public class RegisterMenuController {
         titleText.setFont(new Font("Impact", 58));
 
         // Adjust buttons
-        submitButton.setFont(new Font("Arial", 40));
+        registerButton.setFont(new Font("Arial", 40));
     }
 
 

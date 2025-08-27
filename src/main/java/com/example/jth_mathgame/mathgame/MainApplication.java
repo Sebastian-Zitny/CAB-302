@@ -12,6 +12,12 @@ public class MainApplication extends Application {
     public static final int WIDTH = 960;
     public static final int HEIGHT = 720;
 
+    static {
+        // Initialises MockUserDAO();
+        new MockUserDAO();
+    }
+
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));

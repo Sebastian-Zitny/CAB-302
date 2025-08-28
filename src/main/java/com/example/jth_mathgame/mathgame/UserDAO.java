@@ -3,7 +3,7 @@ package com.example.jth_mathgame.mathgame;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MockUserDAO implements IUserDAO {
+public class UserDAO implements IUserDAO {
     /**
      * A static list of users to be used as a mock database.
      */

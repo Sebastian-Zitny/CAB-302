@@ -23,7 +23,7 @@ public class LoginMenuController {
     @FXML
     private Button backButton;
 
-    private static final IUserDAO dao = new MockUserDAO();
+    private static final IUserDAO dao = new UserDAO();
 
     @FXML
     protected void onSubmitClick() throws IOException {

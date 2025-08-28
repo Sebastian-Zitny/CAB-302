@@ -15,7 +15,7 @@ public class MainApplication extends Application {
 
     static {
         // Initialises MockUserDAO();
-        new MockUserDAO();
+        new UserDAO();
     }
 
 

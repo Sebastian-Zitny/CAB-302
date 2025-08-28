@@ -8,6 +8,22 @@ public class User {
     private String phone;
 
     /**
+     * Represents a user in the database
+     * @param id The user's id
+     * @param username The user's username
+     * @param password The user's password
+     * @param email The user's email address
+     * @param phone The user's phone
+     */
+    public User(int id, String username, String password, String email, String phone) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+    }
+
+    /**
      * Creates a new user
      * @param username The user's username
      * @param password The user's password
@@ -15,10 +31,6 @@ public class User {
      * @param phone The user's phone
      */
     public User(String username, String password, String email, String phone) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
     }
 
     public int getId() {

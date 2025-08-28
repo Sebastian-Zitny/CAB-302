@@ -30,12 +30,8 @@ public class LoginMenuController {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
-        // Retrieves all users and looks for matching username, else null
-        User foundUser = dao.getAllUsers().stream()
-                .filter(c -> c.getUsername().equals(username))
-                .findFirst()
-                .orElse(null);
-
+        // Looks for user with username
+        User foundUser = dao.getUser(username);
         if (foundUser != null && foundUser.getPassword().equals(password)) {
             // Login success
             System.out.println("Login successful: " + username);

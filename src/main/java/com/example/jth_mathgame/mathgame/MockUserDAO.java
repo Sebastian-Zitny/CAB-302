@@ -10,13 +10,6 @@ public class MockUserDAO implements IUserDAO {
     private static final ArrayList<User> Users = new ArrayList<>();
     private static int autoIncrementedId = 0;
 
-    public MockUserDAO() {
-        // Add some initial users to the mock database
-        addUser(new User("John", "Doe", "johndoe@example.com", "0423423423"));
-        addUser(new User("Jane", "Doe",  "janedoe@example.com", "0423423424"));
-        addUser(new User("Jay", "Doe",  "jaydoe@example.com", "0423423425"));
-    }
-
     @Override
     public void addUser(User user) {
         user.setId(autoIncrementedId);

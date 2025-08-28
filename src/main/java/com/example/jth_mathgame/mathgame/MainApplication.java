@@ -11,6 +11,7 @@ public class MainApplication extends Application {
     public static final String TITLE = "Math Game";
     public static final int WIDTH = 960;
     public static final int HEIGHT = 720;
+    public static int currentUserId; // User currently logged in
 
     static {
         // Initialises MockUserDAO();

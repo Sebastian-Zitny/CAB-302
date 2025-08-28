@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
+
 public class LoginMenuController {
     @FXML
     public TextField usernameTextField;
@@ -37,7 +39,7 @@ public class LoginMenuController {
         if (foundUser != null && foundUser.getPassword().equals(password)) {
             // Login success
             System.out.println("Login successful: " + username);
-            // TODO: The user needs to be persistent throughout the entire program
+            currentUserId = foundUser.getId();
             Stage stage = (Stage) submitButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);

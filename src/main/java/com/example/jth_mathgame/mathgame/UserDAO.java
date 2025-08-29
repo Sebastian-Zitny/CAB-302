@@ -6,7 +6,7 @@ import java.util.List;
 
 public class UserDAO implements IUserDAO {
 
-    private Connection connection;
+    private final Connection connection;
 
     /**
      * An interface that interacts with the database
@@ -18,15 +18,14 @@ public class UserDAO implements IUserDAO {
 
     private void createTables() {
         // Create table if not exists
-        //TODO: I think this is causing errors
         try {
             Statement statement = connection.createStatement();
             String query = "CREATE TABLE IF NOT EXISTS users ("
                     + "UserID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"
                     + "Username TEXT NOT NULL UNIQUE,"
                     + "Password TEXT NOT NULL,"
-                    + "Email TEXT"
-                    + "Phone TEXT,"
+                    + "Email TEXT,"
+                    + "Phone TEXT"
                     + ")";
             statement.execute(query);
         } catch (Exception e) {
@@ -73,7 +72,7 @@ public class UserDAO implements IUserDAO {
     }
 
     public void authUser(String username, String password) {
-        //TODO
+        //TODO: Perhaps this could be used instead to authenticate?
     }
 
     @Override

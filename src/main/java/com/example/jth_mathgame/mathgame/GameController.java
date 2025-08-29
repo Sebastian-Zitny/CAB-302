@@ -1,99 +1,118 @@
 package com.example.jth_mathgame.mathgame;
 
+import com.example.jth_mathgame.mathgame.engine.GameEngine;
+import com.example.jth_mathgame.mathgame.model.Equation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.time.temporal.ChronoUnit;
 
 public class GameController {
-    @FXML
-    private Button quitButton;
-    @FXML
-    private Label levelLabel;
-    @FXML
-    private Label timeLabel;
-    @FXML
-    private Label questionLabel;
-    @FXML
-    private TextField inputField;
-    @FXML
-    private Label answerResponseLabel;
-    @FXML
-    private Button submitButton;
-    @FXML
-    private VBox submitVBox;
+
+    @FXML private Label levelLabel;           // "Level: X"
+    @FXML private Label timeLabel;            // "Time: mm:ss"
+    @FXML private Label questionLabel;        // "a × b = ?"
+    @FXML private TextField inputField;       // answer box
+    @FXML private Label answerResponseLabel;  // feedback line
+    @FXML private Button submitButton;
+    @FXML private Button quitButton;
+
+    private final GameEngine engine = new GameEngine();
+    private Timeline timer;
+    private Equation current;
 
     @FXML
     public void initialize() {
-        // TODO: Maybe convert FXML padding to code
-        // Defines some fonts
-        Font smallFont = new Font("Arial", 20);
-        Font smallFontBold = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20);
-
-        quitButton.setFont(smallFont);
-
-        levelLabel.setFont(new Font("Arial", 26));
-
-        timeLabel.setFont(smallFont);
-
-        questionLabel.setFont(new Font("Arial", 58));
-
-        inputField.setFont(new Font("Arial", 29));
-
-        answerResponseLabel.setFont(smallFontBold);
-        answerResponseLabel.setPadding(new Insets(20));
-
-        quitButton.setFont(smallFont);
-        submitButton.setFont(smallFont);
-        submitVBox.setAlignment(Pos.CENTER);
-        mockQuestion();
+        startRound(3); // 3-minute timed run
     }
 
-    // TODO: Delete when no longer needed
-    // Creates a hardcoded mock question
-    private void mockQuestion() {
-        questionLabel.setText("9 + 10");
+    private void startRound(int minutes){
+        stopTimerIfAny();
+        engine.startRound(java.time.Duration.of(minutes, ChronoUnit.MINUTES));
+        updateHud();
+        nextQuestion();
+        timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            engine.tickOneSecond();
+            updateTimeLabel();
+            if (engine.timeUp()){
+                stopTimerIfAny();
+                endRound();
+            }
+        }));
+        timer.setCycleCount(Timeline.INDEFINITE);
+        timer.playFromStart();
     }
 
-    // TODO: Implement method
-    // Displays text based on if the answer is correct or not
-    private void answerCorrect(boolean answer){
-        if (answer) {
-            answerResponseLabel.setText("Correct!");
+    private void stopTimerIfAny(){
+        if (timer != null) { timer.stop(); timer = null; }
+    }
+
+    private void nextQuestion(){
+        current = engine.nextEquation();
+        questionLabel.setText(current.prompt());
+        inputField.clear();
+        inputField.requestFocus();
+    }
+
+    private void updateHud(){
+        levelLabel.setText("Level: " + engine.getLevel());
+        updateTimeLabel();
+    }
+
+    private void updateTimeLabel(){
+        int s = engine.getSecondsLeft();
+        timeLabel.setText(String.format("Time: %02d:%02d", s/60, s%60));
+    }
+
+    @FXML
+    protected void onSubmitButtonClick() {
+        if (current == null) return;
+        String raw = inputField.getText().trim();
+        if (raw.isEmpty()) return;
+
+        int val;
+        try { val = Integer.parseInt(raw); }
+        catch (NumberFormatException ex){
+            answerResponseLabel.setTextFill(Color.ORANGE);
+            answerResponseLabel.setText("Please enter a whole number.");
+            return;
+        }
+
+        boolean ok = engine.submit(current, val);
+        if (ok){
             answerResponseLabel.setTextFill(Color.GREEN);
-        }
-        else {
-            answerResponseLabel.setText("Incorrect!");
+            answerResponseLabel.setText("Correct! +10  •  Mods: " + engine.getEarnedModifiers());
+        } else {
             answerResponseLabel.setTextFill(Color.RED);
+            answerResponseLabel.setText("Incorrect. Answer was " + current.answer());
         }
+        levelLabel.setText("Level: " + engine.getLevel());
+
+        if (!engine.timeUp()) nextQuestion();
+        else endRound();
     }
 
-    // Go back to menu when quit button clicked
+    private void endRound(){
+        submitButton.setDisable(true);
+        questionLabel.setText("Time! Final score: " + engine.getScore());
+        answerResponseLabel.setTextFill(Color.WHITE);
+        answerResponseLabel.setText("Modifiers earned: " + engine.getEarnedModifiers());
+    }
+
     @FXML
     protected void onQuitButtonClick() throws IOException {
+        stopTimerIfAny();
         Stage stage = (Stage) quitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
-    }
-
-    //TODO: Compare user input against answer when clicked
-    @FXML
-    protected void onSubmitButtonClick() {
-        // Right now it will simply evaluate true if inputField is 19
-        answerCorrect(Objects.equals(inputField.getText(), "19")); //TODO: Delete when no longer needed
     }
 }

@@ -39,7 +39,7 @@ public class RegisterMenuController {
 
         User newUser = new User(username, password, email, phone);
 
-        IUserDAO dao = new MockUserDAO();
+        IUserDAO dao = new UserDAO();
         dao.addUser(newUser);
 
         System.out.println("Registered: " + newUser.getUsername());

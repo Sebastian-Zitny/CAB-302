@@ -18,6 +18,7 @@ public class UserDAO implements IUserDAO {
 
     private void createTables() {
         // Create table if not exists
+        //TODO: I think this is causing errors
         try {
             Statement statement = connection.createStatement();
             String query = "CREATE TABLE IF NOT EXISTS users ("

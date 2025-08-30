@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
+
 public class LoginMenuController {
     @FXML
     public TextField usernameTextField;
@@ -21,23 +23,19 @@ public class LoginMenuController {
     @FXML
     private Button backButton;
 
-    private static final IUserDAO dao = new MockUserDAO();
+    private static final IUserDAO dao = new UserDAO();
 
     @FXML
     protected void onSubmitClick() throws IOException {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
-        // Retrieves all users and looks for matching username, else null
-        User foundUser = dao.getAllUsers().stream()
-                .filter(c -> c.getUsername().equals(username))
-                .findFirst()
-                .orElse(null);
-
+        // Looks for user with username
+        User foundUser = dao.getUser(username);
         if (foundUser != null && foundUser.getPassword().equals(password)) {
             // Login success
             System.out.println("Login successful: " + username);
-            // TODO: The user needs to be persistent throughout the entire program
+            currentUserId = foundUser.getId();
             Stage stage = (Stage) submitButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);

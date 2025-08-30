@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface IUserDAO {
     void addUser(User user);
-    User getUser(int id);
+    User getUser(String username);
     List<User> getAllUsers();
 }

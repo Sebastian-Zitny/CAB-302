@@ -14,6 +14,8 @@ public class main extends Application {
     public static final int HEIGHT = 720;
     @Override
     public void start(Stage stage) throws IOException {
+      //  soundPlayer.setVolume(0.5);
+        musicPlayer.playMusic("src/sounds/music0.wav");
         FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
         stage.setTitle(TITLE);

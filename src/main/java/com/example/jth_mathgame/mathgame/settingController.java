@@ -17,8 +17,9 @@ import java.io.IOException;
 
 public class settingController {
     @FXML
-    private static Slider masterVolume = new Slider(0,1,soundPlayer.getVolume());
+    private static Slider soundVolume = new Slider(0,1,0);
     // need to find a way to save slider values
+   // private static double volume = soundPlayer.getVolume();
     @FXML
     private Slider musicVolume;
     @FXML
@@ -27,20 +28,21 @@ public class settingController {
     private Label musicVolumeLabel;
     @FXML
     private Button backButton;
-
     @FXML
     public void initialize(){
-        masterVolume.setValue(soundPlayer.getVolume());
+        soundPlayer.volume.bind(soundVolume.valueProperty());
+        soundVolume.setValue(0.5);
     }
 
     @FXML
     protected void backToMenu() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         soundPlayer.playSound("src/sounds/button_3.wav");
-        soundPlayer.setVolume(masterVolume.getValue());
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), main.WIDTH, main.HEIGHT);
         stage.setScene(scene);
     }
+   // @FXML
+   // protected void setSoundVolume(){soundPlayer.setVolume(soundVolume.getValue());}
 }
 

@@ -21,11 +21,7 @@ public class settingController {
     // need to find a way to save slider values
    // private static double volume = soundPlayer.getVolume();
     @FXML
-    private Slider musicVolume;
-    @FXML
     private Label masterVolumeLabel;
-    @FXML
-    private Label musicVolumeLabel;
     @FXML
     private Button backButton;
     @FXML

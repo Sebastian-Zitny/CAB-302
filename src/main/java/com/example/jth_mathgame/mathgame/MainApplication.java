@@ -12,7 +12,6 @@ public class MainApplication extends Application {
     public static final String TITLE = "Math Game";
     public static final int WIDTH = 960;
     public static final int HEIGHT = 720;
-
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));

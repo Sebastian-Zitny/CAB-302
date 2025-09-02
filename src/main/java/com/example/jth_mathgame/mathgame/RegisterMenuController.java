@@ -3,6 +3,7 @@ package com.example.jth_mathgame.mathgame;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -37,18 +38,30 @@ public class RegisterMenuController {
         String email = emailTextField.getText();
         String phone = phoneTextField.getText();
 
-        User newUser = new User(username, password, email, phone);
+        if (!username.isEmpty() && !password.isEmpty() && !email.isEmpty() && !phone.isEmpty()) {
+            User newUser = new User(username, password, email, phone);
 
-        IUserDAO dao = new UserDAO();
-        dao.addUser(newUser);
+            IUserDAO dao = new UserDAO();
+            dao.addUser(newUser);
 
-        System.out.println("Registered: " + newUser.getUsername());
+            System.out.println("Registered: " + newUser.getUsername());
 
-        // Change window when register button clicked
-        Stage stage = (Stage) registerButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-        stage.setScene(scene);
+            // Change window when register button clicked
+            Stage stage = (Stage) registerButton.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+            stage.setScene(scene);
+        }
+        else {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Register Failed");
+            alert.setHeaderText("Invalid credentials");
+            alert.setContentText("something isn't filled in");
+            alert.showAndWait();
+        }
+
+
 
     }
 

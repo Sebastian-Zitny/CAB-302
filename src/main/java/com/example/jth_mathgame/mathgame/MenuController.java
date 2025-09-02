@@ -59,8 +59,8 @@ public class MenuController {
     protected void onSettingButtonClick() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         soundPlayer.playSound("src/sounds/button_3.wav");
         Stage stage = (Stage) settingsButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("setting-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), main.WIDTH, main.HEIGHT);
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("setting-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
     }
 

@@ -25,6 +25,7 @@ public class LoginMenuController {
 
     @FXML
     protected void onSubmitClick() throws IOException {
+        soundPlayer.playSound("src/sounds/button_3.wav");
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
@@ -54,6 +55,7 @@ public class LoginMenuController {
     @FXML
     protected void onBackClick() throws IOException {
         // Change window when start button clicked
+        soundPlayer.playSound("src/sounds/button_3.wav");
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);

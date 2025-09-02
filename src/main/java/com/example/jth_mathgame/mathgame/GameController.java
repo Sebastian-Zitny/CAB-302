@@ -38,6 +38,7 @@ public class GameController {
 
     @FXML
     public void initialize() {
+        musicPlayer.playMusic("src/sounds/music0.wav");
         // TODO: Maybe convert FXML padding to code
         Font smallFont = new Font("Arial", 20);
         Font smallFontBold = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20);
@@ -81,6 +82,8 @@ public class GameController {
     @FXML
     protected void onQuitButtonClick() throws IOException {
         // Go back to menu when quit button clicked
+        musicPlayer.stopMusic();
+        soundPlayer.playSound("src/sounds/button_3.wav");
         Stage stage = (Stage) quitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
@@ -90,6 +93,7 @@ public class GameController {
     //TODO: Make the submit button do something
     @FXML
     protected void onSubmitButtonClick() {
+        soundPlayer.playSound("src/sounds/button_3.wav");
         answerCorrect(Objects.equals(inputField.getText(), "19")); //TODO: Delete when no longer needed
     }
 }

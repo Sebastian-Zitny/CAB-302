@@ -14,7 +14,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
-public class menuController {
+public class MenuController {
     @FXML
     private Label titleText;
     @FXML
@@ -31,8 +31,8 @@ public class menuController {
         soundPlayer.playSound("src/sounds/button_3.wav");
         // Change window when start button clicked
         Stage stage = (Stage) startButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("game-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), main.WIDTH, main.HEIGHT);
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("game-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
     }
     @FXML
@@ -52,7 +52,7 @@ public class menuController {
     protected void onQuitButtonClick() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         soundPlayer.playSound("src/sounds/button_3.wav");
         // Close window when quit button clicked
-        Stage stage = (Stage) startButton.getScene().getWindow();
+        Stage stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
     }
     @FXML

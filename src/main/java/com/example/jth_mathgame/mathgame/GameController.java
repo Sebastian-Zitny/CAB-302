@@ -30,7 +30,7 @@ public class GameController {
     @FXML
     private Label timeLabel;
     @FXML
-    private int Time = 60;
+    private int Time = 30;
     @FXML
     private Label questionLabel;
     @FXML
@@ -49,6 +49,8 @@ public class GameController {
     private int fixedTime2;
     @FXML
     private Random randomGenerator;
+    @FXML
+    public int score = 1;
 
 
     @FXML
@@ -57,6 +59,8 @@ public class GameController {
         // Defines some fonts
         Font smallFont = new Font("Arial", 20);
         Font smallFontBold = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20);
+
+        levelLabel.setText("Level:" + score);
 
         randomGenerator = new Random();
 
@@ -115,23 +119,11 @@ public class GameController {
         String stringTime1 = String.valueOf(fixedTime1);
         fixedTime2 = randomGenerator.nextInt(11);
         String stringTime2 = String.valueOf(fixedTime2);
-        questionLabel.setText(stringTime1 + " + " + stringTime2);
+        questionLabel.setText(stringTime1 + " + " + stringTime2 + " * " + score);
 
 
     }
 
-    // TODO: Implement method
-    // Displays text based on if the answer is correct or not
-    private void answerCorrect(boolean answer){
-        if (answer) {
-            answerResponseLabel.setText("Correct!");
-            answerResponseLabel.setTextFill(Color.GREEN);
-        }
-        else {
-            answerResponseLabel.setText("Incorrect!");
-            answerResponseLabel.setTextFill(Color.RED);
-        }
-    }
 
     // Go back to menu when quit button clicked
     @FXML
@@ -147,14 +139,22 @@ public class GameController {
     protected void onSubmitButtonClick() {
 
         int equalsInt = Integer.parseInt(inputField.getText());
-        if (equalsInt == (fixedTime1+fixedTime2)) {
+
+        if (equalsInt == (fixedTime1+fixedTime2) * score) {
             answerResponseLabel.setText("Correct!");
             answerResponseLabel.setTextFill(Color.GREEN);
+
+            score ++;
             mockQuestion();
+            levelLabel.setText("Level:" + score);
+
+
+            // levelLabel
         }
         else {
             answerResponseLabel.setText("Incorrect!");
             answerResponseLabel.setTextFill(Color.RED);
+            score--;
         }
         //answerCorrect(Objects.equals(inputField.getText(), "19")); //TODO: Delete when no longer needed
 

@@ -58,4 +58,12 @@ public class MenuController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "To be added...", ButtonType.OK);
         alert.showAndWait();
     }
+
+    @FXML
+    protected void onSettingsButtonClick() throws IOException {
+        Stage stage = (Stage) settingsButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("settings-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        stage.setScene(scene);
+    }
 }

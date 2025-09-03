@@ -16,8 +16,8 @@
     </VBox>
 
     <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml">
-        <Button fx:id="LoginButton" text="Login" minWidth="200" minHeight="40" onAction="#onLoginClick"/>
-        <Button fx:id="RegisterButton" text="Register" minWidth="200" minHeight="40" onAction="#onRegisterClick"/>
+        <Button fx:id="loginButton" text="Login" minWidth="200" minHeight="40" onAction="#onLoginClick"/>
+        <Button fx:id="registerButton" text="Register" minWidth="200" minHeight="40" onAction="#onRegisterClick"/>
         <Button fx:id="quitButton" text="Quit" minWidth="200" minHeight="40" onAction="#onQuitButtonClick"/>
     </VBox>
 </VBox>

@@ -3,6 +3,7 @@ package com.example.jth_mathgame.mathgame;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -23,39 +24,49 @@ public class RegisterMenuController {
     @FXML
     private Label titleText;
     @FXML
-    private Button submitButton;
+    private Button registerButton;
     @FXML
     private Button backButton;
 
 
 
     @FXML
-    protected void onSubmitClick() throws IOException {
-        soundPlayer.playSound("src/sounds/button_3.wav");
+    protected void onRegisterClick() throws IOException {
+        // Create a new user when register button clicked
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
         String email = emailTextField.getText();
         String phone = phoneTextField.getText();
 
+        if (!username.isEmpty() && !password.isEmpty() && !email.isEmpty() && !phone.isEmpty()) {
+            User newUser = new User(username, password, email, phone);
 
-        Contact newUser = new Contact(username, password, email, phone);
+            IUserDAO dao = new UserDAO();
+            dao.addUser(newUser);
 
-        IContactDAO dao = new MockContactDAO();
-        dao.addContact(newUser);
+            System.out.println("Registered: " + newUser.getUsername());
 
-        System.out.println("Registered: " + newUser.getUsername());
+            // Change window when register button clicked
+            Stage stage = (Stage) registerButton.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+            stage.setScene(scene);
+        }
+        else {
 
-        // Change window when start button clicked
-        Stage stage = (Stage) submitButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-        stage.setScene(scene);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Register Failed");
+            alert.setHeaderText("Invalid credentials");
+            alert.setContentText("something isn't filled in");
+            alert.showAndWait();
+        }
+
+
 
     }
 
     @FXML
     protected void onBackClick() throws IOException {
-        soundPlayer.playSound("src/sounds/button_3.wav");
         // Change window when start button clicked
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
@@ -70,7 +81,7 @@ public class RegisterMenuController {
         titleText.setFont(new Font("Impact", 58));
 
         // Adjust buttons
-        submitButton.setFont(new Font("Arial", 40));
+        registerButton.setFont(new Font("Arial", 40));
     }
 
 

@@ -27,7 +27,7 @@
         <TextField fx:id="emailTextField"/>
         <Label text="Input your Phone number:"/>
         <TextField fx:id="phoneTextField"/>
-        <Button fx:id="submitButton" text="Register" minWidth="200" minHeight="40" onAction="#onSubmitClick"/>
+        <Button fx:id="registerButton" text="Register" minWidth="200" minHeight="40" onAction="#onRegisterClick"/>
         <Button fx:id="backButton" text="Back" minWidth="200" minHeight="40" onAction="#onBackClick"/>
     </VBox>
 </VBox>

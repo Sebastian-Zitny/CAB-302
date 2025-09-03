@@ -4,14 +4,21 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+
 import java.io.IOException;
 
 public class MainApplication extends Application {
     public static final String TITLE = "Math Game";
     public static final int WIDTH = 960;
     public static final int HEIGHT = 720;
+    public static int currentUserId; // User currently logged in
+
+    static {
+        // Initialises MockUserDAO();
+        new UserDAO();
+    }
+
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));

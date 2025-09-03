@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
+
 public class LoginMenuController {
     @FXML
     public TextField usernameTextField;
@@ -21,29 +23,25 @@ public class LoginMenuController {
     @FXML
     private Button backButton;
 
-    private static final IContactDAO dao = new MockContactDAO();
+    private static final IUserDAO dao = new UserDAO();
 
     @FXML
     protected void onSubmitClick() throws IOException {
-        soundPlayer.playSound("src/sounds/button_3.wav");
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
-        Contact foundUser = dao.getAllContacts().stream()
-                .filter(c -> c.getUsername().equals(username))
-                .findFirst()
-                .orElse(null);
-
+        // Looks for user with username
+        User foundUser = dao.getUser(username);
         if (foundUser != null && foundUser.getPassword().equals(password)) {
             // Login success
             System.out.println("Login successful: " + username);
-
+            currentUserId = foundUser.getId();
             Stage stage = (Stage) submitButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
             stage.setScene(scene);
         } else {
-            // failed login
+            // Failed login
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login Failed");
             alert.setHeaderText("Invalid credentials");
@@ -54,8 +52,7 @@ public class LoginMenuController {
 
     @FXML
     protected void onBackClick() throws IOException {
-        // Change window when start button clicked
-        soundPlayer.playSound("src/sounds/button_3.wav");
+        // Change window when back button clicked
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
@@ -68,7 +65,7 @@ public class LoginMenuController {
         titleText.setText("Math Game");
         titleText.setFont(new Font("Impact", 58));
 
-        // Adjust buttons
+        // Adjust button
         submitButton.setFont(new Font("Arial", 40));
     }
 

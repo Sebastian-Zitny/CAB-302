@@ -1,118 +1,162 @@
 package com.example.jth_mathgame.mathgame;
 
-import com.example.jth_mathgame.mathgame.engine.GameEngine;
-import com.example.jth_mathgame.mathgame.model.Equation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import javafx.animation.Timeline;
 import javafx.util.Duration;
+import javafx.animation.KeyFrame;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.temporal.ChronoUnit;
+import java.util.Objects;
+import java.util.Random;
 
 public class GameController {
+    @FXML
+    private Button quitButton;
+    @FXML
+    private Label levelLabel;
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private int Time = 30;
+    @FXML
+    private Label questionLabel;
+    @FXML
+    private TextField inputField;
+    @FXML
+    private Label answerResponseLabel;
+    @FXML
+    private Button submitButton;
+    @FXML
+    private VBox submitVBox;
+    @FXML
+    private Timeline timeline;
+    @FXML
+    private int fixedTime1;
+    @FXML
+    private int fixedTime2;
+    @FXML
+    private Random randomGenerator;
+    @FXML
+    public int score = 1;
 
-    @FXML private Label levelLabel;           // "Level: X"
-    @FXML private Label timeLabel;            // "Time: mm:ss"
-    @FXML private Label questionLabel;        // "a × b = ?"
-    @FXML private TextField inputField;       // answer box
-    @FXML private Label answerResponseLabel;  // feedback line
-    @FXML private Button submitButton;
-    @FXML private Button quitButton;
-
-    private final GameEngine engine = new GameEngine();
-    private Timeline timer;
-    private Equation current;
 
     @FXML
     public void initialize() {
-        startRound(3); // 3-minute timed run
+        // TODO: Maybe convert FXML padding to code
+        // Defines some fonts
+        Font smallFont = new Font("Arial", 20);
+        Font smallFontBold = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20);
+
+        levelLabel.setText("Level:" + score);
+
+        randomGenerator = new Random();
+
+        timeLabel.setText(String.valueOf(Time));
+        timeLabel.setStyle("-fx-font-size: 40px;");
+
+        quitButton.setFont(smallFont);
+
+        levelLabel.setFont(new Font("Arial", 26));
+
+        timeLabel.setFont(smallFont);
+
+        questionLabel.setFont(new Font("Arial", 58));
+
+        inputField.setFont(new Font("Arial", 29));
+
+        answerResponseLabel.setFont(smallFontBold);
+        answerResponseLabel.setPadding(new Insets(20));
+
+        quitButton.setFont(smallFont);
+        submitButton.setFont(smallFont);
+        submitVBox.setAlignment(Pos.CENTER);
+        mockQuestion();
+        startTimer();
+    }
+    // TODO give error message and disable gameplay rather than force back to menu
+    private void startTimer() {
+        timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> {
+                    Time--;
+                    if (Time >= 0) {
+                        timeLabel.setText(String.valueOf(Time));
+                    } else {
+                        // timer finished
+                        timeline.stop();
+                        try {
+                            Stage stage = (Stage) timeLabel.getScene().getWindow();
+                            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
+                            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+                            stage.setScene(scene);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                })
+        );
+
+        timeline.setCycleCount(Time + 1);
+        timeline.play();
+    }
+    // TODO: Delete when no longer needed
+    // Creates a hardcoded mock question
+    private void mockQuestion() {
+
+        fixedTime1 = randomGenerator.nextInt(11);
+        String stringTime1 = String.valueOf(fixedTime1);
+        fixedTime2 = randomGenerator.nextInt(11);
+        String stringTime2 = String.valueOf(fixedTime2);
+        questionLabel.setText(stringTime1 + " + " + stringTime2 + " * " + score);
+
+
     }
 
-    private void startRound(int minutes){
-        stopTimerIfAny();
-        engine.startRound(java.time.Duration.of(minutes, ChronoUnit.MINUTES));
-        updateHud();
-        nextQuestion();
-        timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            engine.tickOneSecond();
-            updateTimeLabel();
-            if (engine.timeUp()){
-                stopTimerIfAny();
-                endRound();
-            }
-        }));
-        timer.setCycleCount(Timeline.INDEFINITE);
-        timer.playFromStart();
-    }
 
-    private void stopTimerIfAny(){
-        if (timer != null) { timer.stop(); timer = null; }
-    }
-
-    private void nextQuestion(){
-        current = engine.nextEquation();
-        questionLabel.setText(current.prompt());
-        inputField.clear();
-        inputField.requestFocus();
-    }
-
-    private void updateHud(){
-        levelLabel.setText("Level: " + engine.getLevel());
-        updateTimeLabel();
-    }
-
-    private void updateTimeLabel(){
-        int s = engine.getSecondsLeft();
-        timeLabel.setText(String.format("Time: %02d:%02d", s/60, s%60));
-    }
-
-    @FXML
-    protected void onSubmitButtonClick() {
-        if (current == null) return;
-        String raw = inputField.getText().trim();
-        if (raw.isEmpty()) return;
-
-        int val;
-        try { val = Integer.parseInt(raw); }
-        catch (NumberFormatException ex){
-            answerResponseLabel.setTextFill(Color.ORANGE);
-            answerResponseLabel.setText("Please enter a whole number.");
-            return;
-        }
-
-        boolean ok = engine.submit(current, val);
-        if (ok){
-            answerResponseLabel.setTextFill(Color.GREEN);
-            answerResponseLabel.setText("Correct! +10  •  Mods: " + engine.getEarnedModifiers());
-        } else {
-            answerResponseLabel.setTextFill(Color.RED);
-            answerResponseLabel.setText("Incorrect. Answer was " + current.answer());
-        }
-        levelLabel.setText("Level: " + engine.getLevel());
-
-        if (!engine.timeUp()) nextQuestion();
-        else endRound();
-    }
-
-    private void endRound(){
-        submitButton.setDisable(true);
-        questionLabel.setText("Time! Final score: " + engine.getScore());
-        answerResponseLabel.setTextFill(Color.WHITE);
-        answerResponseLabel.setText("Modifiers earned: " + engine.getEarnedModifiers());
-    }
-
+    // Go back to menu when quit button clicked
     @FXML
     protected void onQuitButtonClick() throws IOException {
-        stopTimerIfAny();
         Stage stage = (Stage) quitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
+    }
+
+    //TODO: Compare user input against answer when clicked
+    @FXML
+    protected void onSubmitButtonClick() {
+
+        int equalsInt = Integer.parseInt(inputField.getText());
+
+        if (equalsInt == (fixedTime1+fixedTime2) * score) {
+            answerResponseLabel.setText("Correct!");
+            answerResponseLabel.setTextFill(Color.GREEN);
+
+            score ++;
+            mockQuestion();
+            levelLabel.setText("Level:" + score);
+
+
+            // levelLabel
+        }
+        else {
+            answerResponseLabel.setText("Incorrect!");
+            answerResponseLabel.setTextFill(Color.RED);
+            score--;
+        }
+        //answerCorrect(Objects.equals(inputField.getText(), "19")); //TODO: Delete when no longer needed
+
     }
 }

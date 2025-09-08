@@ -11,6 +11,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
+import static com.example.jth_mathgame.mathgame.MainApplication.userdao;
 
 public class RegisterMenuController {
     @FXML
@@ -40,9 +44,7 @@ public class RegisterMenuController {
 
         if (!username.isEmpty() && !password.isEmpty() && !email.isEmpty() && !phone.isEmpty()) {
             User newUser = new User(username, password, email, phone);
-
-            IUserDAO dao = new UserDAO();
-            dao.addUser(newUser);
+            userdao.addUser(newUser);
 
             System.out.println("Registered: " + newUser.getUsername());
 

@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
+import static com.example.jth_mathgame.mathgame.MainApplication.userdao;
 
 public class LoginMenuController {
     @FXML
@@ -23,23 +24,35 @@ public class LoginMenuController {
     @FXML
     private Button backButton;
 
-    private static final IUserDAO dao = new UserDAO();
-
     @FXML
     protected void onSubmitClick() throws IOException {
         String username = usernameTextField.getText();
-        String password = passwordTextField.getText();
 
         // Looks for user with username
-        User foundUser = dao.getUser(username);
-        if (foundUser != null && foundUser.getPassword().equals(password)) {
-            // Login success
-            System.out.println("Login successful: " + username);
-            currentUserId = foundUser.getId();
-            Stage stage = (Stage) submitButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-            stage.setScene(scene);
+        User user = userdao.getUser(username);
+        if (user != null) {
+            // TODO: I can't get array to pass so I did this. There has to be a better way to do this
+            String[] returnedPasswordArray = userdao.getUserPasswordArray(username);
+            String[] passwordArray = new String[2];
+            System.arraycopy(returnedPasswordArray, 0, passwordArray, 0, returnedPasswordArray.length);
+            // Verify password
+            if (userdao.verifyHash(user.getPassword(), passwordArray[0], passwordArray[1])) {
+                // Login success
+                System.out.println("Login successful: " + username);
+                currentUserId = user.getId();
+                Stage stage = (Stage) submitButton.getScene().getWindow();
+                FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+                stage.setScene(scene);
+            }
+            else {
+                // Failed login
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Login Failed");
+                alert.setHeaderText("Invalid credentials");
+                alert.setContentText("Please check your username and password.");
+                alert.showAndWait();
+            }
         } else {
             // Failed login
             Alert alert = new Alert(Alert.AlertType.ERROR);

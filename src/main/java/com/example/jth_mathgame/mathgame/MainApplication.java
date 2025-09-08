@@ -12,12 +12,7 @@ public class MainApplication extends Application {
     public static final int WIDTH = 960;
     public static final int HEIGHT = 720;
     public static int currentUserId; // User currently logged in
-
-    static {
-        // Initialises MockUserDAO();
-        new UserDAO();
-    }
-
+    public static UserDAO userdao = new UserDAO();
 
     @Override
     public void start(Stage stage) throws IOException {

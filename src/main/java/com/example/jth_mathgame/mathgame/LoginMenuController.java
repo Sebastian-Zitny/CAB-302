@@ -1,9 +1,12 @@
 package com.example.jth_mathgame.mathgame;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -17,7 +20,7 @@ public class LoginMenuController {
     @FXML
     public TextField usernameTextField;
     @FXML
-    public TextField passwordTextField;
+    public PasswordField passwordTextField;
     @FXML
     private Label titleText;
     @FXML
@@ -80,6 +83,19 @@ public class LoginMenuController {
 
         // Adjust button
         submitButton.setFont(new Font("Arial", 40));
+
+        passwordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if (ke.getCode().equals(KeyCode.ENTER)) {
+                    try {
+                        onSubmitClick();
+                    } catch (IOException e) {
+                        System.err.println("Submit button is throwing exception");
+                    }
+                }
+            }
+        });
     }
 
 

@@ -84,18 +84,18 @@ public class LoginMenuController {
         // Adjust button
         submitButton.setFont(new Font("Arial", 40));
 
-        passwordTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent ke) {
-                if (ke.getCode().equals(KeyCode.ENTER)) {
-                    try {
-                        onSubmitClick();
-                    } catch (IOException e) {
-                        System.err.println("Submit button is throwing exception");
-                    }
+        EventHandler<KeyEvent> enterEventHandler = ke -> {
+            if (ke.getCode().equals(KeyCode.ENTER)) {
+                try {
+                    onSubmitClick();
+                } catch (IOException e) {
+                    System.err.println("Submit button is throwing exception");
                 }
             }
-        });
+        };
+
+        usernameTextField.setOnKeyPressed(enterEventHandler);
+        passwordTextField.setOnKeyPressed(enterEventHandler);
     }
 
 

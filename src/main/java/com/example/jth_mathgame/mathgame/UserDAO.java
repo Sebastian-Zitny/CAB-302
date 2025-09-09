@@ -28,8 +28,8 @@ public class UserDAO implements IUserDAO {
             String query = "CREATE TABLE IF NOT EXISTS users ("
                     + "UserID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"
                     + "Username TEXT NOT NULL UNIQUE,"
-                    + "PasswordHash TEXT NOT NULL,"
-                    + "PasswordSalt TEXT NOT NULL,"
+                    + "PasswordHash BLOB NOT NULL,"
+                    + "PasswordSalt BLOB NOT NULL,"
                     + "Email TEXT,"
                     + "Phone TEXT"
                     + ")";
@@ -42,9 +42,9 @@ public class UserDAO implements IUserDAO {
     @Override
     public void addUser(User user) {
         // Get Hash and salt for password
-        String[] passArray;
+        ArrayList<byte[]> passArrayList;
         try {
-            passArray = generateHash(user.getPassword());
+            passArrayList = generateHash(user.getPassword());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
@@ -53,8 +53,8 @@ public class UserDAO implements IUserDAO {
                     INSERT INTO users
                     (Username, PasswordHash, PasswordSalt, Email, Phone) VALUES (?, ?, ?, ?, ?)""");
             statement.setString(1, user.getUsername());
-            statement.setString(2, passArray[0]);
-            statement.setString(3, passArray[1]);
+            statement.setBytes(2, passArrayList.get(0));
+            statement.setBytes(3, passArrayList.get(1));
             statement.setString(4, user.getEmail());
             statement.setString(5, user.getPhone());
             statement.execute();
@@ -89,7 +89,7 @@ public class UserDAO implements IUserDAO {
      * @return String array with PasswordHash and PasswordSalt
      */
     @Override
-    public String[] getUserPasswordArray(String username) {
+    public ArrayList<byte[]> getUserPasswordArray(String username) {
         try {
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT PasswordHash, PasswordSalt
@@ -98,20 +98,21 @@ public class UserDAO implements IUserDAO {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet == null) return null; // TODO: Throw exception here instead
+            if (resultSet.next()) {
+                ArrayList<byte[]> returnList = new ArrayList<>();
+                returnList.add(resultSet.getBytes("PasswordHash"));
+                returnList.add(resultSet.getBytes("PasswordSalt"));
+                return returnList;
+            }
+            throw new SQLException();
 
-            resultSet.first(); // Go back to start of row
-            return new String[] {
-                    resultSet.getString("PasswordHash"),
-                    resultSet.getString("PasswordSalt")
-            };
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
+        throw new RuntimeException("Something is wrong");
     }
 
-    private String[] generateHash(String password) throws NoSuchAlgorithmException {
+    private ArrayList<byte[]> generateHash(String password) throws NoSuchAlgorithmException {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
@@ -124,15 +125,14 @@ public class UserDAO implements IUserDAO {
         System.out.println(Arrays.toString(hashedPassword));
         System.out.println(Arrays.toString(salt));
         //
-        return new String[] {Arrays.toString(hashedPassword), Arrays.toString(salt)};
+        ArrayList<byte[]> returnList = new ArrayList<>();
+        returnList.add(hashedPassword);
+        returnList.add(salt);
+        return returnList;
     }
 
-    public Boolean verifyHash(String password, String passwordChallengeString, String saltString)
+    public Boolean verifyHash(String password, byte[] passwordChallenge, byte[] salt)
     {
-        // Convert Strings to char[]
-        byte[] passwordChallenge = passwordChallengeString.getBytes(StandardCharsets.UTF_8);
-        byte[] salt = saltString.getBytes(StandardCharsets.UTF_8);
-
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("SHA-512"); // Need to handle this exception
@@ -142,7 +142,7 @@ public class UserDAO implements IUserDAO {
         md.update(salt);
 
         byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-        return hashedPassword.equals(passwordChallenge);
+        return Arrays.equals(hashedPassword, passwordChallenge);
     }
 
     @Override

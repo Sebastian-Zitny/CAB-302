@@ -8,6 +8,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
 import static com.example.jth_mathgame.mathgame.MainApplication.userdao;
@@ -27,16 +28,15 @@ public class LoginMenuController {
     @FXML
     protected void onSubmitClick() throws IOException {
         String username = usernameTextField.getText();
+        String password = passwordTextField.getText();
 
         // Looks for user with username
         User user = userdao.getUser(username);
         if (user != null) {
-            // TODO: I can't get array to pass so I did this. There has to be a better way to do this
-            String[] returnedPasswordArray = userdao.getUserPasswordArray(username);
-            String[] passwordArray = new String[2];
-            System.arraycopy(returnedPasswordArray, 0, passwordArray, 0, returnedPasswordArray.length);
+            ArrayList<byte[]> passwordArrayList = userdao.getUserPasswordArray(username);
+
             // Verify password
-            if (userdao.verifyHash(user.getPassword(), passwordArray[0], passwordArray[1])) {
+            if (userdao.verifyHash(password, passwordArrayList.get(0), passwordArrayList.get(1))) {
                 // Login success
                 System.out.println("Login successful: " + username);
                 currentUserId = user.getId();

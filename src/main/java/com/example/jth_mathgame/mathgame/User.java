@@ -38,6 +38,10 @@ public class User {
     }
 
     public User(int userID, String username, String email, String phone) {
+        this.id = userID;
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
     }
 
     public int getId() {

@@ -30,7 +30,7 @@ public class UserDAO implements IUserDAO {
                     + "Username TEXT NOT NULL UNIQUE,"
                     + "PasswordHash BLOB NOT NULL,"
                     + "PasswordSalt BLOB NOT NULL,"
-                    + "Email TEXT,"
+                    + "Email TEXT UNIQUE,"
                     + "Phone TEXT"
                     + ")";
             statement.execute(query);

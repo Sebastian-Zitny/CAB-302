@@ -1,22 +1,27 @@
 package com.example.jth_mathgame.mathgame;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
+import static com.example.jth_mathgame.mathgame.MainApplication.userdao;
 
 public class RegisterMenuController {
     @FXML
     public TextField usernameTextField;
     @FXML
-    public TextField passwordTextField;
+    public PasswordField passwordTextField;
     @FXML
     public TextField emailTextField;
     @FXML
@@ -40,9 +45,7 @@ public class RegisterMenuController {
 
         if (!username.isEmpty() && !password.isEmpty() && !email.isEmpty() && !phone.isEmpty()) {
             User newUser = new User(username, password, email, phone);
-
-            IUserDAO dao = new UserDAO();
-            dao.addUser(newUser);
+            userdao.addUser(newUser);
 
             System.out.println("Registered: " + newUser.getUsername());
 
@@ -82,6 +85,21 @@ public class RegisterMenuController {
 
         // Adjust buttons
         registerButton.setFont(new Font("Arial", 40));
+
+        EventHandler<KeyEvent> enterEventHandler = ke -> {
+            if (ke.getCode().equals(KeyCode.ENTER)) {
+                try {
+                    onRegisterClick();
+                } catch (IOException e) {
+                    System.err.println("Submit button is throwing exception");
+                }
+            }
+        };
+
+        usernameTextField.setOnKeyPressed(enterEventHandler);
+        passwordTextField.setOnKeyPressed(enterEventHandler);
+        emailTextField.setOnKeyPressed(enterEventHandler);
+        phoneTextField.setOnKeyPressed(enterEventHandler);
     }
 
 

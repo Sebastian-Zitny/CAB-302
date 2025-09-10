@@ -1,7 +1,5 @@
 package com.example.jth_mathgame.mathgame;
 
-import org.sqlite.SQLiteErrorCode;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

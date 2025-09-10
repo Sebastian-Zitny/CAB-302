@@ -45,7 +45,16 @@ public class RegisterMenuController {
 
         if (!username.isEmpty() && !password.isEmpty() && !email.isEmpty() && !phone.isEmpty()) {
             User newUser = new User(username, password, email, phone);
-            userdao.addUser(newUser);
+            try {
+                userdao.addUser(newUser);
+            } catch (DuplicateUserException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Register Failed");
+                alert.setHeaderText("Duplicate Username/Email");
+                alert.setContentText("Please use another username/email");
+                alert.showAndWait();
+                return;
+            }
 
             System.out.println("Registered: " + newUser.getUsername());
 
@@ -56,11 +65,10 @@ public class RegisterMenuController {
             stage.setScene(scene);
         }
         else {
-
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Register Failed");
             alert.setHeaderText("Invalid credentials");
-            alert.setContentText("something isn't filled in");
+            alert.setContentText("Something isn't filled in");
             alert.showAndWait();
         }
 

@@ -1,5 +1,7 @@
 package com.example.jth_mathgame.mathgame;
 
+import org.sqlite.SQLiteErrorCode;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -40,7 +42,7 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(User user) throws DuplicateUserException {
         // Get Hash and salt for password
         ArrayList<byte[]> passArrayList;
         try {
@@ -59,6 +61,11 @@ public class UserDAO implements IUserDAO {
             statement.setString(5, user.getPhone());
             statement.execute();
         } catch (SQLException e) {
+            // Duplicate username/email
+            if (e.getMessage().contains("UNIQUE constraint failed")) {
+                throw new DuplicateUserException();
+            }
+            // Something else is wrong
             e.printStackTrace();
         }
     }

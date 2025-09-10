@@ -121,10 +121,6 @@ public class UserDAO implements IUserDAO {
         md.update(salt);
 
         byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-        // TODO: Delete below lines
-        System.out.println(Arrays.toString(hashedPassword));
-        System.out.println(Arrays.toString(salt));
-        //
         ArrayList<byte[]> returnList = new ArrayList<>();
         returnList.add(hashedPassword);
         returnList.add(salt);

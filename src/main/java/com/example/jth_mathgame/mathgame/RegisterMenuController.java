@@ -53,7 +53,7 @@ public class RegisterMenuController {
             if (e.getMessage().contains("username")) {
                 alert.setHeaderText("Invalid username");
                 alert.setContentText("Please make sure username is valid.\n" +
-                                     "Username should be between 3-15 characters");
+                                     "Username should be between 3-15 characters with no spaces");
             } else if (e.getMessage().contains("password")) {
                 alert.setHeaderText("Invalid password");
                 alert.setContentText("Please make sure password is valid.\n" +
@@ -63,7 +63,7 @@ public class RegisterMenuController {
                 alert.setContentText("Please make sure email is valid.");
             } else if (e.getMessage().contains("phone")) {
                 alert.setHeaderText("Invalid phone number");
-                alert.setContentText("Please make sure phone is a valid Australian/International number.");
+                alert.setContentText("Please make sure phone is a valid Australian/International number, or leave it blank.");
             }
             alert.showAndWait();
             return;
@@ -103,7 +103,12 @@ public class RegisterMenuController {
         Pattern pattern;
         Matcher matcher;
         // Username
-        // Between 3-15 characters
+        // Between 3-15 characters, no spaces
+        pattern = Pattern.compile("^[\\S]{3,15}$");
+        matcher = pattern.matcher(user.getUsername());
+        if (!matcher.matches()) {
+            throw new RegisterUserException("Invalid username");
+        }
 
         // Password
         // Must have at least 8 characters. 1 Uppercase, 1 lowercase, 1 number

@@ -55,8 +55,8 @@ public class RegisterMenuController {
                 alert.setContentText("Please make sure username is valid.\n" +
                                      "Username should be between 3-15 characters");
             } else if (e.getMessage().contains("password")) {
-                alert.setHeaderText("Invalid username");
-                alert.setContentText("Please make sure username is valid.\n" +
+                alert.setHeaderText("Invalid password");
+                alert.setContentText("Please make sure password is valid.\n" +
                                      "Password must have at least 8 characters, 1 uppercase, 1 lowercase, and 1 number");
             } else if (e.getMessage().contains("email")) {
                 alert.setHeaderText("Invalid email address");
@@ -107,6 +107,11 @@ public class RegisterMenuController {
 
         // Password
         // Must have at least 8 characters. 1 Uppercase, 1 lowercase, 1 number
+        pattern = Pattern.compile("(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}");
+        matcher = pattern.matcher(user.getPassword());
+        if (!matcher.matches()) {
+            throw new RegisterUserException("Invalid password");
+        }
 
         // Email
         // Must be formatted like email (example@example.com)

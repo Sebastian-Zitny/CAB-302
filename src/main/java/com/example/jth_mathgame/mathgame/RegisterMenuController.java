@@ -52,7 +52,21 @@ public class RegisterMenuController {
             catch (RegisterUserException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Register Failed");
-                if (e.getMessage().contains("phone")) {
+                if (e.getMessage().contains("username")) {
+                    alert.setHeaderText("Invalid username");
+                    alert.setContentText("Please make sure username is valid.\n" +
+                                         "Username should be between 3-15 characters");
+                }
+                else if (e.getMessage().contains("password")) {
+                    alert.setHeaderText("Invalid username");
+                    alert.setContentText("Please make sure username is valid.\n" +
+                                         "Password must have at least 8 characters, 1 uppercase, 1 lowercase, and 1 number");
+                }
+                else if (e.getMessage().contains("email")) {
+                    alert.setHeaderText("Invalid email address");
+                    alert.setContentText("Please make sure email is valid.");
+                }
+                else if (e.getMessage().contains("phone")) {
                     alert.setHeaderText("Invalid phone number");
                     alert.setContentText("Please make sure phone is a valid Australian/International number.");
                 }
@@ -81,7 +95,7 @@ public class RegisterMenuController {
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Register Failed");
-            alert.setHeaderText("Invalid credentials");
+            alert.setHeaderText("Error");
             alert.setContentText("Something isn't filled in");
             alert.showAndWait();
         }
@@ -101,6 +115,9 @@ public class RegisterMenuController {
 
     private void validateUserRegistration(User user) throws RegisterUserException {
 
+        // Initialise variables
+        Pattern pattern;
+        Matcher matcher;
         // Username
         // Between 3-15 characters
 
@@ -109,11 +126,16 @@ public class RegisterMenuController {
 
         // Email
         // Must be formatted like email (example@example.com)
+        pattern = Pattern.compile("[A-Za-z0-9]+@[A-Za-z0-9]+\\.[A-Za-z0-9.]*[A-Za-z0-9]+");
+        matcher = pattern.matcher(user.getEmail());
+        if (!matcher.matches()) {
+            throw new RegisterUserException("Invalid email address");
+        }
 
         // Phone
         // Either formatted as 0XXXXXXXXX (australian) or international number (+xxx...)
-        Pattern pattern = Pattern.compile("0[0-9]{9}|\\+[0-9]+");
-        Matcher matcher = pattern.matcher(user.getPhone());
+        pattern = Pattern.compile("0[0-9]{9}|\\+[0-9]+");
+        matcher = pattern.matcher(user.getPhone());
         if (!matcher.matches()) {
             throw new RegisterUserException("Invalid phone number");
         }

@@ -53,11 +53,11 @@ public class RegisterMenuController {
             if (e.getMessage().contains("username")) {
                 alert.setHeaderText("Invalid username");
                 alert.setContentText("Please make sure username is valid.\n" +
-                                     "Username should be between 3-15 characters with no spaces");
+                                     "Username should be between 3-15 characters with no spaces.");
             } else if (e.getMessage().contains("password")) {
                 alert.setHeaderText("Invalid password");
                 alert.setContentText("Please make sure password is valid.\n" +
-                                     "Password must have at least 8 characters, 1 uppercase, 1 lowercase, and 1 number");
+                                     "Password must have at least 8 characters, 1 uppercase, 1 lowercase, and 1 number.");
             } else if (e.getMessage().contains("email")) {
                 alert.setHeaderText("Invalid email address");
                 alert.setContentText("Please make sure email is valid.");
@@ -102,6 +102,7 @@ public class RegisterMenuController {
         // Initialise variables
         Pattern pattern;
         Matcher matcher;
+
         // Username
         // Between 3-15 characters, no spaces
         pattern = Pattern.compile("^[\\S]{3,15}$");
@@ -132,7 +133,6 @@ public class RegisterMenuController {
         matcher = pattern.matcher(user.getPhone());
         if (user.getPhone().isEmpty()) { return; } // Blank
         if (!matcher.matches()) {
-            System.out.println(user.getPhone().length());
             throw new RegisterUserException("Invalid phone number");
         }
 

@@ -43,65 +43,49 @@ public class RegisterMenuController {
         String email = emailTextField.getText();
         String phone = phoneTextField.getText();
 
-        if (!username.isEmpty() && !password.isEmpty() && !email.isEmpty() && !phone.isEmpty()) {
-            User newUser = new User(username, password, email, phone);
-            try {
-                // Validate user details
-                validateUserRegistration(newUser);
-            }
-            catch (RegisterUserException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Register Failed");
-                if (e.getMessage().contains("username")) {
-                    alert.setHeaderText("Invalid username");
-                    alert.setContentText("Please make sure username is valid.\n" +
-                                         "Username should be between 3-15 characters");
-                }
-                else if (e.getMessage().contains("password")) {
-                    alert.setHeaderText("Invalid username");
-                    alert.setContentText("Please make sure username is valid.\n" +
-                                         "Password must have at least 8 characters, 1 uppercase, 1 lowercase, and 1 number");
-                }
-                else if (e.getMessage().contains("email")) {
-                    alert.setHeaderText("Invalid email address");
-                    alert.setContentText("Please make sure email is valid.");
-                }
-                else if (e.getMessage().contains("phone")) {
-                    alert.setHeaderText("Invalid phone number");
-                    alert.setContentText("Please make sure phone is a valid Australian/International number.");
-                }
-                alert.showAndWait();
-                return;
-            }
-            try {
-                userdao.addUser(newUser);
-            } catch (DuplicateUserException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Register Failed");
-                alert.setHeaderText("Duplicate Username/Email");
-                alert.setContentText("Please use another username/email");
-                alert.showAndWait();
-                return;
-            }
-
-            System.out.println("Registered: " + newUser.getUsername());
-
-            // Change window when register button clicked
-            Stage stage = (Stage) registerButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-            stage.setScene(scene);
-        }
-        else {
+        User newUser = new User(username, password, email, phone);
+        try {
+            // Validate user details
+            validateUserRegistration(newUser);
+        } catch (RegisterUserException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Register Failed");
-            alert.setHeaderText("Error");
-            alert.setContentText("Something isn't filled in");
+            if (e.getMessage().contains("username")) {
+                alert.setHeaderText("Invalid username");
+                alert.setContentText("Please make sure username is valid.\n" +
+                                     "Username should be between 3-15 characters");
+            } else if (e.getMessage().contains("password")) {
+                alert.setHeaderText("Invalid username");
+                alert.setContentText("Please make sure username is valid.\n" +
+                                     "Password must have at least 8 characters, 1 uppercase, 1 lowercase, and 1 number");
+            } else if (e.getMessage().contains("email")) {
+                alert.setHeaderText("Invalid email address");
+                alert.setContentText("Please make sure email is valid.");
+            } else if (e.getMessage().contains("phone")) {
+                alert.setHeaderText("Invalid phone number");
+                alert.setContentText("Please make sure phone is a valid Australian/International number.");
+            }
             alert.showAndWait();
+            return;
+        }
+        try {
+            userdao.addUser(newUser);
+        } catch (DuplicateUserException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Register Failed");
+            alert.setHeaderText("Duplicate Username/Email");
+            alert.setContentText("Please use another username/email");
+            alert.showAndWait();
+            return;
         }
 
+        System.out.println("Registered: " + newUser.getUsername());
 
-
+        // Change window when register button clicked
+        Stage stage = (Stage) registerButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        stage.setScene(scene);
     }
 
     @FXML
@@ -133,10 +117,12 @@ public class RegisterMenuController {
         }
 
         // Phone
-        // Either formatted as 0XXXXXXXXX (australian) or international number (+xxx...)
+        // Either formatted as 0XXXXXXXXX (australian), international number (+xxx...) or blank
         pattern = Pattern.compile("0[0-9]{9}|\\+[0-9]+");
         matcher = pattern.matcher(user.getPhone());
+        if (user.getPhone().isEmpty()) { return; } // Blank
         if (!matcher.matches()) {
+            System.out.println(user.getPhone().length());
             throw new RegisterUserException("Invalid phone number");
         }
 
@@ -161,9 +147,16 @@ public class RegisterMenuController {
         };
 
         usernameTextField.setOnKeyPressed(enterEventHandler);
+        usernameTextField.setPromptText("Required");
+
         passwordTextField.setOnKeyPressed(enterEventHandler);
+        passwordTextField.setPromptText("Required");
+
         emailTextField.setOnKeyPressed(enterEventHandler);
+        emailTextField.setPromptText("Required");
+
         phoneTextField.setOnKeyPressed(enterEventHandler);
+        phoneTextField.setPromptText("Optional");
     }
 
 

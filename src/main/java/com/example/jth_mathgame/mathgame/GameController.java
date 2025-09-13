@@ -154,7 +154,16 @@ public class GameController {
         else {
             answerResponseLabel.setText("Incorrect!");
             answerResponseLabel.setTextFill(Color.RED);
-            score--;
+            if (score >= 2) {
+                score--;
+                mockQuestion();
+                levelLabel.setText("Level:" + score);
+            }
+            else {
+                mockQuestion();
+                levelLabel.setText("Level:" + score);
+            }
+
         }
         //answerCorrect(Objects.equals(inputField.getText(), "19")); //TODO: Delete when no longer needed
 

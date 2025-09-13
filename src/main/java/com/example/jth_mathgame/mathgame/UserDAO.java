@@ -30,7 +30,7 @@ public class UserDAO implements IUserDAO {
                     + "Username TEXT NOT NULL UNIQUE,"
                     + "PasswordHash BLOB NOT NULL,"
                     + "PasswordSalt BLOB NOT NULL,"
-                    + "Email TEXT,"
+                    + "Email TEXT UNIQUE,"
                     + "Phone TEXT"
                     + ")";
             statement.execute(query);
@@ -40,7 +40,7 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(User user) throws DuplicateUserException {
         // Get Hash and salt for password
         ArrayList<byte[]> passArrayList;
         try {
@@ -59,6 +59,11 @@ public class UserDAO implements IUserDAO {
             statement.setString(5, user.getPhone());
             statement.execute();
         } catch (SQLException e) {
+            // Duplicate username/email
+            if (e.getMessage().contains("UNIQUE constraint failed")) {
+                throw new DuplicateUserException();
+            }
+            // Something else is wrong
             e.printStackTrace();
         }
     }

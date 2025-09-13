@@ -22,7 +22,7 @@ public class MenuController {
     @FXML
     private Button settingsButton;
     @FXML
-    private Button quitButton;
+    private Button logoutButton;
 
     @FXML
     protected void onStartGameClick() throws IOException {
@@ -42,14 +42,16 @@ public class MenuController {
         startButton.setFont(new Font("Arial", 40));
         statsButton.setFont(new Font("Arial", 40));
         settingsButton.setFont(new Font("Arial", 40));
-        quitButton.setFont(new Font("Arial", 40));
+        logoutButton.setFont(new Font("Arial", 40));
     }
 
     @FXML
-    protected void onQuitButtonClick() {
-        // Close window when quit button clicked
-        Stage stage = (Stage) quitButton.getScene().getWindow();
-        stage.close();
+    private void onLogoutClick() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML

@@ -2,6 +2,7 @@ module com.example.jth_mathgame.mathgame {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires org.xerial.sqlitejdbc;
 
 
     opens com.example.jth_mathgame.mathgame to javafx.fxml;

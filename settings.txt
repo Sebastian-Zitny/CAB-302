@@ -1,2 +1,2 @@
 difficulty=Easy
-sound=false
+sound=true

@@ -29,7 +29,12 @@ public class musicPlayer {
                 noise.seek(Duration.ZERO);
             }
         });
-        noise.play();
+        if (Settings.isSoundEnabled()) {
+            noise.play();
+        }
+        else {
+
+        }
     }
     static void stopMusic(){
         noise.stop();

@@ -32,6 +32,7 @@ public class RegisterMenuController {
 
     @FXML
     protected void onRegisterClick() throws IOException {
+        soundPlayer.playSound("src/sounds/button_3.wav");
         // Create a new user when register button clicked
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
@@ -67,6 +68,7 @@ public class RegisterMenuController {
 
     @FXML
     protected void onBackClick() throws IOException {
+        soundPlayer.playSound("src/sounds/button_3.wav");
         // Change window when start button clicked
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));

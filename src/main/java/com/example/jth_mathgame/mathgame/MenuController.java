@@ -55,14 +55,6 @@ public class MenuController {
         Stage stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
     }
-    @FXML
-    protected void onSettingButtonClick() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        soundPlayer.playSound("src/sounds/button_3.wav");
-        Stage stage = (Stage) settingsButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("setting-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-        stage.setScene(scene);
-    }
 
     @FXML
     protected void toBeAdded() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
@@ -74,8 +66,18 @@ public class MenuController {
 
     @FXML
     protected void onSettingsButtonClick() throws IOException {
+        soundPlayer.playSound("src/sounds/button_3.wav");
         Stage stage = (Stage) settingsButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("settings-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        stage.setScene(scene);
+    }
+
+    @FXML
+    protected void onStatsButtonClick() throws IOException {
+        soundPlayer.playSound("src/sounds/button_3.wav");
+        Stage stage = (Stage) settingsButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("stats-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
     }

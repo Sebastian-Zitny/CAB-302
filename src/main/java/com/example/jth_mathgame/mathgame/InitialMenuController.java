@@ -35,6 +35,7 @@ public class InitialMenuController {
     @FXML
     protected void onLoginClick() throws IOException {
         // Change window when login button clicked
+        soundPlayer.playSound("src/sounds/button_3.wav");
         Stage stage = (Stage) loginButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("loginMenu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
@@ -44,6 +45,7 @@ public class InitialMenuController {
     @FXML
     protected void onRegisterClick() throws IOException {
         // Change window when register button clicked
+        soundPlayer.playSound("src/sounds/button_3.wav");
         Stage stage = (Stage) loginButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("registerMenu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
@@ -53,6 +55,7 @@ public class InitialMenuController {
     @FXML
     protected void onQuitButtonClick() {
         // Close window when quit button clicked
+        soundPlayer.playSound("src/sounds/button_3.wav");
         Stage stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
     }

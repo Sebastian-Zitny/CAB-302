@@ -55,6 +55,7 @@ public class GameController {
 
     @FXML
     public void initialize() {
+        musicPlayer.playMusic("src/sounds/music0.wav");
         // TODO: Maybe convert FXML padding to code
         // Defines some fonts
         Font smallFont = new Font("Arial", 20);

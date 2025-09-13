@@ -18,7 +18,11 @@ public class soundPlayer {
     static void playSound(String sound){
            Media media = new Media(new File(sound).toURI().toString());
            MediaPlayer noise = new MediaPlayer(media);
-           noise.setVolume(volume.get());
-           noise.play();
+           if (Settings.isSoundEnabled()) {
+               noise.play();
+           }
+           else {
+
+           }
     }
 }

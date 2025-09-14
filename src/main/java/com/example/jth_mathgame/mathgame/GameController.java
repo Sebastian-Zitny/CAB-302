@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
+import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
 
 public class GameController {
     @FXML
@@ -52,6 +53,7 @@ public class GameController {
     @FXML
     public int score = 1;
 
+    private static final IUserDAO dao = new UserDAO();
 
     @FXML
     public void initialize() {
@@ -98,6 +100,8 @@ public class GameController {
                         // timer finished
                         timeline.stop();
                         try {
+                            musicPlayer.stopMusic();
+                            dao.setScore(currentUserId,score);
                             Stage stage = (Stage) timeLabel.getScene().getWindow();
                             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
                             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
@@ -129,6 +133,8 @@ public class GameController {
     // Go back to menu when quit button clicked
     @FXML
     protected void onQuitButtonClick() throws IOException {
+        musicPlayer.stopMusic();
+        dao.setScore(currentUserId,score);
         Stage stage = (Stage) quitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);

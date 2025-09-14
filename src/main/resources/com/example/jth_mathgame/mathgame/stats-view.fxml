@@ -8,12 +8,17 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.jth_mathgame.mathgame.StatsController">
+            <center>
             <VBox alignment="CENTER" spacing = "20">
-            <TableView>
-                
+                <TableView  fx:id="statsView" layoutX="20.0" layoutY="20.0" prefHeight="200.0" prefWidth="300.0">
+                    <columns>
+                        <TableColumn fx:id="username" text="Username" />
+                        <TableColumn fx:id="score" text="Score" />
+                    </columns>
             </TableView>
 
 
             </VBox>
+            </center>
 
 </BorderPane>

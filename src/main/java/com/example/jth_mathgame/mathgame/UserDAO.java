@@ -25,7 +25,8 @@ public class UserDAO implements IUserDAO {
                     + "Username TEXT NOT NULL UNIQUE,"
                     + "Password TEXT NOT NULL,"
                     + "Email TEXT,"
-                    + "Phone TEXT"
+                    + "Phone TEXT,"
+                    + "Score INTEGER"
                     + ")";
             statement.execute(query);
         } catch (Exception e) {
@@ -38,11 +39,12 @@ public class UserDAO implements IUserDAO {
         try {
             PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO users
-                    (Username, Password, Email, Phone) VALUES (?, ?, ?, ?)""");
+                    (Username, Password, Email, Phone, Score) VALUES (?, ?, ?, ?)""");
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getEmail());
             statement.setString(4, user.getPhone());
+            statement.setInt(5,user.getScore());
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,13 +66,29 @@ public class UserDAO implements IUserDAO {
                     resultSet.getString("Username"),
                     resultSet.getString("Password"),
                     resultSet.getString("Email"),
-                    resultSet.getString("Phone"));
+                    resultSet.getString("Phone"),
+                    resultSet.getInt("Score"));
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    public void setScore(int Id, int score){
+        try{
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT Score
+                    FROM users
+                    WHERE UserID IS (?)
+                    SET Score = ?
+                    """);
+            statement.setInt(1,Id);
+            statement.setInt(2,score);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void authUser(String username, String password) {
         //TODO: Perhaps this could be used instead to authenticate?
     }
@@ -91,7 +109,8 @@ public class UserDAO implements IUserDAO {
                         resultSet.getString("Username"),
                         resultSet.getString("Password"),
                         resultSet.getString("Email"),
-                        resultSet.getString("Phone")));
+                        resultSet.getString("Phone"),
+                        resultSet.getInt("Score")));
             }
 
             return userList;

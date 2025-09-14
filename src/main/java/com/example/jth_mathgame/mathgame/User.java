@@ -48,6 +48,8 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.score = score;
+        this.usernameProperty = new SimpleStringProperty(username);
+        this.scoreProperty = new SimpleIntegerProperty(score);
     }
 
     public int getId() {

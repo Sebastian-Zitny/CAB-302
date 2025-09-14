@@ -39,7 +39,7 @@ public class UserDAO implements IUserDAO {
         try {
             PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO users
-                    (Username, Password, Email, Phone, Score) VALUES (?, ?, ?, ?)""");
+                    (Username, Password, Email, Phone, Score) VALUES (?, ?, ?, ?, ?)""");
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getEmail());
@@ -68,7 +68,9 @@ public class UserDAO implements IUserDAO {
                     resultSet.getString("Email"),
                     resultSet.getString("Phone"),
                     resultSet.getInt("Score"));
-        } catch (SQLException e) {
+
+        }
+        catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
@@ -77,13 +79,13 @@ public class UserDAO implements IUserDAO {
     public void setScore(int Id, int score){
         try{
             PreparedStatement statement = connection.prepareStatement("""
-                    SELECT Score
-                    FROM users
-                    WHERE UserID IS (?)
+                    UPDATE users
                     SET Score = ?
+                    WHERE UserID IS (?)
                     """);
-            statement.setInt(1,Id);
-            statement.setInt(2,score);
+            statement.setInt(1,score);
+            statement.setInt(2,Id);
+            statement.execute();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

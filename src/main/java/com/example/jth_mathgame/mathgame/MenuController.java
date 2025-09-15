@@ -18,6 +18,8 @@ public class MenuController {
     @FXML
     private Button startButton;
     @FXML
+    private Button startButton2;
+    @FXML
     private Button statsButton;
     @FXML
     private Button settingsButton;
@@ -33,12 +35,21 @@ public class MenuController {
         stage.setScene(scene);
     }
     @FXML
+    protected void onStartEndlessGameClick() throws IOException {
+        // Change window when start button clicked
+        Stage stage = (Stage) startButton2.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("EndlessGame-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        stage.setScene(scene);
+    }
+    @FXML
     public void initialize() {
         // Title text
         titleText.setText("Math Game");
         titleText.setFont(new Font("Impact", 58));
 
         // Adjust buttons
+        startButton2.setFont(new Font("Arial", 40));
         startButton.setFont(new Font("Arial", 40));
         statsButton.setFont(new Font("Arial", 40));
         settingsButton.setFont(new Font("Arial", 40));

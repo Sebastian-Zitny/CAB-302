@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
+
 public class UserDAO implements IUserDAO {
 
     private final Connection connection;
@@ -170,6 +172,22 @@ public class UserDAO implements IUserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    /**
+     * Deletes user account
+     */
+    public void deleteAccount() {
+        try {
+            PreparedStatement statement = connection.prepareStatement("""
+                    DELETE FROM users WHERE UserID = ?""");
+            statement.setInt(1, currentUserId);
+            statement.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("There was a problem with deleting user account");
         }
     }
 }

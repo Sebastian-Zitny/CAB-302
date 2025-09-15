@@ -29,12 +29,14 @@
 
             <Label text="Account" style="-fx-font-size: 30; -fx-font-family: Impact;" />
 
+            <!-- Change Password -->
             <HBox spacing="10" alignment="CENTER">
-                <Button text="Change password" style="-fx-font-size: 20;"/>
+                <Button text="Change password" style="-fx-font-size: 20;" />
             </HBox>
 
+            <!-- Delete Account -->
             <HBox spacing="10" alignment="CENTER">
-                <Button text="Delete Account" style="-fx-font-size: 20;"/>
+                <Button text="Delete Account" fx:id="deleteAccountButton" style="-fx-font-size: 20;" onAction="#deleteAccount" />
             </HBox>
 
             <Region minHeight="25" />

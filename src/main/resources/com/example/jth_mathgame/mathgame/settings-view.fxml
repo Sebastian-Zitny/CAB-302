@@ -3,12 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.jth_mathgame.mathgame.SettingsController">
-
     <center>
         <VBox alignment="CENTER" spacing="20">
             <Label text="Settings" style="-fx-font-size: 36; -fx-font-family: Impact;" />
+
+
+            <Label text="Game" style="-fx-font-size: 30; -fx-font-family: Impact;" />
 
             <!-- Difficulty ChoiceBox -->
             <HBox spacing="10" alignment="CENTER">
@@ -21,6 +24,20 @@
                 <Label text="Sound:" style="-fx-font-size: 20;" />
                 <CheckBox fx:id="soundCheck" text="Enabled"/>
             </HBox>
+
+            <Region minHeight="15" />
+
+            <Label text="Account" style="-fx-font-size: 30; -fx-font-family: Impact;" />
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Change password" style="-fx-font-size: 20;"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Delete Account" style="-fx-font-size: 20;"/>
+            </HBox>
+
+            <Region minHeight="25" />
 
             <!-- Back button -->
             <Button text="Back" fx:id="backButton" style="-fx-font-size: 24;" />

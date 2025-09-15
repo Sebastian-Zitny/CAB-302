@@ -20,6 +20,8 @@ public class SettingsController {
     @FXML
     private Button backButton;
     @FXML
+    private Button changePasswordButton;
+    @FXML
     private Button deleteAccountButton;
 
     @FXML
@@ -61,6 +63,15 @@ public class SettingsController {
             userdao.deleteAccount();
             logout();
         }
+    }
+
+    @FXML
+    private void onChangePasswordClick() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("changePassword-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        Stage stage = (Stage) changePasswordButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**

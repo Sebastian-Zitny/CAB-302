@@ -31,7 +31,7 @@
 
             <!-- Change Password -->
             <HBox spacing="10" alignment="CENTER">
-                <Button text="Change password" style="-fx-font-size: 20;" />
+                <Button text="Change password" fx:id="changePasswordButton" style="-fx-font-size: 20;" onAction="#onChangePasswordClick"/>
             </HBox>
 
             <!-- Delete Account -->

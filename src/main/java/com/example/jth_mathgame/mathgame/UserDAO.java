@@ -71,6 +71,7 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
+    // TODO: Perhaps below two methods can be merged
     public User getUser(String username) {
         try {
             PreparedStatement statement = connection.prepareStatement("""
@@ -78,6 +79,30 @@ public class UserDAO implements IUserDAO {
                     FROM users
                     WHERE username IS (?)""");
             statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet == null) return null; // TODO: Throw exception here instead
+            return new User(
+                    resultSet.getInt("UserID"),
+                    resultSet.getString("Username"),
+                    resultSet.getString("Email"),
+                    resultSet.getString("Phone"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /** Gets user data from database using the user id
+     * @param id Id number of user
+     * @return User
+     */
+    public User getUserFromId(int id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT *
+                    FROM users
+                    WHERE UserID IS (?)""");
+            statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet == null) return null; // TODO: Throw exception here instead
             return new User(
@@ -116,7 +141,7 @@ public class UserDAO implements IUserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new RuntimeException("Something is wrong");
+        throw new RuntimeException("Something is wrong with getting the user password");
     }
 
     private ArrayList<byte[]> generateHash(String password) throws NoSuchAlgorithmException {
@@ -146,6 +171,36 @@ public class UserDAO implements IUserDAO {
 
         byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
         return Arrays.equals(hashedPassword, passwordChallenge);
+    }
+
+    /** Sets a new password in the database for the user
+     * @param password New plain-text password to be set in the database
+     */
+    public void setPassword(int id, String password) {
+        // Get new password
+        ArrayList<byte[]> passArrayList;
+        try {
+            passArrayList = generateHash(password);
+            password = null; // Deletes string
+        } catch (NoSuchAlgorithmException e) {
+            System.err.println("There was a problem setting new password");
+            throw new RuntimeException(e);
+        }
+
+        // Set new password
+        try {
+            PreparedStatement statement = connection.prepareStatement("""
+                    UPDATE users
+                    SET PasswordHash = (?), PasswordSalt = (?)
+                    WHERE UserID = (?)""");
+            statement.setBytes(1, passArrayList.get(0));
+            statement.setBytes(2, passArrayList.get(1));
+            statement.setInt(3, id);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("There was a problem with changing user password");
+        }
     }
 
     @Override

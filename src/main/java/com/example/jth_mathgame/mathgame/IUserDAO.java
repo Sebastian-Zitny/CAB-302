@@ -7,4 +7,5 @@ public interface IUserDAO {
     User getUser(String username);
     List<User> getAllUsers();
     void setScore(int Id, int score);
+    int getScore(int Id);
 }

@@ -76,6 +76,23 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    public int getScore(int Id){
+        try{
+
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT Score
+                    FROM users
+                    WHERE UserID IS (?)
+                    """);
+            statement.setInt(1,Id);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.getInt("Score");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void setScore(int Id, int score){
         try{
             PreparedStatement statement = connection.prepareStatement("""

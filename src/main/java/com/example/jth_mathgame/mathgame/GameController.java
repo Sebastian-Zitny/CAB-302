@@ -101,7 +101,10 @@ public class GameController {
                         timeline.stop();
                         try {
                             musicPlayer.stopMusic();
-                            dao.setScore(currentUserId,score);
+                            // changes user score to current score if the latter is higher (top score)
+                            if(dao.getScore(currentUserId) < score) {
+                                dao.setScore(currentUserId, score);
+                            }
                             Stage stage = (Stage) timeLabel.getScene().getWindow();
                             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
                             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
@@ -134,7 +137,10 @@ public class GameController {
     @FXML
     protected void onQuitButtonClick() throws IOException {
         musicPlayer.stopMusic();
-        dao.setScore(currentUserId,score);
+        // changes user score to current score if the latter is higher (top score)
+        if(dao.getScore(currentUserId) < score) {
+            dao.setScore(currentUserId, score);
+        }
         Stage stage = (Stage) quitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);

@@ -16,7 +16,7 @@
                         <TableColumn fx:id="score" text="Score" />
                     </columns>
             </TableView>
-
+            <Button text="Back" fx:id="backButton" style="-fx-font-size: 24;" onAction="#onBackButtonClick"/>
 
             </VBox>
             </center>

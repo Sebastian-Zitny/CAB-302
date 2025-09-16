@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
+
 public class MenuController {
     @FXML
     private Label titleText;
@@ -47,6 +49,7 @@ public class MenuController {
 
     @FXML
     private void onLogoutClick() throws IOException {
+        currentUserId = null; // Logs user out
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         Stage stage = (Stage) logoutButton.getScene().getWindow();

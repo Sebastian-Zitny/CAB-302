@@ -39,7 +39,11 @@ class UserDAOFileDbTest {
 
     @Test
     void add_and_getUser() {
-        dao.addUser(mk("alice", "pw", "a@x.com", "0401"));
+        try {
+            dao.addUser(mk("alice", "pw", "a@x.com", "0401"));
+        } catch (DuplicateUserException e) {
+            fail();
+        }
         User u = dao.getUser("alice");
         assertNotNull(u);
         assertEquals("alice", u.getUsername());
@@ -53,9 +57,13 @@ class UserDAOFileDbTest {
 
     @Test
     void getAllUsers_returnsAllInserted() {
-        dao.addUser(mk("u1", "p1", "u1@x.com", "0401"));
-        dao.addUser(mk("u2", "p2", "u2@x.com", "0402"));
-        dao.addUser(mk("u3", "p3", "u3@x.com", "0403"));
+        try {
+            dao.addUser(mk("u1", "p1", "u1@x.com", "0401"));
+            dao.addUser(mk("u2", "p2", "u2@x.com", "0402"));
+            dao.addUser(mk("u3", "p3", "u3@x.com", "0403"));
+        } catch (DuplicateUserException e) {
+            fail();
+        }
 
         List<User> all = dao.getAllUsers();
         assertEquals(3, all.size());

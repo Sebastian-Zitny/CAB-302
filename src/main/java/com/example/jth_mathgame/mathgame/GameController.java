@@ -1,13 +1,12 @@
 package com.example.jth_mathgame.mathgame;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-import javafx.animation.KeyFrame;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,9 +16,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Random;
 
 public class GameController {
@@ -44,9 +43,9 @@ public class GameController {
     @FXML
     private Timeline timeline;
     @FXML
-    private int fixedTime1;
+    private int int1;
     @FXML
-    private int fixedTime2;
+    private int int2;
     @FXML
     private Random randomGenerator;
     @FXML
@@ -60,7 +59,7 @@ public class GameController {
         Font smallFont = new Font("Arial", 20);
         Font smallFontBold = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20);
 
-        levelLabel.setText("Level:" + score);
+        levelLabel.setText("Endless Level:" + score);
 
         randomGenerator = new Random();
 
@@ -115,11 +114,11 @@ public class GameController {
     // Creates a hardcoded mock question
     private void mockQuestion() {
 
-        fixedTime1 = randomGenerator.nextInt(11);
-        String stringTime1 = String.valueOf(fixedTime1);
-        fixedTime2 = randomGenerator.nextInt(11);
-        String stringTime2 = String.valueOf(fixedTime2);
-        questionLabel.setText(stringTime1 + " + " + stringTime2 + " * " + score);
+        int1 = randomGenerator.nextInt(11);
+        String stringInt1 = String.valueOf(int1);
+        int2 = randomGenerator.nextInt(11);
+        String stringInt2 = String.valueOf(int2);
+        questionLabel.setText(stringInt1 + " + " + stringInt2 + " * " + score);
 
 
     }
@@ -140,13 +139,13 @@ public class GameController {
 
         int equalsInt = Integer.parseInt(inputField.getText());
 
-        if (equalsInt == (fixedTime1+fixedTime2) * score) {
+        if (equalsInt == (int1+int2) * score) {
             answerResponseLabel.setText("Correct!");
             answerResponseLabel.setTextFill(Color.GREEN);
 
             score ++;
             mockQuestion();
-            levelLabel.setText("Level:" + score);
+            levelLabel.setText("Endless Level:" + score);
 
 
             // levelLabel
@@ -158,13 +157,13 @@ public class GameController {
                 answerResponseLabel.setTextFill(Color.RED);
                 score--;
                 mockQuestion();
-                levelLabel.setText("Level:" + score);
+                levelLabel.setText("Endless Level:" + score);
             }
             else {
                 answerResponseLabel.setText("Incorrect!");
                 answerResponseLabel.setTextFill(Color.RED);
                 mockQuestion();
-                levelLabel.setText("Level:" + score);
+                levelLabel.setText("Endless Level:" + score);
             }
 
 

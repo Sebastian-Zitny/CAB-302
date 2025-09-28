@@ -7,10 +7,10 @@ public record Result(
         int numCorrect,
         int numIncorrect,
         String gamemode,
-        Date date
+        String date
 )
 {
     public Result(int userId, int numCorrect, int numIncorrect, String gamemode) {
-        this(userId, numCorrect, numIncorrect, gamemode, new Date());
+        this(userId, numCorrect, numIncorrect, gamemode, new Date().toString());
     }
 }

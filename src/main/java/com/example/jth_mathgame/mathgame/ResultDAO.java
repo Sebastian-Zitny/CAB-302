@@ -1,6 +1,8 @@
 package com.example.jth_mathgame.mathgame;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class ResultDAO implements IResultDAO {
                     + "Correct INTEGER NOT NULL,"
                     + "Incorrect INTEGER NOT NULL,"
                     + "Gamemode TEXT NOT NULL,"
-                    + "Date TEXT NOT NULL"
+                    + "Date TEXT NOT NULL,"
                     + "FOREIGN KEY(UserID) REFERENCES users(userID)"
                     + ")";
             statement.execute(query);
@@ -37,7 +39,20 @@ public class ResultDAO implements IResultDAO {
      */
     @Override
     public void addResult(Result result) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement("""
+                    INSERT INTO results
+                    (UserID, Correct, Incorrect, Gamemode, Date) VALUES (?, ?, ?, ?, ?)""");
+            statement.setInt(1, result.userId());
+            statement.setInt(2, result.numCorrect());
+            statement.setInt(3, result.numIncorrect());
+            statement.setString(4, result.gamemode());
+            statement.setString(5, result.date());
+            statement.execute();
+        } catch (SQLException e) {
+            System.err.println("Problem creating new result record");
+            e.printStackTrace();
+        }
     }
 
     /**

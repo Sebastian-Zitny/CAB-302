@@ -9,8 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
-import static com.example.jth_mathgame.mathgame.MainApplication.userdao;
+import static com.example.jth_mathgame.mathgame.MainApplication.*;
 
 public class SettingsController {
     @FXML
@@ -56,10 +55,12 @@ public class SettingsController {
      */
     @FXML
     public void deleteAccount() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete your account?",
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete your account?\n" +
+                "This will also delete all your stats.",
                 ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.YES) {
+            resultdao.removeAllUserResults(currentUserId);
             userdao.deleteAccount();
             logout();
         }

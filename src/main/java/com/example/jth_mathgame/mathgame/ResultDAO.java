@@ -50,8 +50,8 @@ public class ResultDAO implements IResultDAO {
             statement.setString(5, result.date());
             statement.execute();
         } catch (SQLException e) {
-            System.err.println("Problem creating new result record");
             e.printStackTrace();
+            System.err.println("Problem creating new result record");
         }
     }
 
@@ -61,7 +61,16 @@ public class ResultDAO implements IResultDAO {
      */
     @Override
     public void removeAllUserResults(int userId) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement("""
+                    DELETE FROM results WHERE UserID = ?""");
+            statement.setInt(1, userId);
+            statement.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("There was a problem with deleting user results");
+        }
     }
 
     /**

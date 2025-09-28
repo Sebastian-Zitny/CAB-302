@@ -13,4 +13,13 @@ public record Result(
     public Result(int userId, int numCorrect, int numIncorrect, String gamemode) {
         this(userId, numCorrect, numIncorrect, gamemode, new Date().toString());
     }
+
+    @Override
+    public String toString() {
+        return "UserId: " + userId + ", "
+        + "Correct answers: " + numCorrect + ", "
+        + "Incorrect answers: " + numIncorrect + ", "
+        + "Gamemode: " + gamemode + ", "
+        + "Date: " + date;
+    }
 }

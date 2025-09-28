@@ -1,9 +1,7 @@
 package com.example.jth_mathgame.mathgame;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultDAO implements IResultDAO {
@@ -79,8 +77,31 @@ public class ResultDAO implements IResultDAO {
      *
      */
     @Override
-    public List<Result> getUserResults(int userId) {
-        return List.of();
+    public List<Result> getUserResults(int userId){
+        try {
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT *
+                    FROM results
+                    WHERE UserID = ?""");
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet == null) return null; // Result table is empty
+
+            List<Result> resultList = new ArrayList<>();
+
+            while (resultSet.next()) { // Iterate through rows and add to list
+                resultList.add(new Result(resultSet.getInt("UserID"),
+                        resultSet.getInt("Correct"),
+                        resultSet.getInt("Incorrect"),
+                        resultSet.getString("Gamemode"),
+                        resultSet.getString("Date")));
+            }
+            return resultList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Problem getting user results");
+            return null;
+        }
     }
 
     /**
@@ -88,6 +109,27 @@ public class ResultDAO implements IResultDAO {
      */
     @Override
     public List<Result> getAllResults() {
-        return List.of();
+        try {
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT *
+                    FROM results""");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet == null) return null; // Result table is empty
+
+            List<Result> resultList = new ArrayList<>();
+
+            while (resultSet.next()) { // Iterate through rows and add to list
+                resultList.add(new Result(resultSet.getInt("UserID"),
+                        resultSet.getInt("Correct"),
+                        resultSet.getInt("Incorrect"),
+                        resultSet.getString("Gamemode"),
+                        resultSet.getString("Date")));
+            }
+            return resultList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Problem getting all user results");
+            return null;
+        }
     }
 }

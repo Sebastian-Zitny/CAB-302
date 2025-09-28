@@ -31,6 +31,7 @@ public class ResultDAO implements IResultDAO {
             e.printStackTrace();
         }
     }
+    
     /**
      * @param result
      * Adds a result record and stores it in the database
@@ -54,8 +55,8 @@ public class ResultDAO implements IResultDAO {
     }
 
     /**
-     * @param userId
      * Removes all records associated with a user
+     * @param userId User Id in database
      */
     @Override
     public void removeAllUserResults(int userId) {
@@ -72,7 +73,7 @@ public class ResultDAO implements IResultDAO {
     }
 
     /**
-     * @param userId
+     * @param userId User Id in database
      * @return A list with all result records associated with a user
      *
      */

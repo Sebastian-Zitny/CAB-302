@@ -7,9 +7,18 @@ import java.util.List;
 public class ResultDAO implements IResultDAO {
     private final Connection connection;
 
+    private static ResultDAO instance;
+
     public ResultDAO() {
         connection = SqliteConnection.getInstance();
         createTables();
+    }
+
+    public static ResultDAO getInstance() {
+        if (instance == null) {
+            instance = new ResultDAO();
+        }
+        return instance;
     }
 
     private void createTables() {

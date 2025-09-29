@@ -2,6 +2,7 @@ package com.example.jth_mathgame.mathgame;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -94,25 +95,46 @@ public class GameController {
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
                     Time--;
+
+
+                    if (timeLabel == null || timeLabel.getScene() == null) {
+                        if (timeline != null) {
+                            timeline.stop();
+                        }
+                        return;
+                    }
+
                     if (Time >= 0) {
                         timeLabel.setText(String.valueOf(Time));
                     } else {
                         // timer finished
                         Game.inputResult(databaseCorrect, databaseIncorrect);
                         timeline.stop();
-                        try {
-                            Stage stage = (Stage) timeLabel.getScene().getWindow();
-                            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
-                            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-                            stage.setScene(scene);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+
+                        Platform.runLater(() -> {
+                            try {
+                                Stage stage = (Stage) quitButton.getScene().getWindow();
+                                if (stage == null) {
+                                    return;
+                                }
+                                FXMLLoader fxmlLoader = new FXMLLoader(
+                                        MainApplication.class.getResource("menu-view.fxml")
+                                );
+                                Scene scene = new Scene(
+                                        fxmlLoader.load(),
+                                        MainApplication.WIDTH,
+                                        MainApplication.HEIGHT
+                                );
+                                stage.setScene(scene);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
                     }
                 })
         );
 
-        timeline.setCycleCount(Time + 1);
+        timeline.setCycleCount(Timeline.INDEFINITE); 
         timeline.play();
     }
     // TODO: Delete when no longer needed

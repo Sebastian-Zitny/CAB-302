@@ -284,12 +284,16 @@ public class EndlessGameController {
                 answerResponseLabel.setTextFill(Color.RED);
                 score--;
                 mockQuestion();
+                String textFinalEquation = stringEquation();
+                questionLabel.setText(textFinalEquation);
                 levelLabel.setText("Endless Level:" + score);
             }
             else {
                 answerResponseLabel.setText("Incorrect!");
                 answerResponseLabel.setTextFill(Color.RED);
                 mockQuestion();
+                String textFinalEquation = stringEquation();
+                questionLabel.setText(textFinalEquation);
                 levelLabel.setText("Endless Level:" + score);
             }
 

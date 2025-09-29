@@ -64,7 +64,7 @@ public class GameController {
         Font smallFont = new Font("Arial", 20);
         Font smallFontBold = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20);
 
-        levelLabel.setText("Endless Level:" + score);
+        levelLabel.setText("Level:" + score);
 
         randomGenerator = new Random();
 
@@ -87,7 +87,7 @@ public class GameController {
         quitButton.setFont(smallFont);
         submitButton.setFont(smallFont);
         submitVBox.setAlignment(Pos.CENTER);
-        mockQuestion();
+        GenerateQuestion();
         startTimer();
     }
     // TODO give error message and disable gameplay rather than force back to menu
@@ -137,19 +137,13 @@ public class GameController {
         timeline.setCycleCount(Timeline.INDEFINITE); 
         timeline.play();
     }
-    // TODO: Delete when no longer needed
-    // Creates a hardcoded mock question
-    private void mockQuestion() {
-
+    private void GenerateQuestion() {
         int1 = randomGenerator.nextInt(11);
         String stringInt1 = String.valueOf(int1);
         int2 = randomGenerator.nextInt(11);
         String stringInt2 = String.valueOf(int2);
         questionLabel.setText(stringInt1 + " + " + stringInt2 + " * " + score);
-
-
     }
-
 
     // Go back to menu when quit button clicked
     @FXML
@@ -171,12 +165,9 @@ public class GameController {
             answerResponseLabel.setTextFill(Color.GREEN);
 
             databaseCorrect++;
-            score ++;
-            mockQuestion();
-            levelLabel.setText("Endless Level:" + score);
-
-
-            // levelLabel
+            score++;
+            GenerateQuestion();
+            levelLabel.setText("Level:" + score);
         }
         else {
 
@@ -185,21 +176,20 @@ public class GameController {
                 answerResponseLabel.setTextFill(Color.RED);
                 databaseIncorrect++;
                 score--;
-                mockQuestion();
-                levelLabel.setText("Endless Level:" + score);
+                GenerateQuestion();
+                levelLabel.setText("Level:" + score);
             }
             else {
                 answerResponseLabel.setText("Incorrect!");
                 answerResponseLabel.setTextFill(Color.RED);
                 databaseIncorrect++;
-                mockQuestion();
-                levelLabel.setText("Endless Level:" + score);
+                GenerateQuestion();
+                levelLabel.setText("Level:" + score);
             }
 
 
 
         }
-        //answerCorrect(Objects.equals(inputField.getText(), "19")); //TODO: Delete when no longer needed
 
     }
 }

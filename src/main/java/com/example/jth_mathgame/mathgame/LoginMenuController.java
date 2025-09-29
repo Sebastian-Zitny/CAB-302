@@ -36,13 +36,9 @@ public class LoginMenuController {
 
         // Looks for user with username
         User user = USERDAO.getUser(username);
-        if (user != null) {
-            ArrayList<byte[]> passwordArrayList = USERDAO.getUserPasswordArray(username);
-
-            // Verify password
-            if (USERDAO.verifyHash(password, passwordArrayList.get(0), passwordArrayList.get(1))) {
+        if (user != null){
+            if (LoginMenu.CheckLogin(username, password)) {
                 // Login success
-                System.out.println("Login successful: " + username);
                 currentUserId = user.getId();
                 Stage stage = (Stage) submitButton.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
@@ -50,21 +46,21 @@ public class LoginMenuController {
                 stage.setScene(scene);
             }
             else {
-                // Failed login
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Login Failed");
-                alert.setHeaderText("Invalid credentials");
-                alert.setContentText("Please check your username and password.");
-                alert.showAndWait();
+                // Password Incorrect
+                failedLogin();
             }
         } else {
-            // Failed login
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Login Failed");
-            alert.setHeaderText("Invalid credentials");
-            alert.setContentText("Please check your username and password.");
-            alert.showAndWait();
+            // Username not found
+            failedLogin();
         }
+    }
+
+    private static void failedLogin() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Login Failed");
+        alert.setHeaderText("Invalid credentials");
+        alert.setContentText("Please check your username and password.");
+        alert.showAndWait();
     }
 
     @FXML

@@ -9,7 +9,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.example.jth_mathgame.mathgame.MainApplication.*;
+import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
+import static com.example.jth_mathgame.mathgame.MainApplication.resultdao;
 
 public class SettingsController {
     @FXML
@@ -22,6 +23,7 @@ public class SettingsController {
     private Button changePasswordButton;
     @FXML
     private Button deleteAccountButton;
+    private UserDAO userdao = UserDAO.getInstance();
 
     @FXML
     public void initialize() {

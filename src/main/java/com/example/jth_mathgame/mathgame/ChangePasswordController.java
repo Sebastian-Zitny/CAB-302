@@ -14,7 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
-import static com.example.jth_mathgame.mathgame.MainApplication.userdao;
 
 public class ChangePasswordController {
     @FXML
@@ -25,6 +24,7 @@ public class ChangePasswordController {
     private Button backButton;
     @FXML
     private Button confirmButton;
+    private final UserDAO userdao = UserDAO.getInstance();
 
     @FXML
     protected void onConfirmClick() throws IOException {

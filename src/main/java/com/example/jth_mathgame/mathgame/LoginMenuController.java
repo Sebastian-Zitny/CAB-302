@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
-import static com.example.jth_mathgame.mathgame.MainApplication.userdao;
 
 public class LoginMenuController {
     @FXML
@@ -27,6 +26,7 @@ public class LoginMenuController {
     private Button submitButton;
     @FXML
     private Button backButton;
+    private UserDAO userdao = UserDAO.getInstance();
 
     @FXML
     protected void onSubmitClick() throws IOException {

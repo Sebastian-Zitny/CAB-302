@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.example.jth_mathgame.mathgame.MainApplication.userdao;
-
 public class RegisterMenuController {
     @FXML
     public TextField usernameTextField;
@@ -32,8 +30,7 @@ public class RegisterMenuController {
     private Button registerButton;
     @FXML
     private Button backButton;
-
-
+    private UserDAO userdao = UserDAO.getInstance();
 
     @FXML
     protected void onRegisterClick() throws IOException {

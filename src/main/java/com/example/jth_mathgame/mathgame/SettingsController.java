@@ -22,8 +22,8 @@ public class SettingsController {
     private Button changePasswordButton;
     @FXML
     private Button deleteAccountButton;
-    private UserDAO userdao = UserDAO.getInstance();
-    private ResultDAO resultdao = ResultDAO.getInstance();
+    private final UserDAO USERDAO = UserDAO.getInstance();
+    private final ResultDAO RESULTDAO = ResultDAO.getInstance();
 
     @FXML
     public void initialize() {
@@ -62,8 +62,8 @@ public class SettingsController {
                 ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.YES) {
-            resultdao.removeAllUserResults(currentUserId);
-            userdao.deleteAccount();
+            RESULTDAO.removeAllUserResults(currentUserId);
+            USERDAO.deleteAccount();
             logout();
         }
     }

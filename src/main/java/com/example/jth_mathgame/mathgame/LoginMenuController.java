@@ -26,7 +26,8 @@ public class LoginMenuController {
     private Button submitButton;
     @FXML
     private Button backButton;
-    private UserDAO userdao = UserDAO.getInstance();
+
+    private final UserDAO USERDAO = UserDAO.getInstance();
 
     @FXML
     protected void onSubmitClick() throws IOException {
@@ -34,12 +35,12 @@ public class LoginMenuController {
         String password = passwordTextField.getText();
 
         // Looks for user with username
-        User user = userdao.getUser(username);
+        User user = USERDAO.getUser(username);
         if (user != null) {
-            ArrayList<byte[]> passwordArrayList = userdao.getUserPasswordArray(username);
+            ArrayList<byte[]> passwordArrayList = USERDAO.getUserPasswordArray(username);
 
             // Verify password
-            if (userdao.verifyHash(password, passwordArrayList.get(0), passwordArrayList.get(1))) {
+            if (USERDAO.verifyHash(password, passwordArrayList.get(0), passwordArrayList.get(1))) {
                 // Login success
                 System.out.println("Login successful: " + username);
                 currentUserId = user.getId();

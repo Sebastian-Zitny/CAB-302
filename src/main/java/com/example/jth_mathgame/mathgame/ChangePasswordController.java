@@ -24,7 +24,7 @@ public class ChangePasswordController {
     private Button backButton;
     @FXML
     private Button confirmButton;
-    private final UserDAO userdao = UserDAO.getInstance();
+    private final UserDAO USERDAO = UserDAO.getInstance();
 
     @FXML
     protected void onConfirmClick() throws IOException {
@@ -33,8 +33,8 @@ public class ChangePasswordController {
 
         // Check current password
         // TODO: There has to be a cleaner way to do this
-        ArrayList<byte[]> passwordArrayList = userdao.getUserPasswordArray(userdao.getUserFromId(currentUserId).getUsername());
-        if (userdao.verifyHash(currentPassword, passwordArrayList.get(0), passwordArrayList.get(1))) { // Verify password
+        ArrayList<byte[]> passwordArrayList = USERDAO.getUserPasswordArray(USERDAO.getUserFromId(currentUserId).getUsername());
+        if (USERDAO.verifyHash(currentPassword, passwordArrayList.get(0), passwordArrayList.get(1))) { // Verify password
             // Check new password formatting
             // Must have at least 8 characters. 1 Uppercase, 1 lowercase, 1 number
             Pattern pattern = Pattern.compile("(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}");
@@ -50,7 +50,7 @@ public class ChangePasswordController {
                 return;
             }
             // Valid
-            userdao.setPassword(currentUserId, newPassword);
+            USERDAO.setPassword(currentUserId, newPassword);
             onBackClick(); // Shortcut back
         } else { // Current password is incorrect
             Alert alert = new Alert(Alert.AlertType.ERROR);

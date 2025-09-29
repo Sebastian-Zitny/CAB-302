@@ -30,7 +30,8 @@ public class RegisterMenuController {
     private Button registerButton;
     @FXML
     private Button backButton;
-    private UserDAO userdao = UserDAO.getInstance();
+
+    private final UserDAO USERDAO = UserDAO.getInstance();
 
     @FXML
     protected void onRegisterClick() throws IOException {
@@ -66,7 +67,7 @@ public class RegisterMenuController {
             return;
         }
         try {
-            userdao.addUser(newUser);
+            USERDAO.addUser(newUser);
         } catch (DuplicateUserException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Register Failed");

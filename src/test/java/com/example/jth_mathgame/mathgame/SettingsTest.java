@@ -1,5 +1,6 @@
 package com.example.jth_mathgame.mathgame;
 
+import com.example.jth_mathgame.mathgame.model.Settings;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

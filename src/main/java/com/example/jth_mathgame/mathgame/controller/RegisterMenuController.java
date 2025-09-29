@@ -1,5 +1,8 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.controller;
 
+import com.example.jth_mathgame.mathgame.*;
+import com.example.jth_mathgame.mathgame.MainApplication;
+import com.example.jth_mathgame.mathgame.model.RegisterMenu;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

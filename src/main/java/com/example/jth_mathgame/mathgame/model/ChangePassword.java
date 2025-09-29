@@ -1,6 +1,6 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.model;
 
-import javafx.scene.control.Alert;
+import com.example.jth_mathgame.mathgame.UserDAO;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

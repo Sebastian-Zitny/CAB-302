@@ -1,5 +1,7 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.model;
 
+import com.example.jth_mathgame.mathgame.RegisterUserException;
+import com.example.jth_mathgame.mathgame.User;
 import javafx.scene.control.Alert;
 
 import java.util.regex.Matcher;

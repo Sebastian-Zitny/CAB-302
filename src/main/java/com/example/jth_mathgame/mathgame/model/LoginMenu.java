@@ -1,4 +1,6 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.model;
+
+import com.example.jth_mathgame.mathgame.UserDAO;
 
 import java.util.ArrayList;
 

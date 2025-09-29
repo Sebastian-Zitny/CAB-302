@@ -1,4 +1,7 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.model;
+
+import com.example.jth_mathgame.mathgame.Result;
+import com.example.jth_mathgame.mathgame.ResultDAO;
 
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
 

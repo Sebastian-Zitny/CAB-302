@@ -1,5 +1,7 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.controller;
 
+import com.example.jth_mathgame.mathgame.model.Game;
+import com.example.jth_mathgame.mathgame.MainApplication;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;

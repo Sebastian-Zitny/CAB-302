@@ -1,4 +1,4 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.model;
 
 import java.io.*;
 import java.nio.file.Files;

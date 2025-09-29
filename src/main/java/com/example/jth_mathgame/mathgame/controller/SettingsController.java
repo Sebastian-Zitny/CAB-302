@@ -1,5 +1,9 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.controller;
 
+import com.example.jth_mathgame.mathgame.MainApplication;
+import com.example.jth_mathgame.mathgame.ResultDAO;
+import com.example.jth_mathgame.mathgame.model.Settings;
+import com.example.jth_mathgame.mathgame.UserDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -12,7 +12,7 @@ public class MainApplication extends Application {
     public static final int WIDTH = 960;
     public static final int HEIGHT = 720;
     public static Integer currentUserId; // User currently logged in
-    public static UserDAO userdao = new UserDAO();
+    public static UserDAO userdao = UserDAO.getInstance();
     public static ResultDAO resultdao = new ResultDAO();
 
     @Override

@@ -14,17 +14,21 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
+import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
+
 public class MenuController {
     @FXML
     private Label titleText;
     @FXML
     private Button startButton;
     @FXML
+    private Button startButton2;
+    @FXML
     private Button statsButton;
     @FXML
     private Button settingsButton;
     @FXML
-    private Button quitButton;
+    private Button logoutButton;
 
     @FXML
     protected void onStartGameClick() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
@@ -36,24 +40,41 @@ public class MenuController {
         stage.setScene(scene);
     }
     @FXML
+    protected void onStartEndlessGameClick() throws IOException {
+        // Change window when start button clicked
+        Stage stage = (Stage) startButton2.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("EndlessGame-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        stage.setScene(scene);
+    }
+    @FXML
     public void initialize() {
         // Title text
         titleText.setText("Math Game");
         titleText.setFont(new Font("Impact", 58));
 
         // Adjust buttons
+        startButton2.setFont(new Font("Arial", 40));
         startButton.setFont(new Font("Arial", 40));
         statsButton.setFont(new Font("Arial", 40));
         settingsButton.setFont(new Font("Arial", 40));
-        quitButton.setFont(new Font("Arial", 40));
+        logoutButton.setFont(new Font("Arial", 40));
     }
 
     @FXML
     protected void onQuitButtonClick() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         soundPlayer.playSound("src/sounds/button_3.wav");
         // Close window when quit button clicked
-        Stage stage = (Stage) quitButton.getScene().getWindow();
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
         stage.close();
+    }
+    private void onLogoutClick() throws IOException {
+        currentUserId = null; // Logs user out
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML

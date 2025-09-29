@@ -4,6 +4,8 @@ module com.example.jth_mathgame.mathgame {
     requires java.sql;
     requires javafx.media;
     requires java.desktop;
+    requires org.xerial.sqlitejdbc;
+    requires javafx.graphics;
 
 
     opens com.example.jth_mathgame.mathgame to javafx.fxml;

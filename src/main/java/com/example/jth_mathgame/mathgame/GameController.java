@@ -1,13 +1,13 @@
 package com.example.jth_mathgame.mathgame;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-import javafx.animation.KeyFrame;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,9 +17,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Random;
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
 
@@ -45,15 +45,21 @@ public class GameController {
     @FXML
     private Timeline timeline;
     @FXML
-    private int fixedTime1;
+    private int int1;
     @FXML
-    private int fixedTime2;
+    private int int2;
     @FXML
     private Random randomGenerator;
     @FXML
     public int score = 1;
 
+
     private static final IUserDAO dao = new UserDAO();
+    // For input to database
+    public int databaseCorrect = 0;
+    public int databaseIncorrect = 0;
+
+
 
     @FXML
     public void initialize() {
@@ -63,7 +69,7 @@ public class GameController {
         Font smallFont = new Font("Arial", 20);
         Font smallFontBold = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20);
 
-        levelLabel.setText("Level:" + score);
+        levelLabel.setText("Endless Level:" + score);
 
         randomGenerator = new Random();
 
@@ -94,10 +100,19 @@ public class GameController {
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
                     Time--;
+
+                    if (timeLabel == null || timeLabel.getScene() == null) {
+                        if (timeline != null) {
+                            timeline.stop();
+                        }
+                        return;
+                    }
+
                     if (Time >= 0) {
                         timeLabel.setText(String.valueOf(Time));
                     } else {
                         // timer finished
+                        Game.inputResult(databaseCorrect, databaseIncorrect);
                         timeline.stop();
                         try {
                             musicPlayer.stopMusic();
@@ -112,22 +127,43 @@ public class GameController {
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
+
+                        Platform.runLater(() -> {
+                            try {
+                                Stage stage = (Stage) quitButton.getScene().getWindow();
+                                if (stage == null) {
+                                    return;
+                                }
+                                FXMLLoader fxmlLoader = new FXMLLoader(
+                                        MainApplication.class.getResource("menu-view.fxml")
+                                );
+                                Scene scene = new Scene(
+                                        fxmlLoader.load(),
+                                        MainApplication.WIDTH,
+                                        MainApplication.HEIGHT
+                                );
+                                stage.setScene(scene);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+
                     }
                 })
         );
 
-        timeline.setCycleCount(Time + 1);
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
     // TODO: Delete when no longer needed
     // Creates a hardcoded mock question
     private void mockQuestion() {
 
-        fixedTime1 = randomGenerator.nextInt(11);
-        String stringTime1 = String.valueOf(fixedTime1);
-        fixedTime2 = randomGenerator.nextInt(11);
-        String stringTime2 = String.valueOf(fixedTime2);
-        questionLabel.setText(stringTime1 + " + " + stringTime2 + " * " + score);
+        int1 = randomGenerator.nextInt(11);
+        String stringInt1 = String.valueOf(int1);
+        int2 = randomGenerator.nextInt(11);
+        String stringInt2 = String.valueOf(int2);
+        questionLabel.setText(stringInt1 + " + " + stringInt2 + " * " + score);
 
 
     }
@@ -153,23 +189,39 @@ public class GameController {
 
         int equalsInt = Integer.parseInt(inputField.getText());
 
-        if (equalsInt == (fixedTime1+fixedTime2) * score) {
+        if (equalsInt == (int1+int2) * score) {
             answerResponseLabel.setText("Correct!");
             answerResponseLabel.setTextFill(Color.GREEN);
 
+            databaseCorrect++;
             score ++;
             mockQuestion();
-            levelLabel.setText("Level:" + score);
+            levelLabel.setText("Endless Level:" + score);
 
 
             // levelLabel
         }
         else {
-            answerResponseLabel.setText("Incorrect!");
-            answerResponseLabel.setTextFill(Color.RED);
-            score--;
+
+            if (score > 1) {
+                answerResponseLabel.setText("Incorrect!");
+                answerResponseLabel.setTextFill(Color.RED);
+                databaseIncorrect++;
+                score--;
+                mockQuestion();
+                levelLabel.setText("Endless Level:" + score);
+            }
+            else {
+                answerResponseLabel.setText("Incorrect!");
+                answerResponseLabel.setTextFill(Color.RED);
+                databaseIncorrect++;
+                mockQuestion();
+                levelLabel.setText("Endless Level:" + score);
+            }
+
+
+
         }
-        //answerCorrect(Objects.equals(inputField.getText(), "19")); //TODO: Delete when no longer needed
 
     }
 }

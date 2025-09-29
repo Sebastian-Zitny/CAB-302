@@ -1,0 +1,25 @@
+package com.example.jth_mathgame.mathgame;
+
+import java.util.Date;
+
+public record Result(
+        int userId,
+        int numCorrect,
+        int numIncorrect,
+        String gamemode,
+        String date
+)
+{
+    public Result(int userId, int numCorrect, int numIncorrect, String gamemode) {
+        this(userId, numCorrect, numIncorrect, gamemode, new Date().toString());
+    }
+
+    @Override
+    public String toString() {
+        return "UserId: " + userId + ", "
+        + "Correct answers: " + numCorrect + ", "
+        + "Incorrect answers: " + numIncorrect + ", "
+        + "Gamemode: " + gamemode + ", "
+        + "Date: " + date;
+    }
+}

@@ -13,6 +13,7 @@ public class MainApplication extends Application {
     public static final int HEIGHT = 720;
     public static Integer currentUserId; // User currently logged in
     public static UserDAO userdao = new UserDAO();
+    public static ResultDAO resultdao = new ResultDAO();
 
     @Override
     public void start(Stage stage) throws IOException {

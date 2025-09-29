@@ -51,6 +51,10 @@ public class GameController {
     @FXML
     public int score = 1;
 
+    // For input to database
+    public int databaseCorrect = 0;
+    public int databaseIncorrect = 0;
+
 
     @FXML
     public void initialize() {
@@ -94,6 +98,7 @@ public class GameController {
                         timeLabel.setText(String.valueOf(Time));
                     } else {
                         // timer finished
+                        Game.inputResult(databaseCorrect, databaseIncorrect);
                         timeline.stop();
                         try {
                             Stage stage = (Stage) timeLabel.getScene().getWindow();
@@ -143,6 +148,7 @@ public class GameController {
             answerResponseLabel.setText("Correct!");
             answerResponseLabel.setTextFill(Color.GREEN);
 
+            databaseCorrect++;
             score ++;
             mockQuestion();
             levelLabel.setText("Endless Level:" + score);
@@ -155,6 +161,7 @@ public class GameController {
             if (score > 1) {
                 answerResponseLabel.setText("Incorrect!");
                 answerResponseLabel.setTextFill(Color.RED);
+                databaseIncorrect++;
                 score--;
                 mockQuestion();
                 levelLabel.setText("Endless Level:" + score);
@@ -162,6 +169,7 @@ public class GameController {
             else {
                 answerResponseLabel.setText("Incorrect!");
                 answerResponseLabel.setTextFill(Color.RED);
+                databaseIncorrect++;
                 mockQuestion();
                 levelLabel.setText("Endless Level:" + score);
             }

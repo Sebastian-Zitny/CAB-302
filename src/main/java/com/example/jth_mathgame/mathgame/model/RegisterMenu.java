@@ -75,6 +75,5 @@ public class RegisterMenu {
         alert.setHeaderText("Duplicate Username/Email");
         alert.setContentText("Please use another username/email");
         alert.showAndWait();
-        return;
     }
 }

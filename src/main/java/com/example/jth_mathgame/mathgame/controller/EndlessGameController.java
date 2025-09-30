@@ -45,17 +45,9 @@ public class EndlessGameController {
     @FXML
     private VBox submitVBox;
     @FXML
-    private Timeline timeline;
-    @FXML
-    private int int1;
-    @FXML
-    private int int2;
-    @FXML
     private String stringInt1;
     @FXML
     private String stringInt2;
-    @FXML
-    private int question;
     @FXML
     private Random randomGenerator;
     @FXML
@@ -103,7 +95,7 @@ public class EndlessGameController {
     }
     // TODO give error message and disable gameplay rather than force back to menu
     private void startTimer() {
-        timeline = new Timeline(
+        Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
                     Time++;
                     if (Time >= 0) {
@@ -119,9 +111,9 @@ public class EndlessGameController {
     // Creates a hardcoded mock question
     private void mockQuestion() {
 
-        int1 = randomGenerator.nextInt(11);
+        int int1 = randomGenerator.nextInt(11);
         stringInt1 = String.valueOf(int1);
-        int2 = randomGenerator.nextInt(11);
+        int int2 = randomGenerator.nextInt(11);
         stringInt2 = String.valueOf(int2);
 
 
@@ -162,7 +154,7 @@ public class EndlessGameController {
             case 0 -> "+";
             case 1 -> "-";
             case 2 -> "×";
-            default -> "?"; // shouldnt happen just in case
+            default -> "?"; // shouldn't happen just in case
         };
     }
 
@@ -264,7 +256,7 @@ public class EndlessGameController {
                     FinalEquation.add(Integer.valueOf(modNum3));
 
                 } else if (clicked == ButtonType.CANCEL) {
-                    System.out.println("shouldnt be doing this");
+                    System.out.println("shouldn't be doing this");
                 }
             }
 

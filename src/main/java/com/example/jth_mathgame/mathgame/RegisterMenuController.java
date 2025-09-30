@@ -59,7 +59,7 @@ public class RegisterMenuController {
             stage.setScene(scene);
         } else {
 
-            User newUser = new User(0, username, email, phone);
+            User newUser = new User(userdao.getAllUsers().size(),username,password, email, phone);
             try {
                 // Validate user details
                 validateUserRegistration(newUser);
@@ -170,6 +170,8 @@ public class RegisterMenuController {
                     onRegisterClick();
                 } catch (IOException e) {
                     System.err.println("Submit button is throwing exception");
+                } catch (DuplicateUserException e) {
+                    throw new RuntimeException(e);
                 }
             }
         };

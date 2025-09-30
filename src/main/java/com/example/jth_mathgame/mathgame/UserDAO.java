@@ -91,11 +91,12 @@ public class UserDAO implements IUserDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet == null) return null; // TODO: Throw exception here instead
             return new User(
-                    resultSet.getInt("UserID"),
                     resultSet.getString("Username"),
+                    resultSet.getString("Password"),
                     resultSet.getString("Email"),
                     resultSet.getString("Phone"),
-                    resultSet.getInt("Score"));
+                    resultSet.getInt("Score")
+            );
 
         }
         catch (SQLException e) {
@@ -138,10 +139,11 @@ public class UserDAO implements IUserDAO {
     }
     public void authUser(String username, String password) {
         //TODO: Perhaps this could be used instead to authenticate?
-    /** Gets user data from database using the user id
-     * @param id Id number of user
-     * @return User
-     */
+        /** Gets user data from database using the user id
+         * @param id Id number of user
+         * @return User
+         */
+    }
     public User getUserFromId(int id) {
         try {
             PreparedStatement statement = connection.prepareStatement("""
@@ -154,12 +156,16 @@ public class UserDAO implements IUserDAO {
                 return null; // TODO: Throw exception here instead
             }
             else{
-            return new User(
-                    resultSet.getInt("UserID"),
-                    resultSet.getString("Username"),
-                    resultSet.getString("Email"),
-                    resultSet.getString("Phone"));
-        } catch (SQLException e) {
+                return new User(
+                        resultSet.getInt("UserID"),
+                        resultSet.getString("Username"),
+                        resultSet.getString("Password"),
+                        resultSet.getString("Email"),
+                        resultSet.getString("Phone")
+                );
+
+        }}
+        catch (SQLException e) {
             e.printStackTrace();
             return null;
         }

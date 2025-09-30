@@ -52,8 +52,9 @@ public class User {
         this.scoreProperty = new SimpleIntegerProperty(score);
     }
 
-    public User(int userID, String username, String email, String phone) {
+    public User(int userID, String username, String password, String email, String phone) {
         this.id = userID;
+        this.password = password;
         this.username = username;
         this.email = email;
         this.phone = phone;

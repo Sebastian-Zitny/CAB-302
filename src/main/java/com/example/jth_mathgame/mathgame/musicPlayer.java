@@ -34,7 +34,7 @@ public class musicPlayer {
         }
         else {
 
-        }
+        }  
     }
     static void stopMusic(){
         noise.stop();

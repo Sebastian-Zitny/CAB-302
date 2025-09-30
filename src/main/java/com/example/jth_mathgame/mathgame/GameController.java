@@ -96,6 +96,7 @@ public class GameController {
                 new KeyFrame(Duration.seconds(1), event -> {
                     Time--;
 
+
                     if (timeLabel == null || timeLabel.getScene() == null) {
                         if (timeline != null) {
                             timeline.stop();
@@ -133,7 +134,7 @@ public class GameController {
                 })
         );
 
-        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setCycleCount(Timeline.INDEFINITE); 
         timeline.play();
     }
     // TODO: Delete when no longer needed
@@ -198,6 +199,7 @@ public class GameController {
 
 
         }
+        //answerCorrect(Objects.equals(inputField.getText(), "19")); //TODO: Delete when no longer needed
 
     }
 }

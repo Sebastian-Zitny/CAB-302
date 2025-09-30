@@ -1,5 +1,8 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.controller;
 
+import com.example.jth_mathgame.mathgame.model.ChangePassword;
+import com.example.jth_mathgame.mathgame.MainApplication;
+import com.example.jth_mathgame.mathgame.UserDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,12 +12,8 @@ import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
-import static com.example.jth_mathgame.mathgame.MainApplication.userdao;
 
 public class ChangePasswordController {
     @FXML
@@ -25,33 +24,26 @@ public class ChangePasswordController {
     private Button backButton;
     @FXML
     private Button confirmButton;
+    private final UserDAO USERDAO = UserDAO.getInstance();
 
     @FXML
     protected void onConfirmClick() throws IOException {
         String currentPassword = currentPasswordField.getText();
         String newPassword = newPasswordField.getText();
-
-        // Check current password
-        // TODO: There has to be a cleaner way to do this
-        ArrayList<byte[]> passwordArrayList = userdao.getUserPasswordArray(userdao.getUserFromId(currentUserId).getUsername());
-        if (userdao.verifyHash(currentPassword, passwordArrayList.get(0), passwordArrayList.get(1))) { // Verify password
-            // Check new password formatting
-            // Must have at least 8 characters. 1 Uppercase, 1 lowercase, 1 number
-            Pattern pattern = Pattern.compile("(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}");
-            Matcher matcher = pattern.matcher(newPassword);
-
-            if (!matcher.matches()) { // Invalid
+        
+        if (ChangePassword.checkPassword(currentPassword)) {
+            if (ChangePassword.checkPasswordValid(newPassword)) {
+                USERDAO.setPassword(currentUserId, newPassword);
+                onBackClick(); // Shortcut back
+            }
+            else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Password change Failed");
                 alert.setHeaderText("New password invalid");
                 alert.setContentText("Please make sure password is valid.\n" +
                         "Password must have at least 8 characters, 1 uppercase, 1 lowercase, and 1 number.");
                 alert.showAndWait();
-                return;
             }
-            // Valid
-            userdao.setPassword(currentUserId, newPassword);
-            onBackClick(); // Shortcut back
         } else { // Current password is incorrect
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Password change Failed");
@@ -59,7 +51,6 @@ public class ChangePasswordController {
             alert.setContentText("Current password is incorrect.");
             alert.showAndWait();
         }
-
     }
 
     @FXML

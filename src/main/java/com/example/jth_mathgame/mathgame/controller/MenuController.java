@@ -1,5 +1,7 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.controller;
 
+import com.example.jth_mathgame.mathgame.MainApplication;
+import com.example.jth_mathgame.mathgame.model.Menu;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,15 +14,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
-
 public class MenuController {
     @FXML
     private Label titleText;
     @FXML
-    private Button startButton;
+    private Button timedButton;
     @FXML
-    private Button startButton2;
+    private Button endlessButton;
     @FXML
     private Button statsButton;
     @FXML
@@ -31,7 +31,7 @@ public class MenuController {
     @FXML
     protected void onStartGameClick() throws IOException {
         // Change window when start button clicked
-        Stage stage = (Stage) startButton.getScene().getWindow();
+        Stage stage = (Stage) timedButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("game-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
@@ -39,7 +39,7 @@ public class MenuController {
     @FXML
     protected void onStartEndlessGameClick() throws IOException {
         // Change window when start button clicked
-        Stage stage = (Stage) startButton2.getScene().getWindow();
+        Stage stage = (Stage) endlessButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("EndlessGame-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
@@ -51,16 +51,17 @@ public class MenuController {
         titleText.setFont(new Font("Impact", 58));
 
         // Adjust buttons
-        startButton2.setFont(new Font("Arial", 40));
-        startButton.setFont(new Font("Arial", 40));
-        statsButton.setFont(new Font("Arial", 40));
-        settingsButton.setFont(new Font("Arial", 40));
-        logoutButton.setFont(new Font("Arial", 40));
+        Font buttonFont = new Font("Arial", 40);
+        endlessButton.setFont(buttonFont);
+        timedButton.setFont(buttonFont);
+        statsButton.setFont(buttonFont);
+        settingsButton.setFont(buttonFont);
+        logoutButton.setFont(buttonFont);
     }
 
     @FXML
     private void onLogoutClick() throws IOException {
-        currentUserId = null; // Logs user out
+        Menu.Logout();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         Stage stage = (Stage) logoutButton.getScene().getWindow();

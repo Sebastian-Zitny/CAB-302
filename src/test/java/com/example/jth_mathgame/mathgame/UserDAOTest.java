@@ -26,7 +26,7 @@ class UserDAOFileDbTest {
             """);
             st.execute("DELETE FROM users");
         }
-        dao = new UserDAO();
+        dao = UserDAO.getInstance();
     }
 
     @AfterAll

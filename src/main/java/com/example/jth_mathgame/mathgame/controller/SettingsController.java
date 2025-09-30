@@ -1,5 +1,9 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.controller;
 
+import com.example.jth_mathgame.mathgame.MainApplication;
+import com.example.jth_mathgame.mathgame.ResultDAO;
+import com.example.jth_mathgame.mathgame.model.Settings;
+import com.example.jth_mathgame.mathgame.UserDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.example.jth_mathgame.mathgame.MainApplication.*;
+import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
 
 public class SettingsController {
     @FXML
@@ -22,6 +26,8 @@ public class SettingsController {
     private Button changePasswordButton;
     @FXML
     private Button deleteAccountButton;
+    private final UserDAO USERDAO = UserDAO.getInstance();
+    private final ResultDAO RESULTDAO = ResultDAO.getInstance();
 
     @FXML
     public void initialize() {
@@ -60,8 +66,8 @@ public class SettingsController {
                 ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.YES) {
-            resultdao.removeAllUserResults(currentUserId);
-            userdao.deleteAccount();
+            RESULTDAO.removeAllUserResults(currentUserId);
+            USERDAO.deleteAccount();
             logout();
         }
     }

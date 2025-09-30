@@ -5,11 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultDAO implements IResultDAO {
+
     private final Connection connection;
 
-    public ResultDAO() {
+    protected ResultDAO() {
         connection = SqliteConnection.getInstance();
         createTables();
+    }
+
+    private static class ResultDAOHolder {
+        private final static ResultDAO INSTANCE = new ResultDAO();
+    }
+
+    public static ResultDAO getInstance() {
+        return ResultDAOHolder.INSTANCE;
     }
 
     private void createTables() {

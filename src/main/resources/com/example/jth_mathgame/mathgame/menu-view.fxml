@@ -6,7 +6,7 @@
 
 <?import javafx.scene.control.Button?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.jth_mathgame.mathgame.MenuController">
+      fx:controller="com.example.jth_mathgame.mathgame.controller.MenuController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
@@ -16,8 +16,8 @@
     </VBox>
 
     <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml">
-        <Button fx:id="startButton2" text="Start endless" minWidth="200" minHeight="40" onAction="#onStartEndlessGameClick"/>
-        <Button fx:id="startButton" text="Start" minWidth="200" minHeight="40" onAction="#onStartGameClick"/>
+        <Button fx:id="endlessButton" text="Start endless" minWidth="200" minHeight="40" onAction="#onStartEndlessGameClick"/>
+        <Button fx:id="timedButton" text="Start" minWidth="200" minHeight="40" onAction="#onStartGameClick"/>
         <Button fx:id="statsButton" text="Stats" minWidth="200" minHeight="40" onAction="#toBeAdded"/>
         <Button fx:id="settingsButton" text="Settings" minWidth="200" minHeight="40" onAction="#onSettingsButtonClick"/>
         <Button fx:id="logoutButton" text="Logout" minWidth="200" minHeight="40" onAction="#onLogoutClick"/>

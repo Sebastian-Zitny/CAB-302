@@ -15,12 +15,17 @@ public class UserDAO implements IUserDAO {
 
     private final Connection connection;
 
-    /**
-     * An interface that interacts with the database
-     */
-    public UserDAO() {
+    protected UserDAO() {
         connection = SqliteConnection.getInstance();
         createTables();
+    }
+
+    private static class UserDAOHolder {
+        private final static UserDAO INSTANCE = new UserDAO();
+    }
+
+    public static UserDAO getInstance() {
+        return UserDAOHolder.INSTANCE;
     }
 
     private void createTables() {

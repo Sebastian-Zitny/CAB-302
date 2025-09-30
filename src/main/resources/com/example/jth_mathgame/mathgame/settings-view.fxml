@@ -3,9 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.jth_mathgame.mathgame.SettingsController">
+            fx:controller="com.example.jth_mathgame.mathgame.controller.SettingsController">
     <center>
         <VBox alignment="CENTER" spacing="20">
             <Label text="Settings" style="-fx-font-size: 36; -fx-font-family: Impact;" />

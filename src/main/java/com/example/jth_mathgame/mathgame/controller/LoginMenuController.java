@@ -1,5 +1,9 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.controller;
 
+import com.example.jth_mathgame.mathgame.model.LoginMenu;
+import com.example.jth_mathgame.mathgame.MainApplication;
+import com.example.jth_mathgame.mathgame.User;
+import com.example.jth_mathgame.mathgame.UserDAO;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +15,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
-import static com.example.jth_mathgame.mathgame.MainApplication.userdao;
 
 public class LoginMenuController {
     @FXML
@@ -28,20 +30,18 @@ public class LoginMenuController {
     @FXML
     private Button backButton;
 
+    private final UserDAO USERDAO = UserDAO.getInstance();
+
     @FXML
     protected void onSubmitClick() throws IOException {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
         // Looks for user with username
-        User user = userdao.getUser(username);
-        if (user != null) {
-            ArrayList<byte[]> passwordArrayList = userdao.getUserPasswordArray(username);
-
-            // Verify password
-            if (userdao.verifyHash(password, passwordArrayList.get(0), passwordArrayList.get(1))) {
+        User user = USERDAO.getUser(username);
+        if (user != null){
+            if (LoginMenu.CheckLogin(username, password)) {
                 // Login success
-                System.out.println("Login successful: " + username);
                 currentUserId = user.getId();
                 Stage stage = (Stage) submitButton.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
@@ -49,21 +49,21 @@ public class LoginMenuController {
                 stage.setScene(scene);
             }
             else {
-                // Failed login
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Login Failed");
-                alert.setHeaderText("Invalid credentials");
-                alert.setContentText("Please check your username and password.");
-                alert.showAndWait();
+                // Password Incorrect
+                failedLogin();
             }
         } else {
-            // Failed login
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Login Failed");
-            alert.setHeaderText("Invalid credentials");
-            alert.setContentText("Please check your username and password.");
-            alert.showAndWait();
+            // Username not found
+            failedLogin();
         }
+    }
+
+    private static void failedLogin() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Login Failed");
+        alert.setHeaderText("Invalid credentials");
+        alert.setContentText("Please check your username and password.");
+        alert.showAndWait();
     }
 
     @FXML

@@ -47,7 +47,6 @@ public class User {
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.score = score;
         this.usernameProperty = new SimpleStringProperty(username);
         this.scoreProperty = new SimpleIntegerProperty(score);
     }

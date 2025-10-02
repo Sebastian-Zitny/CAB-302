@@ -31,9 +31,7 @@ public class UserDAO implements IUserDAO {
                     + "UserID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"
                     + "Username TEXT NOT NULL UNIQUE,"
                     + "Password TEXT NOT NULL,"
-                    + "Email TEXT,"
-                    + "Phone TEXT,"
-                    + "Score INTEGER"
+                    + "Score INTEGER,"
                     + "PasswordHash BLOB NOT NULL,"
                     + "PasswordSalt BLOB NOT NULL,"
                     + "Email TEXT UNIQUE,"
@@ -57,17 +55,14 @@ public class UserDAO implements IUserDAO {
         try {
             PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO users
-                    (Username, Password, Email, Phone, Score) VALUES (?, ?, ?, ?, ?)""");
+                    (Username, Password, Score, PasswordHash, PasswordSalt, Email, Phone) VALUES (?, ?, ?, ?, ?, ?, ?)""");
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getPhone());
-            statement.setInt(5,user.getScore());
-            statement.setString(1, user.getUsername());
-            statement.setBytes(2, passArrayList.get(0));
-            statement.setBytes(3, passArrayList.get(1));
-            statement.setString(4, user.getEmail());
-            statement.setString(5, user.getPhone());
+            statement.setInt(3,user.getScore());
+            statement.setBytes(4, passArrayList.get(0));
+            statement.setBytes(5, passArrayList.get(1));
+            statement.setString(6, user.getEmail());
+            statement.setString(7, user.getPhone());
             statement.execute();
         } catch (SQLException e) {
             // Duplicate username/email

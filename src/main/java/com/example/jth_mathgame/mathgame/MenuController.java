@@ -68,6 +68,7 @@ public class MenuController {
         Stage stage = (Stage) logoutButton.getScene().getWindow();
         stage.close();
     }
+    @FXML
     private void onLogoutClick() throws IOException {
         currentUserId = null; // Logs user out
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));

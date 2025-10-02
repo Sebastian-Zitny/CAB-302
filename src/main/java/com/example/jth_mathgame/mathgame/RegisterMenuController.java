@@ -44,12 +44,11 @@ public class RegisterMenuController {
         String email = emailTextField.getText();
         String phone = phoneTextField.getText();
 
-        if (!username.isEmpty() && !password.isEmpty() && !email.isEmpty() && !phone.isEmpty()) {
-            User newUser = new User(username, password, email, phone, 1);
+        if (!username.isEmpty() && !password.isEmpty() && !email.isEmpty()) {
+            User newUser = new User(username,password,email,phone,0);
 
             IUserDAO dao = new UserDAO();
             dao.addUser(newUser);
-
             System.out.println("Registered: " + newUser.getUsername());
 
             // Change window when register button clicked

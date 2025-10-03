@@ -18,10 +18,12 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import java.util.Date;
 
 import java.io.IOException;
 import java.util.Random;
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
+import static com.example.jth_mathgame.mathgame.MainApplication.resultdao;
 
 public class GameController {
     @FXML
@@ -55,6 +57,7 @@ public class GameController {
 
 
     private static final IUserDAO dao = new UserDAO();
+    private static final IResultDAO resultdao = new ResultDAO();
     // For input to database
     public int databaseCorrect = 0;
     public int databaseIncorrect = 0;
@@ -112,14 +115,12 @@ public class GameController {
                         timeLabel.setText(String.valueOf(Time));
                     } else {
                         // timer finished
-                        Game.inputResult(databaseCorrect, databaseIncorrect);
+                       // Game.inputResult(databaseCorrect, databaseIncorrect);
+                        Result result = new Result(currentUserId, databaseCorrect, databaseIncorrect, new Date().toString());
+                        resultdao.addResult(result);
                         timeline.stop();
                         try {
                             musicPlayer.stopMusic();
-                            // changes user score to current score if the latter is higher (top score)
-                            if(dao.getScore(currentUserId) < score) {
-                                dao.setScore(currentUserId, score);
-                            }
                             Stage stage = (Stage) timeLabel.getScene().getWindow();
                             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
                             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
@@ -173,15 +174,12 @@ public class GameController {
     @FXML
     protected void onQuitButtonClick() throws IOException {
         musicPlayer.stopMusic();
-        // changes user score to current score if the latter is higher (top score)
-        if(dao.getScore(currentUserId) < score) {
-            dao.setScore(currentUserId, score);
-        }
         Stage stage = (Stage) quitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
     }
+
 
     //TODO: Compare user input against answer when clicked
     @FXML

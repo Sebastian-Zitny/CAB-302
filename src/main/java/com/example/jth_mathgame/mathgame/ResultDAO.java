@@ -39,6 +39,7 @@ public class ResultDAO implements IResultDAO {
     @Override
     public void addResult(Result result) {
         try {
+
             PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO results
                     (UserID, Correct, Incorrect, Gamemode, Date) VALUES (?, ?, ?, ?, ?)""");
@@ -127,6 +128,31 @@ public class ResultDAO implements IResultDAO {
                         resultSet.getString("Date")));
             }
             return resultList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Problem getting all user results");
+            return null;
+        }
+    }
+
+    public List<Score> getScores(){
+        try {
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT u.Username, r.Correct, r.Incorrect, r.Date
+                    FROM results r
+                    JOIN users u ON r.UserID = u.UserID""");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet == null) return null; // Result table is empty
+
+            List<Score> scoreList = new ArrayList<>();
+            while (resultSet.next()) { // Iterate through rows and add to list
+                scoreList.add(new Score(
+                        resultSet.getString("Username"),
+                        resultSet.getInt("Correct"),
+                        resultSet.getInt("Incorrect"),
+                        resultSet.getString("Date")));
+            }
+            return scoreList;
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Problem getting all user results");

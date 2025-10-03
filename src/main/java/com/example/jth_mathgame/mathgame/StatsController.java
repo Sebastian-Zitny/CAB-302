@@ -18,23 +18,32 @@ import java.util.List;
 
 public class StatsController {
     @FXML
-    private TableView<User> statsView;
+    private TableView<Score> statsView;
     @FXML
-    TableColumn<User, String> username;
+    TableColumn<Score, String> username;
     @FXML
-    TableColumn<User, Number> score;
+    TableColumn<Score, Number> score;
+    @FXML
+    TableColumn<Score, Number> correct;
+    @FXML
+    TableColumn<Score, Number> incorrect;
+    @FXML
+    TableColumn<Score, String> date;
     @FXML
     Button backButton;
 
-    private static final IUserDAO dao = new UserDAO();
+    private static final IResultDAO dao = new ResultDAO();
 
     public void initialize(){
         username.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
         score.setCellValueFactory(cellData -> cellData.getValue().getScoreProperty());
+        correct.setCellValueFactory(cellData -> cellData.getValue().getCorrectAnswersProperty());
+        incorrect.setCellValueFactory(cellData -> cellData.getValue().getIncorrectAnswersProperty());
+        date.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
 
-        List<User> users = dao.getAllUsers();
-        ObservableList<User> usersTable = FXCollections.observableArrayList(users);
-        statsView.setItems(usersTable);
+        List<Score> scores = dao.getScores();
+        ObservableList<Score> scoresTable = FXCollections.observableArrayList(scores);
+        statsView.setItems(scoresTable);
     }
     @FXML
     protected void onBackButtonClick() throws IOException, UnsupportedAudioFileException, LineUnavailableException {

@@ -45,7 +45,7 @@ public class RegisterMenuController {
         String phone = phoneTextField.getText();
 
         if (!username.isEmpty() && !password.isEmpty() && !email.isEmpty()) {
-            User newUser = new User(username,password,email,phone,0);
+            User newUser = new User(username,password,email,phone);
 
             IUserDAO dao = new UserDAO();
             dao.addUser(newUser);

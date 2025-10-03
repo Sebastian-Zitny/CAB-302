@@ -44,6 +44,7 @@ public class LoginMenuController {
                 // Login success
                 System.out.println("Login successful: " + username);
                 currentUserId = user.getId();
+                System.out.println("User Id: " + currentUserId);
                 Stage stage = (Stage) submitButton.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);

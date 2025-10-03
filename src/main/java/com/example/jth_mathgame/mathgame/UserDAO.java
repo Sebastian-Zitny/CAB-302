@@ -55,10 +55,9 @@ public class UserDAO implements IUserDAO {
         try {
             PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO users
-                    (Username, Password, Score, PasswordHash, PasswordSalt, Email, Phone) VALUES (?, ?, ?, ?, ?, ?, ?)""");
+                    (Username, Password, PasswordHash, PasswordSalt, Email, Phone) VALUES (?, ?, ?, ?, ?, ?, ?)""");
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
-            statement.setInt(3,user.getScore());
             statement.setBytes(4, passArrayList.get(0));
             statement.setBytes(5, passArrayList.get(1));
             statement.setString(6, user.getEmail());
@@ -86,11 +85,11 @@ public class UserDAO implements IUserDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet == null) return null; // TODO: Throw exception here instead
             return new User(
+                    resultSet.getInt("UserId"),
                     resultSet.getString("Username"),
                     resultSet.getString("Password"),
                     resultSet.getString("Email"),
-                    resultSet.getString("Phone"),
-                    resultSet.getInt("Score")
+                    resultSet.getString("Phone")
             );
 
         }

@@ -12,9 +12,6 @@ public class User {
     private String password;
     private String email;
     private String phone;
-    private int score;
-    private StringProperty usernameProperty;
-    private IntegerProperty scoreProperty;
     /**
      * Represents a user in the database
      * @param id The user's id
@@ -30,9 +27,6 @@ public class User {
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.score = score;
-        this.usernameProperty = new SimpleStringProperty(username);
-        this.scoreProperty = new SimpleIntegerProperty(score);
     }
 
     /**
@@ -42,13 +36,11 @@ public class User {
      * @param email The user's email address
      * @param phone The user's phone
      */
-    public User(String username, String password, String email, String phone, int score) {
+    public User(String username, String password, String email, String phone) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.usernameProperty = new SimpleStringProperty(username);
-        this.scoreProperty = new SimpleIntegerProperty(score);
     }
 
     public User(int userID, String username, String password, String email, String phone) {
@@ -99,24 +91,5 @@ public class User {
         this.phone = phone;
     }
 
-    public int getScore() {return score;}
 
-    public void setScore(int score) {this.score = score;}
-
-
-    public StringProperty getUsernameProperty() {
-        return usernameProperty;
-    }
-
-    public void setUsernameProperty() {
-        this.usernameProperty.set(username);
-    }
-
-    public IntegerProperty getScoreProperty() {
-        return scoreProperty;
-    }
-
-    public void setScoreProperty() {
-        this.scoreProperty.set(score);
-    }
 }

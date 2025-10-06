@@ -61,6 +61,8 @@ public class EndlessGameController {
     public int score = 1;
     @FXML
     ArrayList<Integer> FinalEquation = new ArrayList<>(Arrays.asList(0, 0));
+    private int correct = 0;
+    private int incorrect = 0;
 
 
 
@@ -138,6 +140,7 @@ public class EndlessGameController {
     // Go back to menu when quit button clicked
     @FXML
     protected void onQuitButtonClick() throws IOException {
+        EndlessGame.inputEndlessResult(correct,incorrect);
         Stage stage = (Stage) quitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
@@ -228,6 +231,7 @@ public class EndlessGameController {
             answerResponseLabel.setText("Correct!");
             answerResponseLabel.setTextFill(Color.GREEN);
             score ++;
+            correct ++;
 
 
 
@@ -283,6 +287,7 @@ public class EndlessGameController {
                 answerResponseLabel.setText("Incorrect!");
                 answerResponseLabel.setTextFill(Color.RED);
                 score--;
+                incorrect++;
                 mockQuestion();
                 String textFinalEquation = stringEquation();
                 questionLabel.setText(textFinalEquation);
@@ -291,6 +296,7 @@ public class EndlessGameController {
             else {
                 answerResponseLabel.setText("Incorrect!");
                 answerResponseLabel.setTextFill(Color.RED);
+                incorrect++;
                 mockQuestion();
                 String textFinalEquation = stringEquation();
                 questionLabel.setText(textFinalEquation);

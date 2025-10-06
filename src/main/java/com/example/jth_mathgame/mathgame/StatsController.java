@@ -6,9 +6,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -17,6 +19,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class StatsController {
+    @FXML
+    Label headerText;
     @FXML
     private TableView<Score> statsView;
     @FXML
@@ -27,24 +31,45 @@ public class StatsController {
     TableColumn<Score, Number> correct;
     @FXML
     TableColumn<Score, Number> incorrect;
+
     @FXML
-    TableColumn<Score, String> date;
+    private TableView<Score> endlessStatsView;
+    @FXML
+    TableColumn<Score, String> endlessUsername;
+    @FXML
+    TableColumn<Score, Number> endlessScore;
+    @FXML
+    TableColumn<Score, Number> endlessCorrect;
+    @FXML
+    TableColumn<Score, Number> endlessIncorrect;
+
     @FXML
     Button backButton;
 
     private static final IResultDAO dao = new ResultDAO();
 
     public void initialize(){
+        headerText.setText("Stats");
+        headerText.setFont(new Font("Impact", 29));
         username.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
         score.setCellValueFactory(cellData -> cellData.getValue().getScoreProperty());
         correct.setCellValueFactory(cellData -> cellData.getValue().getCorrectAnswersProperty());
-        incorrect.setCellValueFactory(cellData -> cellData.getValue().getIncorrectAnswersProperty());
-        date.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        incorrect.setCellValueFactory(cellData -> cellData.getValue().getIncorrectAnswersProperty());;
 
         List<Score> scores = dao.getScores();
         ObservableList<Score> scoresTable = FXCollections.observableArrayList(scores);
         statsView.setItems(scoresTable);
+
+        endlessUsername.setCellValueFactory(cellData -> cellData.getValue().getUsernameProperty());
+        endlessScore.setCellValueFactory(cellData -> cellData.getValue().getScoreProperty());
+        endlessCorrect.setCellValueFactory(cellData -> cellData.getValue().getCorrectAnswersProperty());
+        endlessIncorrect.setCellValueFactory(cellData -> cellData.getValue().getIncorrectAnswersProperty());;
+
+        List<Score> endlessScores = dao.getEndlessScores();
+        ObservableList<Score> endlessScoresTable = FXCollections.observableArrayList(endlessScores);
+        endlessStatsView.setItems(endlessScoresTable);
     }
+
     @FXML
     protected void onBackButtonClick() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         soundPlayer.playSound("src/sounds/button_3.wav");

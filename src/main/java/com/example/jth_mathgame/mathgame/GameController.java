@@ -115,9 +115,7 @@ public class GameController {
                         timeLabel.setText(String.valueOf(Time));
                     } else {
                         // timer finished
-                       // Game.inputResult(databaseCorrect, databaseIncorrect);
-                        Result result = new Result(currentUserId, databaseCorrect, databaseIncorrect, new Date().toString());
-                        resultdao.addResult(result);
+                       Game.inputResult(databaseCorrect, databaseIncorrect);
                         timeline.stop();
                         try {
                             musicPlayer.stopMusic();
@@ -174,6 +172,7 @@ public class GameController {
     @FXML
     protected void onQuitButtonClick() throws IOException {
         musicPlayer.stopMusic();
+        Game.inputResult(databaseCorrect, databaseIncorrect);
         Stage stage = (Stage) quitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);

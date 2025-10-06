@@ -55,13 +55,13 @@ public class UserDAO implements IUserDAO {
         try {
             PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO users
-                    (Username, Password, PasswordHash, PasswordSalt, Email, Phone) VALUES (?, ?, ?, ?, ?, ?, ?)""");
+                    (Username, Password, PasswordHash, PasswordSalt, Email, Phone) VALUES (?, ?, ?, ?, ?, ?)""");
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
-            statement.setBytes(4, passArrayList.get(0));
-            statement.setBytes(5, passArrayList.get(1));
-            statement.setString(6, user.getEmail());
-            statement.setString(7, user.getPhone());
+            statement.setBytes(3, passArrayList.get(0));
+            statement.setBytes(4, passArrayList.get(1));
+            statement.setString(5, user.getEmail());
+            statement.setString(6, user.getPhone());
             statement.execute();
         } catch (SQLException e) {
             // Duplicate username/email

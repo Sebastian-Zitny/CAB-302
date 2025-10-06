@@ -24,17 +24,12 @@ public class Score {
     public IntegerProperty getIncorrectAnswersProperty() {
         return incorrectAnswersProperty;
     }
-    private StringProperty dateProperty;
-    public StringProperty getDateProperty(){
-        return dateProperty;
-    }
 
-    public Score(String username, int correctAnswers, int incorrectAnswers, String date){
+    public Score(String username, int correctAnswers, int incorrectAnswers){
         this.usernameProperty = new SimpleStringProperty(username);
         this.scoreProperty = new SimpleIntegerProperty(correctAnswers - incorrectAnswers);
         this.correctAnswersProperty = new SimpleIntegerProperty(correctAnswers);
         this.incorrectAnswersProperty = new SimpleIntegerProperty(incorrectAnswers);
-        this.dateProperty = new SimpleStringProperty(date);
     }
 
 }

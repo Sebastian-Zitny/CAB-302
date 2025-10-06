@@ -8,4 +8,5 @@ public interface IResultDAO {
     List<Result> getUserResults(int userId);
     List<Result> getAllResults();
     List<Score> getScores();
+    List<Score> getEndlessScores();
 }

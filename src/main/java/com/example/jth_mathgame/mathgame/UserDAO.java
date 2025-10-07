@@ -35,6 +35,8 @@ public class UserDAO implements IUserDAO {
             String query = "CREATE TABLE IF NOT EXISTS users ("
                     + "UserID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"
                     + "Username TEXT NOT NULL UNIQUE,"
+                    + "Password TEXT NOT NULL,"
+                    + "Score INTEGER,"
                     + "PasswordHash BLOB NOT NULL,"
                     + "PasswordSalt BLOB NOT NULL,"
                     + "Email TEXT UNIQUE,"
@@ -58,12 +60,13 @@ public class UserDAO implements IUserDAO {
         try {
             PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO users
-                    (Username, PasswordHash, PasswordSalt, Email, Phone) VALUES (?, ?, ?, ?, ?)""");
+                    (Username, Password, PasswordHash, PasswordSalt, Email, Phone) VALUES (?, ?, ?, ?, ?, ?)""");
             statement.setString(1, user.getUsername());
-            statement.setBytes(2, passArrayList.get(0));
-            statement.setBytes(3, passArrayList.get(1));
-            statement.setString(4, user.getEmail());
-            statement.setString(5, user.getPhone());
+            statement.setString(2, user.getPassword());
+            statement.setBytes(3, passArrayList.get(0));
+            statement.setBytes(4, passArrayList.get(1));
+            statement.setString(5, user.getEmail());
+            statement.setString(6, user.getPhone());
             statement.execute();
         } catch (SQLException e) {
             // Duplicate username/email
@@ -87,20 +90,59 @@ public class UserDAO implements IUserDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet == null) return null; // TODO: Throw exception here instead
             return new User(
-                    resultSet.getInt("UserID"),
+                    resultSet.getInt("UserId"),
                     resultSet.getString("Username"),
+                    resultSet.getString("Password"),
                     resultSet.getString("Email"),
-                    resultSet.getString("Phone"));
-        } catch (SQLException e) {
+                    resultSet.getString("Phone")
+            );
+
+        }
+        catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    /** Gets user data from database using the user id
-     * @param id Id number of user
-     * @return User
-     */
+    public int getScore(int Id){
+        try{
+
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT Score
+                    FROM users
+                    WHERE UserID IS (?)
+                    """);
+            statement.setInt(1,Id);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.getInt("Score");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setScore(int Id, int score){
+        try{
+            PreparedStatement statement = connection.prepareStatement("""
+                    UPDATE users
+                    SET Score = ?
+                    WHERE UserID IS (?)
+                    """);
+            statement.setInt(1,score);
+            statement.setInt(2,Id);
+            statement.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void authUser(String username, String password) {
+        //TODO: Perhaps this could be used instead to authenticate?
+        /** Gets user data from database using the user id
+         * @param id Id number of user
+         * @return User
+         */
+    }
     public User getUserFromId(int id) {
         try {
             PreparedStatement statement = connection.prepareStatement("""
@@ -109,13 +151,20 @@ public class UserDAO implements IUserDAO {
                     WHERE UserID IS (?)""");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet == null) return null; // TODO: Throw exception here instead
-            return new User(
-                    resultSet.getInt("UserID"),
-                    resultSet.getString("Username"),
-                    resultSet.getString("Email"),
-                    resultSet.getString("Phone"));
-        } catch (SQLException e) {
+            if (resultSet == null) {
+                return null; // TODO: Throw exception here instead
+            }
+            else{
+                return new User(
+                        resultSet.getInt("UserID"),
+                        resultSet.getString("Username"),
+                        resultSet.getString("Password"),
+                        resultSet.getString("Email"),
+                        resultSet.getString("Phone")
+                );
+
+        }}
+        catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
@@ -224,7 +273,8 @@ public class UserDAO implements IUserDAO {
                         resultSet.getString("Username"),
                         resultSet.getString("Password"),
                         resultSet.getString("Email"),
-                        resultSet.getString("Phone")));
+                        resultSet.getString("Phone"),
+                        resultSet.getInt("Score")));
             }
 
             return userList;

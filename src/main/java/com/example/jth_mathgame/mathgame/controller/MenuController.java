@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
 public class MenuController {
@@ -60,6 +62,12 @@ public class MenuController {
     }
 
     @FXML
+    protected void onQuitButtonClick() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        // Close window when quit button clicked
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.close();
+    }
+    @FXML
     private void onLogoutClick() throws IOException {
         Menu.Logout();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
@@ -70,7 +78,7 @@ public class MenuController {
     }
 
     @FXML
-    protected void toBeAdded() {
+    protected void toBeAdded() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // Use on features not yet implemented
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "To be added...", ButtonType.OK);
         alert.showAndWait();
@@ -80,6 +88,14 @@ public class MenuController {
     protected void onSettingsButtonClick() throws IOException {
         Stage stage = (Stage) settingsButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("settings-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        stage.setScene(scene);
+    }
+
+    @FXML
+    protected void onStatsButtonClick() throws IOException {
+        Stage stage = (Stage) settingsButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("stats-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
     }

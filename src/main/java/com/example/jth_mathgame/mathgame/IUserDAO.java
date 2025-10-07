@@ -8,4 +8,6 @@ public interface IUserDAO {
     User getUser(String username);
     ArrayList<byte[]> getUserPasswordArray(String username);
     List<User> getAllUsers();
+    void setScore(int Id, int score);
+    int getScore(int Id);
 }

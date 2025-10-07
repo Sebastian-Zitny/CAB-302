@@ -18,12 +18,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.util.Date;
-
 import java.io.IOException;
 import java.util.Random;
-import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
-import static com.example.jth_mathgame.mathgame.MainApplication.resultdao;
 
 public class GameController {
     @FXML
@@ -56,8 +52,6 @@ public class GameController {
     public int score = 1;
 
 
-    private static final IUserDAO dao = new UserDAO();
-    private static final IResultDAO resultdao = new ResultDAO();
     // For input to database
     public int databaseCorrect = 0;
     public int databaseIncorrect = 0;
@@ -66,7 +60,6 @@ public class GameController {
 
     @FXML
     public void initialize() {
-        musicPlayer.playMusic("src/sounds/music0.wav");
         // TODO: Maybe convert FXML padding to code
         // Defines some fonts
         Font smallFont = new Font("Arial", 20);
@@ -118,7 +111,6 @@ public class GameController {
                        Game.inputResult(databaseCorrect, databaseIncorrect);
                         timeline.stop();
                         try {
-                            musicPlayer.stopMusic();
                             Stage stage = (Stage) timeLabel.getScene().getWindow();
                             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
                             Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
@@ -171,7 +163,6 @@ public class GameController {
     // Go back to menu when quit button clicked
     @FXML
     protected void onQuitButtonClick() throws IOException {
-        musicPlayer.stopMusic();
         Game.inputResult(databaseCorrect, databaseIncorrect);
         Stage stage = (Stage) quitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));

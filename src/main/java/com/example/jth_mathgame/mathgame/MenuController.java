@@ -31,8 +31,7 @@ public class MenuController {
     private Button logoutButton;
 
     @FXML
-    protected void onStartGameClick() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        soundPlayer.playSound("src/sounds/button_3.wav");
+    protected void onStartGameClick() throws IOException {
         // Change window when start button clicked
         Stage stage = (Stage) startButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("game-view.fxml"));
@@ -63,7 +62,6 @@ public class MenuController {
 
     @FXML
     protected void onQuitButtonClick() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        soundPlayer.playSound("src/sounds/button_3.wav");
         // Close window when quit button clicked
         Stage stage = (Stage) logoutButton.getScene().getWindow();
         stage.close();
@@ -80,7 +78,6 @@ public class MenuController {
 
     @FXML
     protected void toBeAdded() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        soundPlayer.playSound("src/sounds/button_3.wav");
         // Use on features not yet implemented
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "To be added...", ButtonType.OK);
         alert.showAndWait();
@@ -88,7 +85,6 @@ public class MenuController {
 
     @FXML
     protected void onSettingsButtonClick() throws IOException {
-        soundPlayer.playSound("src/sounds/button_3.wav");
         Stage stage = (Stage) settingsButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("settings-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
@@ -97,7 +93,6 @@ public class MenuController {
 
     @FXML
     protected void onStatsButtonClick() throws IOException {
-        soundPlayer.playSound("src/sounds/button_3.wav");
         Stage stage = (Stage) settingsButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("stats-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);

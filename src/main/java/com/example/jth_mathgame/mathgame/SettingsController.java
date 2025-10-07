@@ -40,7 +40,6 @@ public class SettingsController {
             Settings.save(); // persist to file
 
             try {
-                soundPlayer.playSound("src/sounds/button_3.wav");
                 Stage stage = (Stage) backButton.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);

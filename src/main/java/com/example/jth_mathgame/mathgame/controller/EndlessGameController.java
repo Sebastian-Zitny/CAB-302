@@ -1,5 +1,6 @@
 package com.example.jth_mathgame.mathgame.controller;
 
+import com.example.jth_mathgame.mathgame.model.EndlessGame;
 import com.example.jth_mathgame.mathgame.MainApplication;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

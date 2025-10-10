@@ -1,2 +1,2 @@
-difficulty=Medium
+difficulty=Easy
 sound=true

@@ -35,8 +35,6 @@ public class UserDAO implements IUserDAO {
             String query = "CREATE TABLE IF NOT EXISTS users ("
                     + "UserID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"
                     + "Username TEXT NOT NULL UNIQUE,"
-                    + "Password TEXT NOT NULL,"
-                    + "Score INTEGER,"
                     + "PasswordHash BLOB NOT NULL,"
                     + "PasswordSalt BLOB NOT NULL,"
                     + "Email TEXT UNIQUE,"
@@ -60,13 +58,12 @@ public class UserDAO implements IUserDAO {
         try {
             PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO users
-                    (Username, Password, PasswordHash, PasswordSalt, Email, Phone) VALUES (?, ?, ?, ?, ?, ?)""");
+                    (Username, PasswordHash, PasswordSalt, Email, Phone) VALUES (?, ?, ?, ?, ?)""");
             statement.setString(1, user.getUsername());
-            statement.setString(2, user.getPassword());
-            statement.setBytes(3, passArrayList.get(0));
-            statement.setBytes(4, passArrayList.get(1));
-            statement.setString(5, user.getEmail());
-            statement.setString(6, user.getPhone());
+            statement.setBytes(2, passArrayList.get(0));
+            statement.setBytes(3, passArrayList.get(1));
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getPhone());
             statement.execute();
         } catch (SQLException e) {
             // Duplicate username/email
@@ -92,7 +89,6 @@ public class UserDAO implements IUserDAO {
             return new User(
                     resultSet.getInt("UserId"),
                     resultSet.getString("Username"),
-                    resultSet.getString("Password"),
                     resultSet.getString("Email"),
                     resultSet.getString("Phone")
             );
@@ -158,7 +154,6 @@ public class UserDAO implements IUserDAO {
                 return new User(
                         resultSet.getInt("UserID"),
                         resultSet.getString("Username"),
-                        resultSet.getString("Password"),
                         resultSet.getString("Email"),
                         resultSet.getString("Phone")
                 );
@@ -271,10 +266,8 @@ public class UserDAO implements IUserDAO {
             while (resultSet.next()) { // Iterate through rows and add to list
                 userList.add(new User(resultSet.getInt("UserID"),
                         resultSet.getString("Username"),
-                        resultSet.getString("Password"),
                         resultSet.getString("Email"),
-                        resultSet.getString("Phone"),
-                        resultSet.getInt("Score")));
+                        resultSet.getString("Phone")));
             }
 
             return userList;

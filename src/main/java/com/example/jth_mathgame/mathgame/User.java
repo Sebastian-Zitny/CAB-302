@@ -19,9 +19,8 @@ public class User {
      * @param password The user's password
      * @param email The user's email address
      * @param phone The user's phone
-     * @param score The user's score
      */
-    public User(int id, String username, String password, String email, String phone,int score) {
+    public User(int id, String username, String password, String email, String phone) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -43,9 +42,8 @@ public class User {
         this.phone = phone;
     }
 
-    public User(int userID, String username, String password, String email, String phone) {
+    public User(int userID, String username, String email, String phone) {
         this.id = userID;
-        this.password = password;
         this.username = username;
         this.email = email;
         this.phone = phone;

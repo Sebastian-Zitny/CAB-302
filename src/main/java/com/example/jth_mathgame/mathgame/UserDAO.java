@@ -113,8 +113,10 @@ public class UserDAO implements IUserDAO {
     }
 
     public int getScore(int Id){
-        try{
-
+        SqliteConnection database = null;
+        try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT Score
                     FROM users
@@ -126,11 +128,16 @@ public class UserDAO implements IUserDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
     public void setScore(int Id, int score){
-        try{
+        SqliteConnection database = null;
+        try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     UPDATE users
                     SET Score = ?
@@ -142,15 +149,15 @@ public class UserDAO implements IUserDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
-    public void authUser(String username, String password) {
-        //TODO: Perhaps this could be used instead to authenticate?
-        /** Gets user data from database using the user id
-         * @param id Id number of user
-         * @return User
-         */
-    }
+
+    /** Gets user data from database using the user id
+     * @param id Id number of user
+     * @return User
+     */
     public User getUserFromId(int id) {
         SqliteConnection database = null;
         try {
@@ -164,16 +171,15 @@ public class UserDAO implements IUserDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet == null) {
                 return null; // TODO: Throw exception here instead
-            }
-            else{
+            } else {
                 return new User(
                         resultSet.getInt("UserID"),
                         resultSet.getString("Username"),
                         resultSet.getString("Email"),
                         resultSet.getString("Phone")
                 );
-
-        }}
+            }
+        }
         catch (SQLException e) {
             e.printStackTrace();
             return null;

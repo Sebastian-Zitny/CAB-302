@@ -166,7 +166,10 @@ public class ResultDAO implements IResultDAO {
     }
 
     public List<Score> getScores(){
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT u.Username AS Username, AVG(r.Correct) AS Correct, AVG(r.Incorrect) AS Incorrect
                     FROM results r
@@ -188,11 +191,16 @@ public class ResultDAO implements IResultDAO {
             e.printStackTrace();
             System.err.println("Problem getting all user results");
             return null;
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
     public List<Score> getEndlessScores(){
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT u.Username AS Username, AVG(r.Correct) AS Correct, AVG(r.Incorrect) AS Incorrect
                     FROM results r
@@ -214,6 +222,8 @@ public class ResultDAO implements IResultDAO {
             e.printStackTrace();
             System.err.println("Problem getting all user results");
             return null;
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 }

@@ -52,11 +52,12 @@ public class EndlessGameController {
     @FXML
     private Random randomGenerator;
     @FXML
-    public int score = 1;
+    public int score = 0;
     @FXML
     ArrayList<Integer> FinalEquation = new ArrayList<>(Arrays.asList(0, 0));
     private int correct = 0;
     private int incorrect = 0;
+    public int difficulty = 1;
 
 
 
@@ -119,8 +120,6 @@ public class EndlessGameController {
         int int2 = randomGenerator.nextInt(11);
         stringInt2 = String.valueOf(int2);
 
-
-
         FinalEquation.set(0, int1);
         FinalEquation.set(1, int2);
 
@@ -144,9 +143,16 @@ public class EndlessGameController {
     private int[][] generateModifier() {
         int[][] modifiers = new int[3][2];
 
+
+        if (score != 0) {
+            if (score % 3 == 0)  {
+                difficulty = difficulty + 2;
+            }
+        }
+
         for (int i = 0; i < 3; i++) {
             int symbol = randomGenerator.nextInt(3);
-            int addedInt = randomGenerator.nextInt(1, 5);
+            int addedInt = randomGenerator.nextInt(1, 5 * difficulty);
             modifiers[i] = new int[]{symbol, addedInt};
         }
 
@@ -202,10 +208,9 @@ public class EndlessGameController {
         return answer;
     }
 
-
-    //TODO: Compare user input against answer when clicked
     @FXML
     protected void onSubmitButtonClick() {
+
 
         // generate modifiers for future
         int[][] modifiers = generateModifier();
@@ -221,59 +226,114 @@ public class EndlessGameController {
 
         int questionAns = equationAnswer();
 
+        inputField.clear();
+
         if (equalsInt == (questionAns)) {
+
             answerResponseLabel.setText("Correct!");
             answerResponseLabel.setTextFill(Color.GREEN);
             score ++;
             correct ++;
+            levelLabel.setText("Endless Level:" + score);
+
+            if (FinalEquation.toArray().length > 6) {
+                answerResponseLabel.setText("Correct!, difficulty increased");
+                FinalEquation.clear();
+                FinalEquation.add(0, 1);
+                FinalEquation.add(1, 1);
+
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Modifier");
+                alert.setHeaderText("Your score has increased your modifer difficulty");
+                alert.setContentText("whichever chosen will be added to the next equation");
+
+
+                ButtonType modifierButton1= new ButtonType(symbol1 + " " + modNum1);
+                ButtonType modifierButton2 = new ButtonType(symbol2 + " " + modNum2);
+                ButtonType modifierButton3 = new ButtonType(symbol3 + " " + modNum3);
+                alert.getButtonTypes().setAll(modifierButton1, modifierButton2, modifierButton3);
+
+                Optional<ButtonType> result = alert.showAndWait();
 
 
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Modifier");
-            alert.setHeaderText("Choose a modifier");
-            alert.setContentText("whichever chosen will be added to the next equation");
+                if (result.isPresent()) {
+                    ButtonType clicked = result.get();
+
+                    // add modifiers to equation
+                    if (clicked == modifierButton1) {
 
 
-            ButtonType modifierButton1= new ButtonType(symbol1 + " " + modNum1);
-            ButtonType modifierButton2 = new ButtonType(symbol2 + " " + modNum2);
-            ButtonType modifierButton3 = new ButtonType(symbol3 + " " + modNum3);
-            alert.getButtonTypes().setAll(modifierButton1, modifierButton2, modifierButton3, ButtonType.CANCEL);
+                        FinalEquation.add(modifiers[0][0]);
+                        FinalEquation.add(Integer.valueOf(modNum1));
 
 
-            Optional<ButtonType> result = alert.showAndWait();
+                    } else if (clicked == modifierButton2) {
 
-            if (result.isPresent()) {
-                ButtonType clicked = result.get();
+                        FinalEquation.add(modifiers[1][0]);
+                        FinalEquation.add(Integer.valueOf(modNum2));
 
-                // add modifiers to equation
-                if (clicked == modifierButton1) {
-                    FinalEquation.add(modifiers[0][0]);
-                    FinalEquation.add(Integer.valueOf(modNum1));
+                    } else if (clicked == modifierButton3) {
 
+                        FinalEquation.add(modifiers[2][0]);
+                        FinalEquation.add(Integer.valueOf(modNum3));
 
-                } else if (clicked == modifierButton2) {
-                    FinalEquation.add(modifiers[1][0]);
-                    FinalEquation.add(Integer.valueOf(modNum2));
-
-                } else if (clicked == modifierButton3) {
-                    FinalEquation.add(modifiers[2][0]);
-                    FinalEquation.add(Integer.valueOf(modNum3));
-
-                } else if (clicked == ButtonType.CANCEL) {
-                    System.out.println("shouldn't be doing this");
+                    }
                 }
+
+
+                mockQuestion();
+                String textFinalEquation = stringEquation();
+                questionLabel.setText(textFinalEquation);
+
+            }
+
+            else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Modifier");
+                alert.setHeaderText("Choose a modifier");
+                alert.setContentText("whichever chosen will be added to the next equation");
+
+
+                ButtonType modifierButton1= new ButtonType(symbol1 + " " + modNum1);
+                ButtonType modifierButton2 = new ButtonType(symbol2 + " " + modNum2);
+                ButtonType modifierButton3 = new ButtonType(symbol3 + " " + modNum3);
+                alert.getButtonTypes().setAll(modifierButton1, modifierButton2, modifierButton3);
+
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.isPresent()) {
+                    ButtonType clicked = result.get();
+
+                    // add modifiers to equation
+                    if (clicked == modifierButton1) {
+                        FinalEquation.add(modifiers[0][0]);
+                        FinalEquation.add(Integer.valueOf(modNum1));
+
+
+                    } else if (clicked == modifierButton2) {
+                        FinalEquation.add(modifiers[1][0]);
+                        FinalEquation.add(Integer.valueOf(modNum2));
+
+                    } else if (clicked == modifierButton3) {
+                        FinalEquation.add(modifiers[2][0]);
+                        FinalEquation.add(Integer.valueOf(modNum3));
+
+                    }
+                }
+
+
+
+                mockQuestion();
+                String textFinalEquation = stringEquation();
+                questionLabel.setText(textFinalEquation);
+
             }
 
 
 
-            mockQuestion();
-            String textFinalEquation = stringEquation();
-            questionLabel.setText(textFinalEquation);
-            levelLabel.setText("Endless Level:" + score);
-
-
-            // levelLabel
         }
         else {
 

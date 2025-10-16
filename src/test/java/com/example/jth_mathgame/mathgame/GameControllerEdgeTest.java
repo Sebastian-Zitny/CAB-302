@@ -1,5 +1,6 @@
 package com.example.jth_mathgame.mathgame;
 
+import com.example.jth_mathgame.mathgame.controller.GameController;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;

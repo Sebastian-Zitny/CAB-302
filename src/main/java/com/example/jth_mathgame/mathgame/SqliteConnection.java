@@ -4,21 +4,33 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SqliteConnection {
-    private static Connection instance = null;
+    private static SqliteConnection instance = null;
+    private Connection connection;
+    private final String url = "jdbc:sqlite:users.db";
 
-    private SqliteConnection() {
-        String url = "jdbc:sqlite:users.db";
-        try {
-            instance = DriverManager.getConnection(url);
-        } catch (SQLException sqlEx) {
-            System.err.println(sqlEx);
-        }
+    private SqliteConnection() throws SQLException {
+        connection = DriverManager.getConnection(url);
     }
 
-    public static Connection getInstance() {
+    public static SqliteConnection getInstance() throws SQLException{
         if (instance == null) {
-            new SqliteConnection();
+            instance = new SqliteConnection();
         }
         return instance;
+    }
+
+    public Connection openConnection() {
+        return connection;
+    }
+
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Cannot close database connection");
+        } finally {
+            instance = null;
+        }
     }
 }

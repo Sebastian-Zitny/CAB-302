@@ -20,7 +20,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.Random;
 
@@ -54,9 +53,11 @@ public class GameController {
     @FXML
     public int score = 1;
 
+
     // For input to database
     public int databaseCorrect = 0;
     public int databaseIncorrect = 0;
+
 
 
     @FXML
@@ -110,8 +111,16 @@ public class GameController {
                         timeLabel.setText(String.valueOf(Time));
                     } else {
                         // timer finished
-                        Game.inputResult(databaseCorrect, databaseIncorrect);
+                       Game.inputResult(databaseCorrect, databaseIncorrect);
                         timeline.stop();
+                        try {
+                            Stage stage = (Stage) timeLabel.getScene().getWindow();
+                            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
+                            Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+                            stage.setScene(scene);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
 
                         Platform.runLater(() -> {
                             try {
@@ -132,6 +141,7 @@ public class GameController {
                                 throw new RuntimeException(e);
                             }
                         });
+
                     }
                 })
         );
@@ -150,11 +160,13 @@ public class GameController {
     // Go back to menu when quit button clicked
     @FXML
     protected void onQuitButtonClick() throws IOException {
+        Game.inputResult(databaseCorrect, databaseIncorrect);
         Stage stage = (Stage) quitButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
     }
+
 
     //TODO: Compare user input against answer when clicked
     @FXML

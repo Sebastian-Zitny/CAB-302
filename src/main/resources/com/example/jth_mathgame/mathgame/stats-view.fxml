@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.jth_mathgame.mathgame.StatsController">
+            <center>
+
+            <VBox alignment="CENTER" spacing = "20">
+                <Label fx:id="headerText"/>
+                <Label fx:id="timedModeLabel" text="Timed Mode"/>
+                <TableView  fx:id="statsView" layoutX="20.0" layoutY="20.0" prefHeight="200.0" prefWidth="300.0">
+                    <columns>
+                        <TableColumn fx:id="username" text="Username" />
+                        <TableColumn fx:id="score" text="Score"/>
+                        <TableColumn fx:id="correct" text="Correct Answers"/>
+                        <TableColumn fx:id="incorrect" text="Incorrect Answers"/>
+                    </columns>
+            </TableView>
+            <Label fx:id="endlessModeLabel" text="Endless Mode"/>
+                <TableView  fx:id="endlessStatsView" layoutX="20.0" layoutY="20.0" prefHeight="200.0" prefWidth="300.0">
+                    <columns>
+                        <TableColumn fx:id="endlessUsername" text="Username" />
+                        <TableColumn fx:id="endlessScore" text="Score"/>
+                        <TableColumn fx:id="endlessCorrect" text="Correct Answers"/>
+                        <TableColumn fx:id="endlessIncorrect" text="Incorrect Answers"/>
+                    </columns>
+                </TableView>
+            <Button text="Back" fx:id="backButton" style="-fx-font-size: 24;" onAction="#onBackButtonClick"/>
+
+            </VBox>
+            </center>
+
+</BorderPane>

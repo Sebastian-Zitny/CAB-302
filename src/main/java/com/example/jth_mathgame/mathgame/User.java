@@ -1,12 +1,17 @@
 package com.example.jth_mathgame.mathgame;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
+
 public class User {
     private int id;
     private String username;
     private String password;
     private String email;
     private String phone;
-
     /**
      * Represents a user in the database
      * @param id The user's id
@@ -83,5 +88,6 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
 
 }

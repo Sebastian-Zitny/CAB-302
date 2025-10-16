@@ -97,11 +97,14 @@ public class UserDAO implements IUserDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet == null) return null; // TODO: Throw exception here instead
             return new User(
-                    resultSet.getInt("UserID"),
+                    resultSet.getInt("UserId"),
                     resultSet.getString("Username"),
                     resultSet.getString("Email"),
-                    resultSet.getString("Phone"));
-        } catch (SQLException e) {
+                    resultSet.getString("Phone")
+            );
+
+        }
+        catch (SQLException e) {
             e.printStackTrace();
             return null;
         } finally {
@@ -109,10 +112,45 @@ public class UserDAO implements IUserDAO {
         }
     }
 
-    /** Gets user data from database using the user id
-     * @param id Id number of user
-     * @return User
-     */
+    public int getScore(int Id){
+        try{
+
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT Score
+                    FROM users
+                    WHERE UserID IS (?)
+                    """);
+            statement.setInt(1,Id);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.getInt("Score");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setScore(int Id, int score){
+        try{
+            PreparedStatement statement = connection.prepareStatement("""
+                    UPDATE users
+                    SET Score = ?
+                    WHERE UserID IS (?)
+                    """);
+            statement.setInt(1,score);
+            statement.setInt(2,Id);
+            statement.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void authUser(String username, String password) {
+        //TODO: Perhaps this could be used instead to authenticate?
+        /** Gets user data from database using the user id
+         * @param id Id number of user
+         * @return User
+         */
+    }
     public User getUserFromId(int id) {
         SqliteConnection database = null;
         try {
@@ -124,13 +162,19 @@ public class UserDAO implements IUserDAO {
                     WHERE UserID IS (?)""");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet == null) return null; // TODO: Throw exception here instead
-            return new User(
-                    resultSet.getInt("UserID"),
-                    resultSet.getString("Username"),
-                    resultSet.getString("Email"),
-                    resultSet.getString("Phone"));
-        } catch (SQLException e) {
+            if (resultSet == null) {
+                return null; // TODO: Throw exception here instead
+            }
+            else{
+                return new User(
+                        resultSet.getInt("UserID"),
+                        resultSet.getString("Username"),
+                        resultSet.getString("Email"),
+                        resultSet.getString("Phone")
+                );
+
+        }}
+        catch (SQLException e) {
             e.printStackTrace();
             return null;
         } finally {
@@ -252,7 +296,6 @@ public class UserDAO implements IUserDAO {
             while (resultSet.next()) { // Iterate through rows and add to list
                 userList.add(new User(resultSet.getInt("UserID"),
                         resultSet.getString("Username"),
-                        resultSet.getString("Password"),
                         resultSet.getString("Email"),
                         resultSet.getString("Phone")));
             }

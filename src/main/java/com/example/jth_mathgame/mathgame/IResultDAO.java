@@ -7,4 +7,6 @@ public interface IResultDAO {
     void removeAllUserResults(int userId);
     List<Result> getUserResults(int userId);
     List<Result> getAllResults();
+    List<Score> getScores();
+    List<Score> getEndlessScores();
 }

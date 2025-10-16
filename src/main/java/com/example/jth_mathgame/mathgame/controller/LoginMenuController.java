@@ -43,6 +43,7 @@ public class LoginMenuController {
             if (LoginMenu.CheckLogin(username, password)) {
                 // Login success
                 currentUserId = user.getId();
+                System.out.println("User Id: " + currentUserId);
                 Stage stage = (Stage) submitButton.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);

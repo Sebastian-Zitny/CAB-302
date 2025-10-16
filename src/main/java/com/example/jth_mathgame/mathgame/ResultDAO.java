@@ -164,4 +164,56 @@ public class ResultDAO implements IResultDAO {
             if (database != null) database.closeConnection();
         }
     }
+
+    public List<Score> getScores(){
+        try {
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT u.Username AS Username, AVG(r.Correct) AS Correct, AVG(r.Incorrect) AS Incorrect
+                    FROM results r
+                    JOIN users u ON r.UserID = u.UserID
+                    WHERE r.Gamemode = "Timed"
+                    GROUP BY r.UserID""");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet == null) return null; // Result table is empty
+
+            List<Score> scoreList = new ArrayList<>();
+            while (resultSet.next()) { // Iterate through rows and add to list
+                scoreList.add(new Score(
+                        resultSet.getString("Username"),
+                        resultSet.getInt("Correct"),
+                        resultSet.getInt("Incorrect")));
+            }
+            return scoreList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Problem getting all user results");
+            return null;
+        }
+    }
+
+    public List<Score> getEndlessScores(){
+        try {
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT u.Username AS Username, AVG(r.Correct) AS Correct, AVG(r.Incorrect) AS Incorrect
+                    FROM results r
+                    JOIN users u ON r.UserID = u.UserID
+                    WHERE r.Gamemode = "Endless"
+                    GROUP BY r.UserID""");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet == null) return null; // Result table is empty
+
+            List<Score> scoreList = new ArrayList<>();
+            while (resultSet.next()) { // Iterate through rows and add to list
+                scoreList.add(new Score(
+                        resultSet.getString("Username"),
+                        resultSet.getInt("Correct"),
+                        resultSet.getInt("Incorrect")));
+            }
+            return scoreList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Problem getting all user results");
+            return null;
+        }
+    }
 }

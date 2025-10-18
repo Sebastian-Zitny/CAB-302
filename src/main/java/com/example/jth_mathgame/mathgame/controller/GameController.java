@@ -170,7 +170,7 @@ public class GameController {
 
     //TODO: Compare user input against answer when clicked
     @FXML
-    protected void onSubmitButtonClick() {
+    public void onSubmitButtonClick() {
 
         int equalsInt = Integer.parseInt(inputField.getText());
 

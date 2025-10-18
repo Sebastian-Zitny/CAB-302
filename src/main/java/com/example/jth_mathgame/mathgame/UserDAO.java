@@ -13,10 +13,7 @@ import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
 
 public class UserDAO implements IUserDAO {
 
-    private final Connection connection;
-
     protected UserDAO() {
-        connection = SqliteConnection.getInstance();
         createTables();
     }
 
@@ -30,7 +27,10 @@ public class UserDAO implements IUserDAO {
 
     private void createTables() {
         // Create table if not exists
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             Statement statement = connection.createStatement();
             String query = "CREATE TABLE IF NOT EXISTS users ("
                     + "UserID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"
@@ -43,6 +43,8 @@ public class UserDAO implements IUserDAO {
             statement.execute(query);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
@@ -55,7 +57,10 @@ public class UserDAO implements IUserDAO {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO users
                     (Username, PasswordHash, PasswordSalt, Email, Phone) VALUES (?, ?, ?, ?, ?)""");
@@ -72,13 +77,18 @@ public class UserDAO implements IUserDAO {
             }
             // Something else is wrong
             e.printStackTrace();
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
     @Override
     // TODO: Perhaps below two methods can be merged
     public User getUser(String username) {
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT *
                     FROM users
@@ -97,12 +107,16 @@ public class UserDAO implements IUserDAO {
         catch (SQLException e) {
             e.printStackTrace();
             return null;
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
     public int getScore(int Id){
-        try{
-
+        SqliteConnection database = null;
+        try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT Score
                     FROM users
@@ -114,11 +128,16 @@ public class UserDAO implements IUserDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
     public void setScore(int Id, int score){
-        try{
+        SqliteConnection database = null;
+        try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     UPDATE users
                     SET Score = ?
@@ -130,17 +149,20 @@ public class UserDAO implements IUserDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
-    public void authUser(String username, String password) {
-        //TODO: Perhaps this could be used instead to authenticate?
-        /** Gets user data from database using the user id
-         * @param id Id number of user
-         * @return User
-         */
-    }
+
+    /** Gets user data from database using the user id
+     * @param id Id number of user
+     * @return User
+     */
     public User getUserFromId(int id) {
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT *
                     FROM users
@@ -149,19 +171,20 @@ public class UserDAO implements IUserDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet == null) {
                 return null; // TODO: Throw exception here instead
-            }
-            else{
+            } else {
                 return new User(
                         resultSet.getInt("UserID"),
                         resultSet.getString("Username"),
                         resultSet.getString("Email"),
                         resultSet.getString("Phone")
                 );
-
-        }}
+            }
+        }
         catch (SQLException e) {
             e.printStackTrace();
             return null;
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
@@ -171,7 +194,10 @@ public class UserDAO implements IUserDAO {
      */
     @Override
     public ArrayList<byte[]> getUserPasswordArray(String username) {
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT PasswordHash, PasswordSalt
                     FROM users
@@ -189,6 +215,8 @@ public class UserDAO implements IUserDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (database != null) database.closeConnection();
         }
         throw new RuntimeException("Something is wrong with getting the user password");
     }
@@ -237,7 +265,10 @@ public class UserDAO implements IUserDAO {
         }
 
         // Set new password
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     UPDATE users
                     SET PasswordHash = (?), PasswordSalt = (?)
@@ -249,12 +280,17 @@ public class UserDAO implements IUserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("There was a problem with changing user password");
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
     @Override
     public List<User> getAllUsers() {
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT *
                     FROM users""");
@@ -269,12 +305,13 @@ public class UserDAO implements IUserDAO {
                         resultSet.getString("Email"),
                         resultSet.getString("Phone")));
             }
-
             return userList;
 
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
@@ -282,7 +319,10 @@ public class UserDAO implements IUserDAO {
      * Deletes user account
      */
     public void deleteAccount() {
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     DELETE FROM users WHERE UserID = ?""");
             statement.setInt(1, currentUserId);
@@ -291,6 +331,8 @@ public class UserDAO implements IUserDAO {
         catch (SQLException e) {
             e.printStackTrace();
             System.err.println("There was a problem with deleting user account");
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 }

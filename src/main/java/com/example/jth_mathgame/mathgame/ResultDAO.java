@@ -6,10 +6,7 @@ import java.util.List;
 
 public class ResultDAO implements IResultDAO {
 
-    private final Connection connection;
-
     protected ResultDAO() {
-        connection = SqliteConnection.getInstance();
         createTables();
     }
 
@@ -23,7 +20,10 @@ public class ResultDAO implements IResultDAO {
 
     private void createTables() {
         // Create table if not exists
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             Statement statement = connection.createStatement();
             String query = "CREATE TABLE IF NOT EXISTS results ("
                     + "ResultID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"
@@ -38,6 +38,8 @@ public class ResultDAO implements IResultDAO {
         } catch (Exception e) {
             System.err.println("Problem creating result table");
             e.printStackTrace();
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
     
@@ -47,8 +49,10 @@ public class ResultDAO implements IResultDAO {
      */
     @Override
     public void addResult(Result result) {
+        SqliteConnection database = null;
         try {
-
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO results
                     (UserID, Correct, Incorrect, Gamemode, Date) VALUES (?, ?, ?, ?, ?)""");
@@ -61,6 +65,8 @@ public class ResultDAO implements IResultDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Problem creating new result record");
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
@@ -70,7 +76,10 @@ public class ResultDAO implements IResultDAO {
      */
     @Override
     public void removeAllUserResults(int userId) {
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     DELETE FROM results WHERE UserID = ?""");
             statement.setInt(1, userId);
@@ -79,6 +88,8 @@ public class ResultDAO implements IResultDAO {
         catch (SQLException e) {
             e.printStackTrace();
             System.err.println("There was a problem with deleting user results");
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
@@ -89,7 +100,10 @@ public class ResultDAO implements IResultDAO {
      */
     @Override
     public List<Result> getUserResults(int userId){
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT *
                     FROM results
@@ -112,6 +126,8 @@ public class ResultDAO implements IResultDAO {
             e.printStackTrace();
             System.err.println("Problem getting user results");
             return null;
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
@@ -120,7 +136,10 @@ public class ResultDAO implements IResultDAO {
      */
     @Override
     public List<Result> getAllResults() {
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT *
                     FROM results""");
@@ -141,11 +160,16 @@ public class ResultDAO implements IResultDAO {
             e.printStackTrace();
             System.err.println("Problem getting all user results");
             return null;
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
     public List<Score> getScores(){
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT u.Username AS Username, AVG(r.Correct) AS Correct, AVG(r.Incorrect) AS Incorrect
                     FROM results r
@@ -167,11 +191,16 @@ public class ResultDAO implements IResultDAO {
             e.printStackTrace();
             System.err.println("Problem getting all user results");
             return null;
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 
     public List<Score> getEndlessScores(){
+        SqliteConnection database = null;
         try {
+            database = SqliteConnection.getInstance();
+            Connection connection = database.openConnection();
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT u.Username AS Username, AVG(r.Correct) AS Correct, AVG(r.Incorrect) AS Incorrect
                     FROM results r
@@ -193,6 +222,8 @@ public class ResultDAO implements IResultDAO {
             e.printStackTrace();
             System.err.println("Problem getting all user results");
             return null;
+        } finally {
+            if (database != null) database.closeConnection();
         }
     }
 }

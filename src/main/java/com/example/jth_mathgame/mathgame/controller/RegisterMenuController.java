@@ -78,7 +78,7 @@ public class RegisterMenuController {
     @FXML
     public void initialize() {
         // Title text
-        titleText.setText("Math Game");
+        titleText.setText("Math Blitz");
         titleText.setFont(new Font("Impact", 58));
 
         // Adjust buttons

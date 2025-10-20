@@ -31,19 +31,19 @@ public class SettingsController {
 
     @FXML
     public void initialize() {
-        // Add difficulty options
-        difficultyChoice.getItems().addAll("Easy", "Medium", "Hard");
+//        // Add difficulty options
+//        difficultyChoice.getItems().addAll("Easy", "Medium", "Hard");
 
-        // Load saved values from Settings
-        difficultyChoice.setValue(Settings.getDifficulty());
-        soundCheck.setSelected(Settings.isSoundEnabled());
+//        // Load saved values from Settings
+//        difficultyChoice.setValue(Settings.getDifficulty());
+//        soundCheck.setSelected(Settings.isSoundEnabled());
 
         // Back button logic
         backButton.setOnAction(event -> {
-            // Save changes globally
-            Settings.setDifficulty(difficultyChoice.getValue());
-            Settings.setSoundEnabled(soundCheck.isSelected());
-            Settings.save(); // persist to file
+//            // Save changes globally
+//            Settings.setDifficulty(difficultyChoice.getValue());
+//            Settings.setSoundEnabled(soundCheck.isSelected());
+//            Settings.save(); // persist to file
 
             try {
                 Stage stage = (Stage) backButton.getScene().getWindow();

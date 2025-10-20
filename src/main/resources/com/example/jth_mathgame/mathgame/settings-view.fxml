@@ -10,19 +10,19 @@
             <Label text="Settings" style="-fx-font-size: 36; -fx-font-family: Impact;" />
 
 
-            <Label text="Game" style="-fx-font-size: 30; -fx-font-family: Impact;" />
+<!--            <Label text="Game" style="-fx-font-size: 30; -fx-font-family: Impact;" />-->
 
-            <!-- Difficulty ChoiceBox -->
-            <HBox spacing="10" alignment="CENTER">
-                <Label text="Difficulty:" style="-fx-font-size: 20;" />
-                <ChoiceBox fx:id="difficultyChoice" />
-            </HBox>
+<!--            &lt;!&ndash; Difficulty ChoiceBox &ndash;&gt;-->
+<!--            <HBox spacing="10" alignment="CENTER">-->
+<!--                <Label text="Difficulty:" style="-fx-font-size: 20;" />-->
+<!--                <ChoiceBox fx:id="difficultyChoice" />-->
+<!--            </HBox>-->
 
-            <!-- Sound Toggle -->
-            <HBox spacing="10" alignment="CENTER">
-                <Label text="Sound:" style="-fx-font-size: 20;" />
-                <CheckBox fx:id="soundCheck" text="Enabled"/>
-            </HBox>
+<!--            &lt;!&ndash; Sound Toggle &ndash;&gt;-->
+<!--            <HBox spacing="10" alignment="CENTER">-->
+<!--                <Label text="Sound:" style="-fx-font-size: 20;" />-->
+<!--                <CheckBox fx:id="soundCheck" text="Enabled"/>-->
+<!--            </HBox>-->
 
             <Region minHeight="15" />
 

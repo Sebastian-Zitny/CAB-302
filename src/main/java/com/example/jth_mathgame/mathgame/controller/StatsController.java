@@ -1,5 +1,8 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.controller;
 
+import com.example.jth_mathgame.mathgame.MainApplication;
+import com.example.jth_mathgame.mathgame.ResultDAO;
+import com.example.jth_mathgame.mathgame.Score;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -42,7 +45,7 @@ public class StatsController {
     @FXML
     Button backButton;
 
-    private static final IResultDAO dao = new ResultDAO();
+    private final ResultDAO RESULTDAO = ResultDAO.getInstance();
 
     public void initialize(){
         headerText.setText("Stats");
@@ -52,7 +55,7 @@ public class StatsController {
         correct.setCellValueFactory(cellData -> cellData.getValue().getCorrectAnswersProperty());
         incorrect.setCellValueFactory(cellData -> cellData.getValue().getIncorrectAnswersProperty());
 
-        List<Score> scores = dao.getScores();
+        List<Score> scores = RESULTDAO.getScores();
         ObservableList<Score> scoresTable = FXCollections.observableArrayList(scores);
         statsView.setItems(scoresTable);
 
@@ -61,7 +64,7 @@ public class StatsController {
         endlessCorrect.setCellValueFactory(cellData -> cellData.getValue().getCorrectAnswersProperty());
         endlessIncorrect.setCellValueFactory(cellData -> cellData.getValue().getIncorrectAnswersProperty());
 
-        List<Score> endlessScores = dao.getEndlessScores();
+        List<Score> endlessScores = RESULTDAO.getEndlessScores();
         ObservableList<Score> endlessScoresTable = FXCollections.observableArrayList(endlessScores);
         endlessStatsView.setItems(endlessScoresTable);
     }

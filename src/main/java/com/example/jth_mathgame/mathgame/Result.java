@@ -2,6 +2,14 @@ package com.example.jth_mathgame.mathgame;
 
 import java.util.Date;
 
+/**
+ * Result of game
+ * @param userId User id of the player
+ * @param numCorrect Number of questions answered correctly
+ * @param numIncorrect Number of questions answered incorrectly
+ * @param gamemode The gamemode the result came from
+ * @param date The date the result was created
+ */
 public record Result(
         int userId,
         int numCorrect,

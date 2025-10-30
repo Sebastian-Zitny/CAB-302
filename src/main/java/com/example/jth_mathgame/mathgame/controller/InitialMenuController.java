@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The initial/welcome window that the user see when starting the program
+ */
 public class InitialMenuController {
     @FXML
     private Label titleText;
@@ -21,6 +24,9 @@ public class InitialMenuController {
     @FXML
     private Button quitButton;
 
+    /**
+     * Sets up window
+     */
     @FXML
     public void initialize() {
         // Title text
@@ -33,6 +39,9 @@ public class InitialMenuController {
         quitButton.setFont(new Font("Arial", 40));
     }
 
+    /**
+     * Switch window to the login screen
+     */
     @FXML
     protected void onLoginClick() throws IOException {
         // Change window when login button clicked
@@ -42,18 +51,22 @@ public class InitialMenuController {
         stage.setScene(scene);
     }
 
+    /**
+     * Switch window to the login screen
+     */
     @FXML
     protected void onRegisterClick() throws IOException {
-        // Change window when register button clicked
         Stage stage = (Stage) loginButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("registerMenu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
         stage.setScene(scene);
     }
 
+    /**
+     * Closes app
+     */
     @FXML
     protected void onQuitButtonClick() {
-        // Close window when quit button clicked
         Stage stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
     }

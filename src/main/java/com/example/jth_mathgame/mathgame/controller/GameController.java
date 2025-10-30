@@ -23,6 +23,9 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * A math game with a time limit
+ */
 public class GameController {
     @FXML
     private Button quitButton;
@@ -59,10 +62,11 @@ public class GameController {
     public int databaseIncorrect = 0;
 
 
-
+    /**
+     * Sets up window
+     */
     @FXML
     public void initialize() {
-        // TODO: Maybe convert FXML padding to code
         // Defines some fonts
         Font smallFont = new Font("Arial", 20);
         Font smallFontBold = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20);
@@ -93,7 +97,6 @@ public class GameController {
         GenerateQuestion();
         startTimer();
     }
-    // TODO give error message and disable gameplay rather than force back to menu
     private void startTimer() {
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
@@ -168,7 +171,6 @@ public class GameController {
     }
 
 
-    //TODO: Compare user input against answer when clicked
     @FXML
     public void onSubmitButtonClick() {
 

@@ -15,6 +15,9 @@ import java.io.IOException;
 
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
 
+/**
+ * Window that allows users to change their passwords
+ */
 public class ChangePasswordController {
     @FXML
     private PasswordField currentPasswordField;
@@ -26,6 +29,9 @@ public class ChangePasswordController {
     private Button confirmButton;
     private final UserDAO USERDAO = UserDAO.getInstance();
 
+    /**
+     * Attempts to change password
+     */
     @FXML
     protected void onConfirmClick() throws IOException {
         String currentPassword = currentPasswordField.getText();
@@ -53,9 +59,11 @@ public class ChangePasswordController {
         }
     }
 
+    /**
+     * Returns to main menu
+     */
     @FXML
     protected void onBackClick() throws IOException {
-        // Change window when back button clicked
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("settings-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);

@@ -5,10 +5,12 @@ import com.example.jth_mathgame.mathgame.ResultDAO;
 
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
 
+/**
+ * A math game with a time limit
+ */
 public class Game {
     /**
      * Inputs result into database
-     *
      * @param correct   Correct answers
      * @param incorrect Incorrect answers
      */

@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Lets the user create a new account
+ */
 public class RegisterMenuController {
     @FXML
     public TextField usernameTextField;
@@ -33,48 +36,9 @@ public class RegisterMenuController {
 
     private final UserDAO USERDAO = UserDAO.getInstance();
 
-    @FXML
-    protected void onRegisterClick() throws IOException {
-        // Create a new user when register button clicked
-        String username = usernameTextField.getText();
-        String password = passwordTextField.getText();
-        String email = emailTextField.getText();
-        String phone = phoneTextField.getText();
-
-        User newUser = new User(username, password, email, phone);
-        try {
-            // Validate user details
-            RegisterMenu.validateUserRegistration(newUser);
-        } catch (RegisterUserException e) {
-            Alert alert = RegisterMenu.getAlertReason(e);
-            alert.showAndWait();
-            return;
-        }
-        try {
-            USERDAO.addUser(newUser);
-        } catch (DuplicateUserException e) {
-            RegisterMenu.DuplicateRegisterFailed();
-            return;
-        }
-
-        // Change window when register button clicked
-        Stage stage = (Stage) registerButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-        stage.setScene(scene);
-    }
-
-
-    @FXML
-    protected void onBackClick() throws IOException {
-        // Change window when back button clicked
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-        stage.setScene(scene);
-    }
-
-    
+    /**
+     * Set up window
+     */
     @FXML
     public void initialize() {
         // Title text
@@ -107,5 +71,48 @@ public class RegisterMenuController {
         phoneTextField.setPromptText("Optional");
     }
 
+    /**
+     * Attempt to create new user and return to welcome screen if successful
+     */
+    @FXML
+    protected void onRegisterClick() throws IOException {
+        // Create a new user when register button clicked
+        String username = usernameTextField.getText();
+        String password = passwordTextField.getText();
+        String email = emailTextField.getText();
+        String phone = phoneTextField.getText();
 
+        User newUser = new User(username, password, email, phone);
+        try {
+            // Validate user details
+            RegisterMenu.validateUserRegistration(newUser);
+        } catch (RegisterUserException e) {
+            Alert alert = RegisterMenu.getAlertReason(e);
+            alert.showAndWait();
+            return;
+        }
+        try {
+            USERDAO.addUser(newUser);
+        } catch (DuplicateUserException e) {
+            RegisterMenu.DuplicateRegisterFailed();
+            return;
+        }
+
+        // Change window when register button clicked
+        Stage stage = (Stage) registerButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        stage.setScene(scene);
+    }
+
+    /**
+     * @throws IOException Return to welcome screen
+     */
+    @FXML
+    protected void onBackClick() throws IOException {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("initialMenu-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        stage.setScene(scene);
+    }
 }

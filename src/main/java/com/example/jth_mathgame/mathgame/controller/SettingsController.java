@@ -2,7 +2,6 @@ package com.example.jth_mathgame.mathgame.controller;
 
 import com.example.jth_mathgame.mathgame.MainApplication;
 import com.example.jth_mathgame.mathgame.ResultDAO;
-import com.example.jth_mathgame.mathgame.model.Settings;
 import com.example.jth_mathgame.mathgame.UserDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,11 +14,10 @@ import java.util.Optional;
 
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
 
+/**
+ * Allows the user to change their settings
+ */
 public class SettingsController {
-    @FXML
-    private ChoiceBox<String> difficultyChoice;
-    @FXML
-    private CheckBox soundCheck;
     @FXML
     private Button backButton;
     @FXML
@@ -29,22 +27,13 @@ public class SettingsController {
     private final UserDAO USERDAO = UserDAO.getInstance();
     private final ResultDAO RESULTDAO = ResultDAO.getInstance();
 
+    /**
+     * Set up window
+     */
     @FXML
     public void initialize() {
-//        // Add difficulty options
-//        difficultyChoice.getItems().addAll("Easy", "Medium", "Hard");
-
-//        // Load saved values from Settings
-//        difficultyChoice.setValue(Settings.getDifficulty());
-//        soundCheck.setSelected(Settings.isSoundEnabled());
-
         // Back button logic
         backButton.setOnAction(event -> {
-//            // Save changes globally
-//            Settings.setDifficulty(difficultyChoice.getValue());
-//            Settings.setSoundEnabled(soundCheck.isSelected());
-//            Settings.save(); // persist to file
-
             try {
                 Stage stage = (Stage) backButton.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("menu-view.fxml"));
@@ -72,6 +61,9 @@ public class SettingsController {
         }
     }
 
+    /**
+     * Switches to change password window
+     */
     @FXML
     private void onChangePasswordClick() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("changePassword-view.fxml"));

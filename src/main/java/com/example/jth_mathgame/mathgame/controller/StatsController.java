@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Allows the user to see their stats among other users
+ */
 public class StatsController {
     @FXML
     Label headerText;
@@ -47,6 +50,9 @@ public class StatsController {
 
     private final ResultDAO RESULTDAO = ResultDAO.getInstance();
 
+    /**
+     * Sets up window
+     */
     public void initialize(){
         headerText.setText("Stats");
         headerText.setFont(new Font("Impact", 29));
@@ -69,6 +75,9 @@ public class StatsController {
         endlessStatsView.setItems(endlessScoresTable);
     }
 
+    /**
+     * Returns to main menu window
+     */
     @FXML
     protected void onBackButtonClick() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();

@@ -26,6 +26,9 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
 
+/**
+ * A math game that continues forever until the user exits
+ */
 public class EndlessGameController {
     @FXML
     private Button quitButton;
@@ -60,11 +63,8 @@ public class EndlessGameController {
     public int difficulty = 1;
 
 
-
-
     @FXML
     public void initialize() {
-        // TODO: Maybe convert FXML padding to code
         // Defines some fonts
 
         Font smallFont = new Font("Arial", 20);
@@ -97,7 +97,6 @@ public class EndlessGameController {
         questionLabel.setText(stringInt1 + " + " + stringInt2);
         startTimer();
     }
-    // TODO give error message and disable gameplay rather than force back to menu
     private void startTimer() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
@@ -111,7 +110,6 @@ public class EndlessGameController {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
-    // TODO: Delete when no longer needed
     // Creates a hardcoded mock question
     private void mockQuestion() {
 

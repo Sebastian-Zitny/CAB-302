@@ -1,11 +1,8 @@
 package com.example.jth_mathgame.mathgame;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
-
+/**
+ * A user of the database
+ */
 public class User {
     private int id;
     private String username;
@@ -29,7 +26,7 @@ public class User {
     }
 
     /**
-     * Creates a new user
+     * Represents a user without the id
      * @param username The user's username
      * @param password The user's password
      * @param email The user's email address
@@ -42,6 +39,13 @@ public class User {
         this.phone = phone;
     }
 
+    /**
+     * Represents a user without the password
+     * @param userID The user's id
+     * @param username The user's username
+     * @param email The user's email address
+     * @param phone The user's phone
+     */
     public User(int userID, String username, String email, String phone) {
         this.id = userID;
         this.username = username;

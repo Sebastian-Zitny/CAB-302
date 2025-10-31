@@ -3,6 +3,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Represents a connection to the database file
+ */
 public class SqliteConnection {
     private static SqliteConnection instance = null;
     private Connection connection;
@@ -12,6 +15,10 @@ public class SqliteConnection {
         connection = DriverManager.getConnection(url);
     }
 
+    /**
+     * A instance of the connection
+     * @return A instance of the connection
+     */
     public static SqliteConnection getInstance() throws SQLException{
         if (instance == null) {
             instance = new SqliteConnection();
@@ -19,10 +26,16 @@ public class SqliteConnection {
         return instance;
     }
 
+    /**
+     * @return Opens the connection to the database
+     */
     public Connection openConnection() {
         return connection;
     }
 
+    /**
+     * Closes the connection to the database
+     */
     public void closeConnection() {
         try {
             connection.close();

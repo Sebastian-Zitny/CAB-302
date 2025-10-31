@@ -11,6 +11,9 @@ import java.util.List;
 
 import static com.example.jth_mathgame.mathgame.MainApplication.currentUserId;
 
+/**
+ * A singleton class that provides methods that can be used to interact with the user table of the database.
+ */
 public class UserDAO implements IUserDAO {
 
     protected UserDAO() {
@@ -21,6 +24,9 @@ public class UserDAO implements IUserDAO {
         private final static UserDAO INSTANCE = new UserDAO();
     }
 
+    /**
+     * @return A instance of the result singleton class
+     */
     public static UserDAO getInstance() {
         return UserDAOHolder.INSTANCE;
     }
@@ -48,6 +54,11 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    /**
+     * Adds a user to the database
+     * @param user A new user
+     * @throws DuplicateUserException Will be thrown if the user already exists
+     */
     @Override
     public void addUser(User user) throws DuplicateUserException {
         // Get Hash and salt for password
@@ -82,8 +93,12 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    /**
+     * Returns a user represented as an object
+     * @param username The username of the user
+     * @return A user object
+     */
     @Override
-    // TODO: Perhaps below two methods can be merged
     public User getUser(String username) {
         SqliteConnection database = null;
         try {
@@ -107,48 +122,6 @@ public class UserDAO implements IUserDAO {
         catch (SQLException e) {
             e.printStackTrace();
             return null;
-        } finally {
-            if (database != null) database.closeConnection();
-        }
-    }
-
-    public int getScore(int Id){
-        SqliteConnection database = null;
-        try {
-            database = SqliteConnection.getInstance();
-            Connection connection = database.openConnection();
-            PreparedStatement statement = connection.prepareStatement("""
-                    SELECT Score
-                    FROM users
-                    WHERE UserID IS (?)
-                    """);
-            statement.setInt(1,Id);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.getInt("Score");
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (database != null) database.closeConnection();
-        }
-    }
-
-    public void setScore(int Id, int score){
-        SqliteConnection database = null;
-        try {
-            database = SqliteConnection.getInstance();
-            Connection connection = database.openConnection();
-            PreparedStatement statement = connection.prepareStatement("""
-                    UPDATE users
-                    SET Score = ?
-                    WHERE UserID IS (?)
-                    """);
-            statement.setInt(1,score);
-            statement.setInt(2,Id);
-            statement.execute();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         } finally {
             if (database != null) database.closeConnection();
         }
@@ -188,9 +161,9 @@ public class UserDAO implements IUserDAO {
         }
     }
 
-    /**
+    /** Gets the user's password and salt a return it as a byte array
      * @param username Username in database
-     * @return String array with PasswordHash and PasswordSalt
+     * @return Byte array with PasswordHash and PasswordSalt
      */
     @Override
     public ArrayList<byte[]> getUserPasswordArray(String username) {
@@ -236,6 +209,13 @@ public class UserDAO implements IUserDAO {
         return returnList;
     }
 
+    /**
+     * Verifies that a password is correct
+     * @param password The password to be verified
+     * @param passwordChallenge A byte array of the password
+     * @param salt A byte array of the password salt
+     * @return True if verification is successful
+     */
     public Boolean verifyHash(String password, byte[] passwordChallenge, byte[] salt)
     {
         MessageDigest md = null;
@@ -250,8 +230,9 @@ public class UserDAO implements IUserDAO {
         return Arrays.equals(hashedPassword, passwordChallenge);
     }
 
-    /** Sets a new password in the database for the user
-     * @param password New plain-text password to be set in the database
+    /**
+     * Sets a new password in the database for the user
+     * @param password New password to be set in the database
      */
     public void setPassword(int id, String password) {
         // Get new password
@@ -285,6 +266,9 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    /** Get a list of all users in the database
+     * @return List of all users in the database
+     */
     @Override
     public List<User> getAllUsers() {
         SqliteConnection database = null;

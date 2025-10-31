@@ -4,6 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A singleton class that provides methods that can be used to interact with the result table of the database.
+ */
 public class ResultDAO implements IResultDAO {
 
     protected ResultDAO() {
@@ -14,6 +17,9 @@ public class ResultDAO implements IResultDAO {
         private final static ResultDAO INSTANCE = new ResultDAO();
     }
 
+    /**
+     * @return A instance of the result singleton class
+     */
     public static ResultDAO getInstance() {
         return ResultDAOHolder.INSTANCE;
     }
@@ -44,8 +50,8 @@ public class ResultDAO implements IResultDAO {
     }
     
     /**
-     * @param result
      * Adds a result record and stores it in the database
+     * @param result Represents a result from a gamemode
      */
     @Override
     public void addResult(Result result) {
@@ -94,9 +100,8 @@ public class ResultDAO implements IResultDAO {
     }
 
     /**
-     * @param userId User Id in database
      * @return A list with all result records associated with a user
-     *
+     * @param userId User Id in database
      */
     @Override
     public List<Result> getUserResults(int userId){
@@ -131,7 +136,7 @@ public class ResultDAO implements IResultDAO {
         }
     }
 
-    /**
+    /** Returns a list of all results
      * @return A list of all results
      */
     @Override
@@ -165,6 +170,9 @@ public class ResultDAO implements IResultDAO {
         }
     }
 
+    /** Returns list of timed user results
+     * @return List of timed user results
+     */
     public List<Score> getScores(){
         SqliteConnection database = null;
         try {
@@ -196,6 +204,9 @@ public class ResultDAO implements IResultDAO {
         }
     }
 
+    /** Returns list of endless user results
+     * @return List of endless user results
+     */
     public List<Score> getEndlessScores(){
         SqliteConnection database = null;
         try {

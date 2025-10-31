@@ -12,10 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
+/**
+ * The main menu which lets the user start the game, view stats, or change settings
+ */
 public class MenuController {
     @FXML
     private Label titleText;
@@ -30,22 +31,9 @@ public class MenuController {
     @FXML
     private Button logoutButton;
 
-    @FXML
-    protected void onStartGameClick() throws IOException {
-        // Change window when start button clicked
-        Stage stage = (Stage) timedButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("game-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-        stage.setScene(scene);
-    }
-    @FXML
-    protected void onStartEndlessGameClick() throws IOException {
-        // Change window when start button clicked
-        Stage stage = (Stage) endlessButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("EndlessGame-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
-        stage.setScene(scene);
-    }
+    /**
+     * Set up window
+     */
     @FXML
     public void initialize() {
         // Title text
@@ -61,12 +49,44 @@ public class MenuController {
         logoutButton.setFont(buttonFont);
     }
 
+    /**
+     * Switches to timed mode window
+     */
     @FXML
-    protected void onQuitButtonClick() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    protected void onStartGameClick() throws IOException {
+        // Change window when start button clicked
+        Stage stage = (Stage) timedButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("game-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        stage.setScene(scene);
+    }
+
+    /**
+     * Switch to endless mode window
+     * @throws IOException Switches to endless mode window
+     */
+    @FXML
+    protected void onStartEndlessGameClick() throws IOException {
+        // Change window when start button clicked
+        Stage stage = (Stage) endlessButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("EndlessGame-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), MainApplication.WIDTH, MainApplication.HEIGHT);
+        stage.setScene(scene);
+    }
+
+    /**
+     * Closes app
+     */
+    @FXML
+    protected void onQuitButtonClick() {
         // Close window when quit button clicked
         Stage stage = (Stage) logoutButton.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * @throws IOException Logs out user and returns to welcome menu
+     */
     @FXML
     private void onLogoutClick() throws IOException {
         Menu.Logout();
@@ -77,13 +97,18 @@ public class MenuController {
         stage.show();
     }
 
+    /**
+     * Use as a placeholder for unimplemented features
+     */
     @FXML
-    protected void toBeAdded() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        // Use on features not yet implemented
+    protected void toBeAdded() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "To be added...", ButtonType.OK);
         alert.showAndWait();
     }
 
+    /**
+     * Switch to settings window
+     */
     @FXML
     protected void onSettingsButtonClick() throws IOException {
         Stage stage = (Stage) settingsButton.getScene().getWindow();
@@ -92,6 +117,9 @@ public class MenuController {
         stage.setScene(scene);
     }
 
+    /**
+     * Switch to stats window
+     */
     @FXML
     protected void onStatsButtonClick() throws IOException {
         Stage stage = (Stage) settingsButton.getScene().getWindow();

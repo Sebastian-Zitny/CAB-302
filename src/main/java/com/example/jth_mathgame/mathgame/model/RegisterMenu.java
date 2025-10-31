@@ -7,7 +7,21 @@ import javafx.scene.control.Alert;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Lets the user create a new account
+ */
 public class RegisterMenu {
+    /**
+     * Validates the details given by new user by checking if they meet certain criteria:
+     * <ul>
+     *  <li>Username should be between 3-15 characters with no spaces</li>
+     *  <li>Password must have at least 8 characters, 1 uppercase, 1 lowercase, and 1 number</li>
+     *  <li>Must be in a valid email address format</li>
+     *  <li>(optional) Phone is a valid Australian/International number</li>
+     * </ul>
+     * @param user The new user trying to be added
+     * @throws RegisterUserException Will be thrown if user settings don't meet certain criteria
+     */
     public static void validateUserRegistration(User user) throws RegisterUserException {
 
         // Initialise variables
@@ -48,6 +62,11 @@ public class RegisterMenu {
         }
     }
 
+    /**
+     * Get alert according to exception message
+     * @param e the thrown exception
+     * @return Alert to be show
+     */
     public static Alert getAlertReason(RegisterUserException e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Register Failed");
@@ -69,6 +88,9 @@ public class RegisterMenu {
         return alert;
     }
 
+    /**
+     * Show alert for duplicate user
+     */
     public static void DuplicateRegisterFailed() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Register Failed");

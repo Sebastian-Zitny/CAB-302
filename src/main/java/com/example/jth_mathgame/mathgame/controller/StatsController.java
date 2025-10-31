@@ -1,5 +1,8 @@
-package com.example.jth_mathgame.mathgame;
+package com.example.jth_mathgame.mathgame.controller;
 
+import com.example.jth_mathgame.mathgame.MainApplication;
+import com.example.jth_mathgame.mathgame.ResultDAO;
+import com.example.jth_mathgame.mathgame.Score;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +17,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Allows the user to see their stats among other users
+ */
 public class StatsController {
     @FXML
     Label headerText;
@@ -42,8 +48,11 @@ public class StatsController {
     @FXML
     Button backButton;
 
-    private static final IResultDAO dao = new ResultDAO();
+    private final ResultDAO RESULTDAO = ResultDAO.getInstance();
 
+    /**
+     * Sets up window
+     */
     public void initialize(){
         headerText.setText("Stats");
         headerText.setFont(new Font("Impact", 29));
@@ -52,7 +61,7 @@ public class StatsController {
         correct.setCellValueFactory(cellData -> cellData.getValue().getCorrectAnswersProperty());
         incorrect.setCellValueFactory(cellData -> cellData.getValue().getIncorrectAnswersProperty());
 
-        List<Score> scores = dao.getScores();
+        List<Score> scores = RESULTDAO.getScores();
         ObservableList<Score> scoresTable = FXCollections.observableArrayList(scores);
         statsView.setItems(scoresTable);
 
@@ -61,11 +70,14 @@ public class StatsController {
         endlessCorrect.setCellValueFactory(cellData -> cellData.getValue().getCorrectAnswersProperty());
         endlessIncorrect.setCellValueFactory(cellData -> cellData.getValue().getIncorrectAnswersProperty());
 
-        List<Score> endlessScores = dao.getEndlessScores();
+        List<Score> endlessScores = RESULTDAO.getEndlessScores();
         ObservableList<Score> endlessScoresTable = FXCollections.observableArrayList(endlessScores);
         endlessStatsView.setItems(endlessScoresTable);
     }
 
+    /**
+     * Returns to main menu window
+     */
     @FXML
     protected void onBackButtonClick() throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();

@@ -8,7 +8,7 @@
 
 <?import javafx.scene.text.Text?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.jth_mathgame.mathgame.StatsController">
+            fx:controller="com.example.jth_mathgame.mathgame.controller.StatsController">
             <center>
 
             <VBox alignment="CENTER" spacing = "20">

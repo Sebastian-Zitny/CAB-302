@@ -4,6 +4,9 @@ import com.example.jth_mathgame.mathgame.MainApplication;
 import com.example.jth_mathgame.mathgame.Result;
 import com.example.jth_mathgame.mathgame.ResultDAO;
 
+/**
+ * A math game that continues forever until the user exits
+ */
 public class EndlessGame {
     /**
      * Inputs result into database

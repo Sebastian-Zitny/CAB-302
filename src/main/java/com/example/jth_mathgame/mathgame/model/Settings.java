@@ -4,6 +4,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Allows the user to change their settings
+ */
 public class Settings {
     private static String difficulty = "Easy";
     private static boolean soundEnabled = true;
@@ -26,7 +29,9 @@ public class Settings {
         soundEnabled = enabled;
     }
 
-    /** Save current settings to file */
+    /**
+     * Save current settings to file
+     */
     public static void save() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(SETTINGS_FILE))) {
             writer.println("difficulty=" + difficulty);
@@ -36,7 +41,9 @@ public class Settings {
         }
     }
 
-    /** Load settings from file if exists */
+    /**
+     * Load settings from file if exists
+     */
     public static void load() {
         Path path = Path.of(SETTINGS_FILE);
         if (!Files.exists(path)) {
